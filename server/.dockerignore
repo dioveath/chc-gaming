@@ -1,0 +1,5 @@
+node_modules
+.vscode
+.log
+khalti_secrets.txt
+PROJECT_TRACKER.org

@@ -1,0 +1,32 @@
+
+* Welcome to Charicha League  
+
+
+* Minimum Viable Product
+** Basic Premise
+   A Website with a form to register by paying with Khalti.
+
+** DONE Build a model for User
+** DONE Create a Registration Form Design in Figma    
+** DONE Build the Frontend in React by using the built design in Figma
+** IN-PROGRESS Combine Frontend with Backend
+** TODO Buy Domain and Hosting and deploy the Site.    
+
+   
+* TODOS
+** DONE Upgrade Commander to Support multiple commands
+** DONE Use Joi Validator for the Model
+** DONE Create data-access all use-cases for Users Model    
+** DELEGATED Implement Test Cases for all the testable modules.
+** DONE Build Workable API for Users only.
+** DONE [#C] Build More robust Validation System for User.
+** IN-PROGRESS [#B] Research & Design more about CHC League System
+** TODO Add Twilio Phone Number Verification
+** IN-PROGRESS [#B] Add models - Match, Tourney
+** TODO Build Robust Khalti Verification API
+** DONE Design a Frontend in Fig  ma - Ref iglnetwork.com | esports.pubgmobile.com
+** TODO Integrate Frontend and Backend 
+
+
+* TO FIX
+** running in production mode...! Where this coming from?  

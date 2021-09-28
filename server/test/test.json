@@ -1,0 +1,33 @@
+{
+  "first_name": "Ram",
+  "last_name": "Bahadur",
+  "gaming_name": "ramisclever",
+  "email": "cleverram00@gmail.com",
+  "password": "something",
+  "address": "Khanyakharka",
+  "phone_number": "1234567890"
+}
+
+{
+  "first_name": "Summer",
+  "last_name": "Winter",
+  "gaming_name": "summeriswinter",
+  "password": "contradiction",
+  "email": "summerflower@gamil.com",
+  "phone_number": "9999911111",
+  "address": "sagaraha",
+  "dob": "12-24-1996",
+  "phone_verified": false,
+  "email_verified": false    
+};
+
+{
+  "summary": "This was the match between jayraj and nugkha at Fifa S3 Week 3 Match 1", 
+  "home_player": "someidinstringjayrajobjid",
+  "away_player": "someidinstringnugkhaobjid",
+  "home_goals": [9, 30, 90],
+  "away_goals": [45, 68, 71],
+  "in_extraTime": false,
+  "in_penalty": false,
+  "date_played": "9-9-2021", // MM-DD-YYYY
+}
