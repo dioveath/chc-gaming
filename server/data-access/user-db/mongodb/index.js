@@ -23,7 +23,6 @@ function findUserById(id){
 }
 
 async function addUser(userInfo){
-
   // defaults
   userInfo.roles = ['614b6844e28ef411e800368d']; // gamer role
 

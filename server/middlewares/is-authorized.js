@@ -40,7 +40,6 @@ function isPermissionGranted(req, permissions){
   console.log("req.url: " + req.url);
   console.log("permissions: " + permissions);
 
-
   var pathSplitted = req.baseUrl.split('/');
   const resourceType = pathSplitted[pathSplitted.length-1];
   const resourceId = req.url.replace('/', '');

@@ -1,0 +1,36 @@
+version: "0.9"
+
+services:
+  client:
+    container_name: chc-gaming-client
+    image: chc-gaming-client:0.1.0
+    build:
+      context: client
+      dockerfile: Dockerfile
+    command: node server.js
+    ports:
+      - 3000:5556
+    restart: unless-stopped
+    networks:
+      - shared-network
+
+  api:
+    container_name: chc-gaming-api
+    image: chc-gaming-api:0.1.0
+    build:
+      context: server
+      dockerfile: Dockerfile
+    command: node server.js
+    ports:
+      - 5555:5555
+    restart: unless-stopped
+    networks:
+      - shared-network
+    healthcheck:
+      test: ["CMD", "curl", "http://api:5555"]
+      interval: 5s
+      timeout: 3s
+      retries: 6
+
+networks:
+  shared-network:

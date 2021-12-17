@@ -6,3 +6,8 @@ COPY package*.json ./
 
 RUN npm install --only production
 
+COPY . .
+
+EXPOSE 5556
+
+CMD ["node", "server.js"]

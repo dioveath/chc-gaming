@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.4",
     "cors": "^2.8.5",
+    "express": "^4.17.1",
     "framer-motion": "^4.1.17",
     "jwt-decode": "^3.1.2",
     "khalti-checkout-web": "^2.2.0",
@@ -29,7 +30,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:prod": "node ./server.js"
   },
   "eslintConfig": {
     "extends": [
