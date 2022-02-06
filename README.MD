@@ -2,6 +2,8 @@
 # Charicha League - Fifa League Season 3 - Online Registration System
 Charicha gaming is introducing it's league and opening it's registration for Fifa S3 League online.
 
+![Charicha Gaming Landing Page](assets/chc_gaming_landing.png)
+
 - Website to register for the Charicha League, Fifa League Season 3
 - Mobile responsive site, where you can easily register using mobile
 - Khalti Online Payment integration, so easy payment of the registration fee.
@@ -22,6 +24,9 @@ Independent of any external agency. In fact your business rules simply don't kno
 	
 # Milestones
 - Create Khalti Verification API for server
+
+## Login
+![Charicha Gaming Login Page](assets/chc_gaming_login.png)
 
 # Scenario 
 1. User registers in charichaleague by going to our website www.charichaleague.com (currently not live.)
