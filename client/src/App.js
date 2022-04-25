@@ -32,7 +32,7 @@ function App() {
     if(auth.accessToken != null){
       const options = {
         method: 'GET',
-        url: `${config.apiUrl}/users/${auth.userId}`,
+        url: `${config.serverUrl}/api/v1/users/${auth.userId}`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + auth.accessToken
