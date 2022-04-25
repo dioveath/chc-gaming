@@ -12,6 +12,6 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("React client server running at port:" + PORT);
+  console.log("Charicha Gaming client server running at port:" + PORT);
 });
 

@@ -17,6 +17,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateToken } from './redux/AuthSlice';
 import { updateUser } from './redux/UserSlice';
 
+import config from './config/config.js';
+
 
 function App() {
 
@@ -30,7 +32,7 @@ function App() {
     if(auth.accessToken != null){
       const options = {
         method: 'GET',
-        url: `http://localhost:5555/api/v1/users/${auth.userId}`,
+        url: `${config.apiUrl}/users/${auth.userId}`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + auth.accessToken

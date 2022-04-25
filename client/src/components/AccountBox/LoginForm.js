@@ -12,8 +12,7 @@ import { Link } from 'react-router-dom';
 import { BoxContainer, FormContainer, ErrorMessage,  Input, MutedLink, BoldLink, SubmitButton} from './FormElements';
 import { Marginer } from '../../components/Marginer';
 
-
-
+import config from '../../config/config.js';
 
 
 export function LoginForm(props){
@@ -30,7 +29,7 @@ export function LoginForm(props){
     dispatch(pending());
 
     try {
-      var response = await axios.post("http://localhost:5555/auth/login",
+      var response = await axios.post(`${config.serverUrl}/auth/login`,
                                       {
 					"email": email.current.value,
 					"password": password.current.value

@@ -5,11 +5,12 @@ import tw from 'twin.macro';
 import { BoxContainer, FormContainer, ErrorMessage, Input, MutedLink, BoldLink, SubmitButton} from './FormElements';
 import { Marginer } from '../../components/Marginer';
 
-
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { pending, error, complete }  from '../../redux/RegisterSlice';
 import { login }  from '../../redux/AuthSlice';
+
+import config from '../../config/config.js';
 
 
 export function RegisterForm(props){
@@ -40,7 +41,7 @@ export function RegisterForm(props){
       }));
 
     try {
-      var response = await axios.post("http://localhost:5555/auth/register",
+      var response = await axios.post(`${config.serverUrl}/auth/register`,
                                       {
                                         "first_name": firstName.current.value,
                                         "last_name": lastName.current.value,

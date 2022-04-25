@@ -20,8 +20,6 @@ All Business models will be created in Clean Architecture Pattern.
 - Independent of Database. You can swap out Oracle or SQL Server, for Mongo, BigTable, CouchDB, or something else. Your business rules are not bound to the database.
 Independent of any external agency. In fact your business rules simply don't know anything at all about the outside world.
 
-
-	
 # Milestones
 - Create Khalti Verification API for server
 
@@ -99,3 +97,24 @@ From Manager to Admin, we have got ranks for all.
 ## Tourneys
 - A Tourney Resource Represents a single Tourney.
 
+## Getting Started
+
+### Docker Setup
+docker-compose up --force-recreate is one option, but if you're using it for CI, I would start the build with docker-compose rm -f to stop and remove the containers and volumes (then follow it with pull and up).
+
+This is what I use:
+```dockerfile
+docker-compose rm -f
+docker-compose pull
+docker-compose up --build -d
+```
+# Run some tests
+```bash
+./tests
+docker-compose stop -t 1
+```
+The reason containers are recreated is to preserve any data volumes that might be used (and it also happens to make up a lot faster).
+
+If you're doing CI you don't want that, so just removing everything should get you want you want.
+
+Update: use up --build which was added in docker-compose 1.7

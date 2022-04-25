@@ -1,5 +1,4 @@
-node_modules
 .vscode
 .log
-public
-src
+build
+node_modules

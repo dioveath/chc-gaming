@@ -6,12 +6,13 @@ import axios from 'axios';
 import KhaltiCheckout from "khalti-checkout-web";
 import { FaPhoneAlt } from 'react-icons/fa';
 
-
 import FifaLeaguePoster from '../../assets/images/fifa_league_poster.png';
 import FifaS3IntroVideo from '../../assets/videos/fifa_s3_intro.mp4';
 import KhaltiLogo from '../../assets/images/khalti_logo.png';
 
 import { Marginer } from '../../components/Marginer';
+
+import APIUrl from '../../config/config.js';
 
 const RegisterContainer = styled.div`
   background: black;
@@ -142,7 +143,7 @@ export function RegisterFifaSection(){
             // hit merchant api for initiating verfication
           console.log(payload);
 
-          axios.post('http://localhost/fifa/s3/registration/verify').then((res) => {
+          axios.post(`http://${APIUrl.baseUrl}:${APIUrl.port}/fifa/s3/registration/verify`).then((res) => {
             console.log(res);
             // change state 
           });
