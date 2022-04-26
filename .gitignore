@@ -11,6 +11,7 @@ node_modules
 
 client_test
 client/node_modules
+build
 
 
 server/.log

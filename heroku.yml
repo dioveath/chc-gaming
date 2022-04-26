@@ -1,5 +1,3 @@
 build:
   docker:
-    nginx: nginx/Dockerfile
-    client: client/Dockerfile
-    api: server/Dockerfile
+    web: Dockerfile
