@@ -7,7 +7,7 @@ import KhaltiCheckout from "khalti-checkout-web";
 import { FaPhoneAlt } from 'react-icons/fa';
 
 import FifaLeaguePoster from '../../assets/images/fifa_league_poster.png';
-import FifaS3IntroVideo from '../../assets/videos/fifa_s3_intro.mp4';
+// import FifaS3IntroVideo from '../../assets/videos/fifa_s3_intro.mp4';
 import KhaltiLogo from '../../assets/images/khalti_logo.png';
 
 import { Marginer } from '../../components/Marginer';
@@ -163,12 +163,21 @@ export function RegisterFifaSection(){
 
   const checkout = new KhaltiCheckout(config);
 
+  const fifaS3YT = 'https://www.youtube.com/watch?v=hKIGnR4LKdM&t=2s';
+
   return (
     <RegisterContainer>
       <LeaguePosterContainer>
-        <video id="my-video" controls className="video-js vjs-theme-city" preload="auto" data-setup="{}">
-          <source src={FifaS3IntroVideo} type="video/mp4"/>
-        </video>
+        <iframe width="560" height="315"
+                src="https://www.youtube.com/embed/hKIGnR4LKdM"
+                title="YouTube Fifa S3 League Opening"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+
+        {/* <video id="my-video" controls className="video-js vjs-theme-city" preload="auto" data-setup="{}"> */}
+        {/*   <source src={fifaS3YT} type="video/mp4"/> */}
+        {/* </video> */}
       </LeaguePosterContainer>
       <RightContainer>
         <TitleContainer>
