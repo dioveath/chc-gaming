@@ -12,6 +12,8 @@ export function ProfileSection(){
 
   var user = useSelector((state) => state.user);
 
+  console.log(user);
+
   return (
     <Container>
       <TitleContainer>

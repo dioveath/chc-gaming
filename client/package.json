@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.8.3",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.4",
+    "babel-jest": "^26.6.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "framer-motion": "^4.1.17",
@@ -27,7 +28,8 @@
     "styled-components": "^5.3.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.14",
     "twin.macro": "^2.7.0",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "webpack": "^4.44.2"
   },
   "scripts": {
     "start": "craco start",
