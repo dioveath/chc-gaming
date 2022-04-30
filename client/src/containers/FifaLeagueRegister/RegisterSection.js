@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import axios from 'axios';
@@ -7,12 +7,16 @@ import KhaltiCheckout from "khalti-checkout-web";
 import { FaPhoneAlt } from 'react-icons/fa';
 
 import FifaLeaguePoster from '../../assets/images/fifa_league_poster.png';
-import FifaS3IntroVideo from '../../assets/videos/fifa_s3_intro.mp4';
+// import FifaS3IntroVideo from '../../assets/videos/fifa_s3_intro.mp4';
 import KhaltiLogo from '../../assets/images/khalti_logo.png';
 
 import { Marginer } from '../../components/Marginer';
 
 import APIUrl from '../../config/config.js';
+
+import VideoJs from 'video.js';
+import 'video.js/dist/video-js.css';
+import Youtube from 'react-youtube';
 
 const RegisterContainer = styled.div`
   background: black;
@@ -50,6 +54,14 @@ const LeftContainer = styled.div`
 `;
 
 const LeaguePosterContainer = styled.div`
+min-width: 80vw;
+height: 100%;
+iframe { 
+width:100%;
+height: 100%;
+aspect-ratio: 16/9;
+}
+
 img { 
 height: 400px;
 object-fit: cover;
@@ -132,6 +144,14 @@ letter-spacing: 0.5px;
 
 
 export function RegisterFifaSection(){
+  // let YtHtml5 = new YoutubeHtml5({
+  //   autoload: true
+  // });o
+
+  // let videoEl = useRef(null);
+  // if(videoEl.current != null){
+  //   let Player = new VideoJs(videoEl.current.id); 
+  // }
 
   let config = {
     "publicKey": "test_public_key_dc74e0fd57cb46cd93832aee0a390234",
@@ -166,9 +186,7 @@ export function RegisterFifaSection(){
   return (
     <RegisterContainer>
       <LeaguePosterContainer>
-        <video id="my-video" controls className="video-js vjs-theme-city" preload="auto" data-setup="{}">
-          <source src={FifaS3IntroVideo} type="video/mp4"/>
-        </video>
+        <Youtube videoId="hKIGnR4LKdM"/>
       </LeaguePosterContainer>
       <RightContainer>
         <TitleContainer>
