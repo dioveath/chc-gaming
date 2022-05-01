@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import axios from 'axios';
@@ -13,6 +13,10 @@ import KhaltiLogo from '../../assets/images/khalti_logo.png';
 import { Marginer } from '../../components/Marginer';
 
 import APIUrl from '../../config/config.js';
+
+import VideoJs from 'video.js';
+import 'video.js/dist/video-js.css';
+import Youtube from 'react-youtube';
 
 const RegisterContainer = styled.div`
   background: black;
@@ -50,6 +54,14 @@ const LeftContainer = styled.div`
 `;
 
 const LeaguePosterContainer = styled.div`
+min-width: 80vw;
+height: 100%;
+iframe { 
+width:100%;
+height: 100%;
+aspect-ratio: 16/9;
+}
+
 img { 
 height: 400px;
 object-fit: cover;
@@ -132,6 +144,14 @@ letter-spacing: 0.5px;
 
 
 export function RegisterFifaSection(){
+  // let YtHtml5 = new YoutubeHtml5({
+  //   autoload: true
+  // });o
+
+  // let videoEl = useRef(null);
+  // if(videoEl.current != null){
+  //   let Player = new VideoJs(videoEl.current.id); 
+  // }
 
   let config = {
     "publicKey": "test_public_key_dc74e0fd57cb46cd93832aee0a390234",
@@ -163,21 +183,10 @@ export function RegisterFifaSection(){
 
   const checkout = new KhaltiCheckout(config);
 
-  const fifaS3YT = 'https://www.youtube.com/watch?v=hKIGnR4LKdM&t=2s';
-
   return (
     <RegisterContainer>
       <LeaguePosterContainer>
-        <iframe width="560" height="315"
-                src="https://www.youtube.com/embed/hKIGnR4LKdM"
-                title="YouTube Fifa S3 League Opening"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
-
-        {/* <video id="my-video" controls className="video-js vjs-theme-city" preload="auto" data-setup="{}"> */}
-        {/*   <source src={fifaS3YT} type="video/mp4"/> */}
-        {/* </video> */}
+        <Youtube videoId="hKIGnR4LKdM"/>
       </LeaguePosterContainer>
       <RightContainer>
         <TitleContainer>

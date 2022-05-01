@@ -29,11 +29,13 @@ export function LoginForm(props){
     dispatch(pending());
 
     try {
+      console.log(config.serverUrl);
       var response = await axios.post(`${config.serverUrl}/auth/login`,
                                       {
 					"email": email.current.value,
 					"password": password.current.value
                                       });
+      console.log(response);
       if(response.data.status == 'success') {
 	dispatch(login({
           accessToken: response.data.accessToken,

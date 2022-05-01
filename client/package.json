@@ -8,8 +8,10 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@thelevicole/youtube-to-html5-loader": "^4.0.1",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.4",
+    "babel-jest": "^26.6.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "framer-motion": "^4.1.17",
@@ -24,10 +26,13 @@
     "react-responsive": "^9.0.0-beta.4",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "react-youtube": "^9.0.1",
     "styled-components": "^5.3.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.14",
     "twin.macro": "^2.7.0",
-    "web-vitals": "^1.1.2"
+    "video.js": "^7.18.1",
+    "web-vitals": "^1.1.2",
+    "webpack": "^4.44.2"
   },
   "scripts": {
     "start": "craco start",

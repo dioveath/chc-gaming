@@ -1,5 +1,5 @@
 const axios = require('axios') ;
-
+const RoleAccess = require('../data-access/role-db/index.js');
 
 module.exports = function isAuthorized(){
   return async (req, res, next) => {
@@ -8,14 +8,16 @@ module.exports = function isAuthorized(){
 
     for(var i = 0; i < req.user.roles.length; i++){
       try {
-        var rolePayload = await axios.get(`http://localhost:5555/api/v1/roles/${req.user.roles[i]}`);
-        if(rolePayload.data != undefined){
-          permissions = permissions.concat(rolePayload.data.role.permissions);
+        var rolePayload = await RoleAccess.findRoleById(`${req.user.roles[i]}`);
+        if(rolePayload !== null){
+          permissions = permissions.concat(rolePayload.permissions);
         }
       } catch (error){
         console.log(error);
       }
     }
+
+    console.log(permissions);
 
     if(isPermissionGranted(req, permissions)){
       return next();

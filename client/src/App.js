@@ -37,7 +37,7 @@ function App() {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + auth.accessToken
         },
-      };      
+      };
 
       var response = await axios.request(options);
 

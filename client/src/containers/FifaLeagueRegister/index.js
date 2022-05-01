@@ -4,7 +4,6 @@ import tw from 'twin.macro';
 import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
 import { RegisterFifaSection } from './RegisterSection';
-import './index.css';
 
 const PageContainer = styled.div`
   background: radial-gradient(#1D0207, #0D0000);
