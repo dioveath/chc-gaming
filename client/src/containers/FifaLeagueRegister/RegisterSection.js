@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useSelector }  from 'react-redux';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import axios from 'axios';
@@ -174,6 +175,7 @@ export function RegisterFifaSection(){
   };
 
   const checkout = new KhaltiCheckout(config);
+  const { selectedTourney } = useSelector(state => state.tourneys);
 
   return (
     <RegisterContainer>

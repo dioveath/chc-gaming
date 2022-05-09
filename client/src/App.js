@@ -66,7 +66,8 @@ function App() {
           <Route path="/auth">
             <LoginPage/>
           </Route>
-          <Route path="/leagues/fifa/s3">
+          <Route path="/tourneys"/>
+          <Route path="/tourneys/fifa/:tourneyId">
             <FifaLeagueRegister/>
           </Route>
           <Route path="/profile/:userId">

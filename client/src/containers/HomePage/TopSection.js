@@ -146,7 +146,6 @@ text-base
 
 
 export default function TopSection() {
-
   const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
 
   return (
@@ -165,7 +164,7 @@ export default function TopSection() {
           STARTS FROM OCT-1
         </SubHeadingText>
         <Marginer vertical="20px"/>
-        <LargeButton to="/leagues/fifa/s3">
+        <LargeButton to="/tourneys/fifa/latest">
           Register Now/-
         </LargeButton>
     

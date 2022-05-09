@@ -21,8 +21,7 @@ import {
 
 
 export function ProfileSection(){
-
-  var user = useSelector((state) => state.user);
+  let user = useSelector((state) => state.user);
 
   return (
     <Container>
