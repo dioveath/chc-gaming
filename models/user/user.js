@@ -32,12 +32,9 @@ var buildMakeUser = function(userValidator, bcrypt){
     var salt;
     var hashedPassword;
 
-    console.log(password);
     if(password != undefined) {
       salt = await bcrypt.genSalt(saltRounds);
-      console.log(password);
       hashedPassword = await bcrypt.hash(password, salt);
-      console.log(hashedPassword);
     }
 
     return Object.freeze({

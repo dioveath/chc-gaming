@@ -6,9 +6,7 @@ const expect = chai.expect;
 const { makeMatch } = require('./index');
 
 
-
 describe('makeMatch', () => {
-
 
   it('tests makeMatch makes a valid match', () => {
 

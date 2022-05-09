@@ -5,7 +5,6 @@ function validator(schema){
   return (payload) => {
 
     // var error = Joi.validate(payload, schema, {abortEarly: false});
-
     const { error } = schema.validate(payload, {abortEarly: false, allowUnknown: true, stripUnknown: true});
   
     if(error){

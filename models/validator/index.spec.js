@@ -8,13 +8,11 @@
  *
  * Copyright(c) 2021 All Rights Reserved for CharichaSoftwares
  */
-
-
 const chai = require('chai');
 const expect = chai.expect;
 const validator = require('./index');
-const userSchema = require('../user/user-schema');
-const matchSchema = require('../match/match-schema');
+const userSchema = require('../user/user-schema.js').userSchema;
+const matchSchema = require('../match/match-schema.js').matchSchema;
 const userValidator = validator(userSchema);
 const matchValidator = validator(matchSchema);
 
@@ -34,8 +32,10 @@ describe("validators", () => {
         email: "bahaduriskhatra@gmail.com",
 	address: "khatra sahar",
 	phone_number: "9812345678",
-        dob: "03-21-1990"
+        dob: "03-21-1990",
+        roles: ['614b6844e28ef411e800368d']     // gamer role
       };
+
 
       var input = userValidator(validPayload);
       var actual = true;

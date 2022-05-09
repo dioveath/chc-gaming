@@ -26,7 +26,7 @@ var seedDatabase = async () => {
     address: "sagarmatha",
     dob: "4-18-1995",
     phone_verified: false,
-    email_verified: false    
+    email_verified: false
   };
 
   var user3 = {

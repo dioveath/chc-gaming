@@ -4,7 +4,6 @@
 // - validation library
 
 
-
 const buildMakeUser = require('./user');
 const userSchema = require('./user-schema').userSchema;
 const userUpdateSchema = require('./user-schema').userUpdateSchema;

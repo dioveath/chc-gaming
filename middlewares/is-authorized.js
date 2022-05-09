@@ -4,11 +4,13 @@ const RoleAccess = require('../data-access/role-db/index.js');
 module.exports = function isAuthorized(){
   return async (req, res, next) => {
 
-    var permissions = [];
+    let permissions = [];
 
-    for(var i = 0; i < req.user.roles.length; i++){
+    console.log(req.user);
+
+    for(let i = 0; i < req.user.roles.length; i++){
       try {
-        var rolePayload = await RoleAccess.findRoleById(`${req.user.roles[i]}`);
+        let rolePayload = await RoleAccess.findRoleById(`${req.user.roles[i]}`);
         if(rolePayload !== null){
           permissions = permissions.concat(rolePayload.permissions);
         }
@@ -42,7 +44,7 @@ function isPermissionGranted(req, permissions){
   console.log("req.url: " + req.url);
   console.log("permissions: " + permissions);
 
-  var pathSplitted = req.baseUrl.split('/');
+  let pathSplitted = req.baseUrl.split('/');
   const resourceType = pathSplitted[pathSplitted.length-1];
   const resourceId = req.url.replace('/', '');
 
@@ -52,8 +54,8 @@ function isPermissionGranted(req, permissions){
   switch(req.method){
   case 'GET':
 
-    for(var i = 0;i < permissions.length; i++){
-      var symbols = permissions[i].split(':');
+    for(let i = 0;i < permissions.length; i++){
+      let symbols = permissions[i].split(':');
       if(symbols[0] != 'read') continue;
       if(symbols[1] != resourceType) continue;
 
@@ -74,8 +76,8 @@ function isPermissionGranted(req, permissions){
     break;
   case 'POST':
 
-    for(var i = 0;i < permissions.length; i++){
-      var symbols = permissions[i].split(':');
+    for(let i = 0;i < permissions.length; i++){
+      let symbols = permissions[i].split(':');
 
       if(symbols[0] != 'update' && symbols[0] != 'create') {
         console.log('it was neither update nor create');
@@ -99,8 +101,8 @@ function isPermissionGranted(req, permissions){
     break;
   case 'DELETE':
 
-    for(var i = 0;i < permissions.length; i++){
-      var symbols = permissions[i].split(':');
+    for(let i = 0;i < permissions.length; i++){
+      let symbols = permissions[i].split(':');
       if(symbols[0] != 'delete') continue;
       if(symbols[1] != resourceType) continue;
 

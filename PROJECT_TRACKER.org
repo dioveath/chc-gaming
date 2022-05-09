@@ -1,4 +1,3 @@
-
 * Welcome to Charicha League  
 
 
@@ -9,8 +8,8 @@
 ** DONE Build a model for User
 ** DONE Create a Registration Form Design in Figma    
 ** DONE Build the Frontend in React by using the built design in Figma
-** IN-PROGRESS Combine Frontend with Backend
-** TODO Buy Domain and Hosting and deploy the Site.    
+** DONE Combine Frontend with Backend
+** DONE Buy Domain and Hosting and deploy the Site. (Used heroku free)
 
    
 * TODOS
@@ -22,11 +21,13 @@
 ** DONE [#C] Build More robust Validation System for User.
 ** IN-PROGRESS [#B] Research & Design more about CHC League System
 ** TODO Add Twilio Phone Number Verification
-** IN-PROGRESS [#B] Add models - Match, Tourney
+** DONE [#B] Add models - Match, Tourney
 ** TODO Build Robust Khalti Verification API
 ** DONE Design a Frontend in Fig  ma - Ref iglnetwork.com | esports.pubgmobile.com
-** TODO Integrate Frontend and Backend 
 
 
 * TO FIX
 ** running in production mode...! Where this coming from?  
+
+* TO RESEARCH
+** Needs refactoring permissions, role system  

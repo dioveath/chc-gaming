@@ -1,7 +1,4 @@
 
-
-
-
 const buildMakeTourney = require('./tourney');
 const tourneySchema =  require('./tourney-schema').tourneySchema;
 const tourneyUpdateSchema = require('./tourney-schema').tourneyUpdateSchema;
