@@ -18,6 +18,7 @@ import Youtube from 'react-youtube';
 import { Marginer } from '../../components/Marginer';
 import APIUrl from '../../config/config.js';
 import RulesSection from './RulesSection.js';
+import ScheduleSection from './ScheduleSection.js';
 
 import { Tab, TabPanel } from '../../components/Tab';
 
@@ -137,14 +138,6 @@ letter-spacing: 0.5px;
 
 
 export function RegisterFifaSection(){
-  // let YtHtml5 = new YoutubeHtml5({
-  //   autoload: true
-  // });o
-
-  // let videoEl = useRef(null);
-  // if(videoEl.current != null){
-  //   let Player = new VideoJs(videoEl.current.id); 
-  // }
 
   let config = {
     "publicKey": "test_public_key_dc74e0fd57cb46cd93832aee0a390234",
@@ -175,7 +168,7 @@ export function RegisterFifaSection(){
   };
 
   const checkout = new KhaltiCheckout(config);
-  const { selectedTourney } = useSelector(state => state.tourneys);
+  const { selectedTourney } = useSelector(state => state.tourney);
 
   return (
     <RegisterContainer>
@@ -184,16 +177,17 @@ export function RegisterFifaSection(){
       </LeaguePosterContainer>
       <RightContainer>
         <TitleContainer>
-          <TitleText> Charicha FIFA 2022 Knockout Tournament </TitleText>
+          <TitleText> { selectedTourney.title } </TitleText>
         </TitleContainer>
         <Tab>
-          <TabPanel name='Rules and Guidelines'>
+          <TabPanel name='Overview'>
             <RulesSection/>
           </TabPanel>
-          <TabPanel name='Schedule'> Schedule Panel </TabPanel>
+          <TabPanel name='Schedule'>
+            <ScheduleSection/>
+          </TabPanel>
           <TabPanel name='Prizes'> Prizes </TabPanel>          
         </Tab>
-
 
         <TitleContainer>
           <TitleText> REGISTRATION </TitleText>

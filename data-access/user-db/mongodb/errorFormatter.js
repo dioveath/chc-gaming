@@ -33,6 +33,7 @@ module.exports = (error) => {
   } else if (error.code == 11011 || error.name == 'CastError'){
     throw new Error(`User not found with "id : '${error._id}'"`);
   } else {
+    console.log(error);
     throw new Error("Error in database!");
   }
 };

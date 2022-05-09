@@ -8,7 +8,7 @@ const tourneySlice = createSlice({
   },
 
   reducers: {
-    setTourney: (state, action) => {
+    setTourneys: (state, action) => {
       state.allTourneys = action.payload;
     },
 

@@ -51,7 +51,7 @@ export function FifaLeagueRegister(props){
 
     })();
     
-  });
+  }, [auth.accessToken, dispatch, tourneyId]);
 
   const { selectedTourney } = useSelector(state => state.tourney);
 

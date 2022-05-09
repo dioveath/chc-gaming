@@ -191,7 +191,7 @@ export function NavItems(){
         <NavItem menu to="/">
           Leagues
         </NavItem>
-        <NavItem menu to="/">
+        <NavItem menu to="/tourneys">
           Tourneys
         </NavItem>
         <NavItem menu to="/">
@@ -231,7 +231,7 @@ export function NavItems(){
       <NavItem to="/">
         Leagues
       </NavItem>
-      <NavItem to="/">
+      <NavItem to="/tourneys">
         Tournaments
       </NavItem>
       <NavItem to="/">

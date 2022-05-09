@@ -3,6 +3,7 @@ import HomePage from './containers/HomePage';
 import LoginPage from './containers/LoginPage';
 import ProfilePage from './containers/ProfilePage';
 import FifaLeagueRegister from './containers/FifaLeagueRegister';
+import TourneysPage from './containers/TourneysPage';
 
 import {
   BrowserRouter as Router,
@@ -66,10 +67,14 @@ function App() {
           <Route path="/auth">
             <LoginPage/>
           </Route>
-          <Route path="/tourneys"/>
-          <Route path="/tourneys/fifa/:tourneyId">
+
+          <Route path="/tourneys/:tourneyId">
             <FifaLeagueRegister/>
           </Route>
+          <Route path="/tourneys">
+            <TourneysPage/>
+          </Route>
+          
           <Route path="/profile/:userId">
             <ProfilePage/>
           </Route>          

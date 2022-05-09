@@ -1,26 +1,25 @@
 import { useEffect } from 'react';
-import styled from 'styled-components';
-import tw from 'twin.macro';
 
+
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import config from '../../config/config.js';
 import { setTourneys } from '../../redux/TourneySlice.js';
 
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import { Marginer } from '../../components/Marginer';
 
-const PageContainer = styled.div`
-  background: radial-gradient(#1D0207, #0D0000);
-${tw`
-flex
-flex-col
-w-screen
-h-screen
-items-center
-overflow-x-hidden
-`}
-
-`;
+import {
+  PageContainer,
+  TourneysContainer,
+  TourneyCardContainer,
+  TextContainer,
+  TitleText,
+  DescriptionText
+} from './elements.js';
 
 
 export default function TourneysPage(){
@@ -40,7 +39,6 @@ export default function TourneysPage(){
             Authorization: 'Bearer ' + auth.accessToken
           },
         };
-
         const response = await axios.request(options);
         dispatch(setTourneys(response.data.tourneys));
       } catch (e){
@@ -49,14 +47,31 @@ export default function TourneysPage(){
 
     })();
     
-  });
+  }, [auth.accessToken, dispatch]);
 
   const { allTourneys } = useSelector(state => state.tourney);
 
-  console.log(allTourneys);
-
   return (
     <PageContainer>
+      <Navbar/>
+      <Marginer vertical='4rem'/>
+      <TourneysContainer>
+        { allTourneys.map((t) => {
+          return <Link to={'/tourneys/' + t.id}>
+               <TourneyCardContainer>
+                 <TextContainer>
+                   <TitleText>
+                     { t.title }
+                   </TitleText>
+                   <DescriptionText>
+                     { t.description }
+                   </DescriptionText>                   
+                 </TextContainer>
+               </TourneyCardContainer>          
+             </Link>;
+        })}
+      </TourneysContainer>
+      <Footer/>
     </PageContainer>
   );
   
