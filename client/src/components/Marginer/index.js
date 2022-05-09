@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const MarginContainer = styled.div`
 
-height: ${ props => props.vertical || "10px"};
-width: ${ props => props.horizontal || "10px"};
+height: ${ props => props.vertical || "0px"};
+width: ${ props => props.horizontal || "0px"};
 
 `;
 

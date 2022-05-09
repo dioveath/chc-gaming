@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 import { BoxContainer, FormContainer, ErrorMessage,  Input, MutedLink, BoldLink, SubmitButton} from './FormElements';
 import { Marginer } from '../../components/Marginer';
 
+import { MdArrowBackIosNew } from 'react-icons/md';
+
 import config from '../../config/config.js';
 
 
@@ -59,21 +61,24 @@ export function LoginForm(props){
 
 
   return (
-    <BoxContainer>
-      <FormContainer onSubmit={handleLoginClick}>
-        <Input type="email" placeholder="Email" ref={email} />
-        <Input type="password" minLength="6" placeholder="Password" ref={password} />
-        <Marginer vertical="5px"/>
-        {
-          auth.isError && auth.errorMessages.map((message, i) => {
-            return <ErrorMessage errorMessage={message} key={i}/>;
-          })
-        }
-        <Marginer vertical="5px"/>
-        <SubmitButton type="submit"> { auth.isPending ? 'Logging in...' : 'LOGIN'} </SubmitButton>
-        <Marginer vertical="10px"/>
-        <MutedLink> Don't have an Account? <BoldLink to="/auth/register"> Register Now! </BoldLink> </MutedLink>
-      </FormContainer>
-    </BoxContainer>
+    <FormContainer onSubmit={handleLoginClick}>
+      <Input type="email" placeholder="Email" ref={email} />
+      <Input type="password" minLength="6" placeholder="Password" ref={password} />
+      <Marginer vertical="5px"/>
+      {
+        auth.isError && auth.errorMessages.map((message, i) => {
+          return <ErrorMessage errorMessage={message} key={i}/>;
+        })
+      }
+      <Marginer vertical="5px"/>
+      <SubmitButton type="submit"> { auth.isPending ? 'Logging in...' : 'LOGIN'} </SubmitButton>
+      <Marginer vertical="10px"/>
+      <MutedLink> Don't have an Account? <BoldLink to="/auth/register"> Register Now! </BoldLink> </MutedLink>
+      <Marginer vertical="10px"/>
+
+
+      <BoldLink to="/"> Home </BoldLink>        
+
+    </FormContainer>
   );
 }

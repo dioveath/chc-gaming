@@ -78,29 +78,26 @@ export function RegisterForm(props){
 
 
   return (
-    <BoxContainer>
-      <FormContainer onSubmit={handleRegisterClick}>
-        <Input type="text" placeholder="First Name" ref={firstName}/>
-        <Input type="text" placeholder="Last Name" ref={lastName}/>
-        <Input type="text" placeholder="Gaming Name" ref={gamingName}/>
-        <Input type="email" placeholder="Email" ref={email}/>
-        <Input type="number" placeholder="Phone Number" ref={phoneNumber}/>
-        <Input type="address" placeholder="Address" ref={address}/>
-        <Input type="date" placeholder="Date of Birth" ref={dob}/>
-        <Input type="password" placeholder="Password" ref={password}/>
-        <Input type="password" placeholder="Confirm Password" ref={confirmPassword}/>
-        <Marginer vertical="5px"/>        
-        {
-          reg.isError && reg.errorMessages.map((message, i) => {
-            return <ErrorMessage errorMessage={message} key={i}/>;
-          })
-        }        
-        <Marginer vertical="5px"/>
-        <SubmitButton type="submit"> Register </SubmitButton>
-        <Marginer vertical="10px"/>        
-        <MutedLink> Already have an Account? <BoldLink to="/auth/login"> Login Here! </BoldLink> </MutedLink>
-        <Marginer vertical="100px"/>
-      </FormContainer>
-    </BoxContainer>
+    <FormContainer onSubmit={handleRegisterClick}>
+      <Input type="text" placeholder="First Name" ref={firstName}/>
+      <Input type="text" placeholder="Last Name" ref={lastName}/>
+      <Input type="text" placeholder="Gaming Name" ref={gamingName}/>
+      <Input type="email" placeholder="Email" ref={email}/>
+      <Input type="number" placeholder="Phone Number" ref={phoneNumber}/>
+      <Input type="address" placeholder="Address" ref={address}/>
+      <Input type="date" placeholder="Date of Birth" ref={dob}/>
+      <Input type="password" placeholder="Password" ref={password}/>
+      <Input type="password" placeholder="Confirm Password" ref={confirmPassword}/>
+      <Marginer vertical="5px"/>        
+      {
+        reg.isError && reg.errorMessages.map((message, i) => {
+          return <ErrorMessage errorMessage={message} key={i}/>;
+        })
+      }        
+      <Marginer vertical="5px"/>
+      <SubmitButton type="submit"> Register </SubmitButton>
+      <Marginer vertical="10px"/>        
+      <MutedLink> Already have an Account? <BoldLink to="/auth/login"> Login Here! </BoldLink> </MutedLink>
+    </FormContainer>
   );
 }

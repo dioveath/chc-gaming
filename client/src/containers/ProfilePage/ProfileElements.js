@@ -1,8 +1,4 @@
 import styled from 'styled-components';
-import tw from 'twin.macro';
-
-
-import { CgProfile } from 'react-icons/cg';
 
 export const Container = styled.div`
 min-height: 600px;

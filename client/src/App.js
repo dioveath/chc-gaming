@@ -8,7 +8,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
 import axios from 'axios';
@@ -25,33 +24,35 @@ function App() {
   const dispatch = useDispatch();
   var auth = useSelector((state => state.auth));
 
-  useEffect(async () => {
+  useEffect(() => {
 
-    dispatch(updateToken());
+    (async() => {
+      dispatch(updateToken());
 
-    if(auth.accessToken != null){
-      const options = {
-        method: 'GET',
-        url: `${config.serverUrl}/api/v1/users/${auth.userId}`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + auth.accessToken
-        },
-      };
+      if(auth.accessToken != null){
+        const options = {
+          method: 'GET',
+          url: `${config.serverUrl}/api/v1/users/${auth.userId}`,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + auth.accessToken
+          },
+        };
 
-      var response = await axios.request(options);
+        var response = await axios.request(options);
 
-      if(response.data.status != 'fail'){
-        dispatch(updateUser({
-          user_id: response.data.user.id,
-          first_name: response.data.user.first_name,
-          last_name: response.data.user.last_name,
-          gaming_name: response.data.user.gaming_name,
-          email: response.data.user.email,
-          dob: response.data.dob
-        }));
+        if(response.data.status !== 'fail'){
+          dispatch(updateUser({
+            user_id: response.data.user.id,
+            first_name: response.data.user.first_name,
+            last_name: response.data.user.last_name,
+            gaming_name: response.data.user.gaming_name,
+            email: response.data.user.email,
+            dob: response.data.dob
+          }));
+        }
       }
-    }
+     })();
 
   });
 

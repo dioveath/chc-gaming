@@ -1,8 +1,4 @@
-
 import { createSlice } from '@reduxjs/toolkit';
-
-
-
 
 const regSlice = createSlice({
   name: "reg",

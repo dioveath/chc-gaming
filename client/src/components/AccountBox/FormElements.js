@@ -11,6 +11,7 @@ width: 100%;
 display: flex;
 flex-direction: column;
 align-items: center;
+transition: all .2s ease;
 `;
 
 export const FormContainer = styled.form`

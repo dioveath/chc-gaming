@@ -1,11 +1,10 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import tw from 'twin.macro';
 import { Link } from 'react-router-dom';
 
 
 import FifaLeaguePoster from '../../assets/images/fifa_league_poster.png';
-import Button from '../../components/Button';
 
 import { useMediaQuery } from 'react-responsive';
 import { SCREENS } from '../../components/Responsive';

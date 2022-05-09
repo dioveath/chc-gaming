@@ -8,10 +8,7 @@ import { useSelector } from 'react-redux';
  
 
 const PageContainer = styled.div`
-margin-top: 40px;
-margin-bottom: 100px;
 width: 100%;
-height: 100%;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -27,7 +24,9 @@ export function LoginPage(){
     auth.accessToken != null ?
       <Redirect to={`/profile/${auth.userId}`}/> :    
     <PageContainer>
+      <Marginer vertical="2rem"/>
       <AccountBox/>
+      <Marginer vertical="2rem"/>      
     </PageContainer>
   );
 }

@@ -5,12 +5,12 @@ import { Route, Switch, useRouteMatch, useLocation } from 'react-router-dom';
 
 import { Logo } from '../Logo';
 import { Marginer } from '../Marginer';
+import { FormContainer, MutedLink, BoldLink } from './FormElements.js';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
 
 const BoxContainer = styled.div`
 min-width: 400px;
-min-height: 480px;
 display: flex;
 flex-direction: column;
 border-radius: 19px;
@@ -95,24 +95,23 @@ export function AccountBox(props){
         </HeaderContainer>
       </TopContainer>
       <ContentContainer>
-        <Marginer vertical="50px"/>
-
+        <Marginer vertical="2rem"/>
         <LogoContainer>
           <Logo size="50px"/>
         </LogoContainer>
-
-        <Marginer vertical="50px"/>
+        <Marginer vertical="2rem"/>
         <SmallText>Enter your Gaming Identity</SmallText>
 
-        <Switch>
-          <Route path={`${match.path}/login`}>
-            <LoginForm/>
-          </Route>
-          <Route path={`${match.path}/register`}>
-            <RegisterForm/>
-          </Route>   
-        </Switch>
+          <Switch>
+            <Route path={`${match.path}/login`}>
+              <LoginForm/>
+            </Route>
+            <Route path={`${match.path}/register`}>
+              <RegisterForm/>
+            </Route>   
+          </Switch>
       </ContentContainer>
+      <Marginer vertical='4rem'/>
     </BoxContainer>
   );
 }

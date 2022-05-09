@@ -10,22 +10,23 @@ import FifaLeaguePoster from '../../assets/images/fifa_league_poster.png';
 // import FifaS3IntroVideo from '../../assets/videos/fifa_s3_intro.mp4';
 import KhaltiLogo from '../../assets/images/khalti_logo.png';
 
-import { Marginer } from '../../components/Marginer';
-
-import APIUrl from '../../config/config.js';
-
 import VideoJs from 'video.js';
 import 'video.js/dist/video-js.css';
 import Youtube from 'react-youtube';
 
+import { Marginer } from '../../components/Marginer';
+import APIUrl from '../../config/config.js';
+import RulesSection from './RulesSection.js';
+
+import { Tab, TabPanel } from '../../components/Tab';
+
 const RegisterContainer = styled.div`
+  width: 100%;
   background: black;
   display: grid;
-  grid-template-columns: 1fr;
   align-items: center;
   border-radius: 5px 5px 5px 5px;
-  margin: 100px 100px;
-  // overflow: hidden;
+  margin-top: 80px;
 
 @media only screen and (max-width: 768px) { 
   grid-template-columns: 1fr;
@@ -48,9 +49,6 @@ width: 200px;
 height: auto;
 object-fit: cover;
 }
-`;
-
-const LeftContainer = styled.div`
 `;
 
 const LeaguePosterContainer = styled.div`
@@ -83,26 +81,20 @@ justify-content: center;
 padding: 10px 0px;
 ` ;
 
-const TitleText = styled.h2`
+const TitleText = styled.h1`
 padding: 0px;
 margin: 0px;
 color: white;
-font-weight: bold; 
-`;
+font-weight: 700; 
+font-size: 1.4rem;
 
-const RulesContainer = styled.div`
-width: 100%;
-display: flex;
-justify-content: flex-start;
-padding: 10px 30px;
+${tw`
+text-sm
+md:text-base
+lg:text-lg
+xl:text-xl
+`}
 `;
-
-const BodyText = styled.p`
-font-size: 12px;
-font-weight: normal;
-color: white;
-`;
-
 
 const RegisterLeagueButton = styled.button`
 background-color: #BD1FCD;
@@ -190,26 +182,27 @@ export function RegisterFifaSection(){
       </LeaguePosterContainer>
       <RightContainer>
         <TitleContainer>
+          <TitleText> Charicha FIFA 2022 Knockout Tournament </TitleText>
+        </TitleContainer>
+        <Tab>
+          <TabPanel name='Rules and Guidelines'>
+            <RulesSection/>
+          </TabPanel>
+          <TabPanel name='Schedule'> Schedule Panel </TabPanel>
+          <TabPanel name='Prizes'> Prizes </TabPanel>          
+        </Tab>
+
+
+        <TitleContainer>
           <TitleText> REGISTRATION </TitleText>
         </TitleContainer>
-        <Marginer vertical="10px"/>
-        <TitleText>
-          Rules and Guidelines
-        </TitleText>
-        <Marginer vertical="10px"/>        
-        <RulesContainer>
-          <BodyText>
-            1. Welcome to the Charicha League.
-          </BodyText>
-        <Marginer vertical="10px"/>          
-        </RulesContainer>
 
         <Marginer vertical="40px"/>
-
         <KhaltiLogoContainer>
-          <img src={KhaltiLogo}/>
+          <img alt='Khalti Logo 'src={KhaltiLogo}/>
         </KhaltiLogoContainer>
-        <Marginer vertical="10px"/>
+
+        <Marginer vertical="10px"/>        
 
         <RegisterLeagueButton onClick={() => checkout.show({amount: 1000}) }> Pay and Register with Khalti </RegisterLeagueButton>
 

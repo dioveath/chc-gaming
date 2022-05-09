@@ -13,7 +13,6 @@ flex-col
 w-screen
 h-screen
 items-center
-overflow-x-hidden
 `}
 
 `;
