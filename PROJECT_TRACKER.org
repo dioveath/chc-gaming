@@ -24,10 +24,19 @@
 ** DONE [#B] Add models - Match, Tourney
 ** TODO Build Robust Khalti Verification API
 ** DONE Design a Frontend in Fig  ma - Ref iglnetwork.com | esports.pubgmobile.com
+** TODO Create a flexible UI component system for further UI works (Create kind of like Chakra UI)
 
+
+* User / Players
+** Needs to get his Upcoming Matches  
+** Needs to get Upcoming Tournaments based on his ranks and other stats
+
+   
 
 * TO FIX
-** running in production mode...! Where this coming from?  
+** DONE running in production mode...! Where this coming from? FROM Mongoose connection
+** TODO fix UIs components to a stable system
+   
 
 * TO RESEARCH
 ** Needs refactoring permissions, role system  

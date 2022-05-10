@@ -23,13 +23,19 @@ export default function LeftProfileBar(){
 
   return (
     <LeftBarContainer>
-      <ProfileContainer>
-        <img alt={user.first_name + ' Profile Image'} src={LogoProfile}/>
-        <FlexContainer>
+      <FlexContainer align='center' gap='1rem' pad='1rem 1.6rem'>
+        <ProfileContainer
+          src='assets/images/altair.jpg'>
+          {/* <img alt={user.first_name + ' Profile Image'} */}
+          {/*      src='assets/images/altair.jpg' */}
+          {/*      width='100%' height='100%' */}
+          {/*      objectFit='cover'/> */}
+        </ProfileContainer>
+        <FlexContainer direction='col'>
           <BoldText> Saroj Rai </BoldText>
-          <NormalText> Immortal </NormalText>
+          <NormalText> Immortal </NormalText>                  
         </FlexContainer>
-      </ProfileContainer>
+      </FlexContainer>
 
       <ProfileStatsContainer>
         <FlexContainer direction='col'

@@ -1,10 +1,10 @@
+
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import tw from 'twin.macro';
 
 const TabContainer = styled.div`
-width: 100%;
 `;
 const TabPanelContainer = styled.div`
 `;
@@ -14,28 +14,32 @@ display: flex;
 flex-wrap: wrap;
 justify-content: center;
 align-items: center;
-border-bottom: 1px solid brown;
+// background-color: #141414;
+${tw`
+rounded-md
+bg-black
+gap-2
+px-4
+`}
 `;
 
 const TabHeader = styled.div`
-min-width: 200px;
-padding: 0.6rem 0rem;
-
 text-align: center;
 color: white;
-font-weight: 600;
-cursor: pointer;
 border-bottom: 2px solid transparent;
 transition: all .2s ease;
 
 ${tw`
-bg-red-700
+py-2
+px-4
+text-sm
+font-normal
+cursor-pointer
 `}
 
 ${props => props.active && css`
-border-bottom: 2px solid #E1C16E;
+border-bottom: 2px solid #B60606;
 ${tw`
-bg-red-800
 `}
 `}
 

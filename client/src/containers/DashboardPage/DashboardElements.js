@@ -2,23 +2,26 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 
 export const LeftBarContainer = styled.div`
-width: 372px;
+min-width: 372px;
 ${tw`
-bg-[#141414]
+bg-black
+// bg-[#141414]
 rounded-md
 shadow-md
-max-w-sm
 `
 }`;
 
-export const ProfileContainer = styled.div`
-width: 96px;
+export const ProfileContainer = styled.img`
+width: 100px;
+height: 100px;
 ${tw`
 rounded-full
-shadow-md
 overflow-hidden
-flex
+object-cover
+shadow-md
+border-4 border-purple-800
 `}
+
 `;
 
 export const FlexContainer = styled.div`
@@ -30,6 +33,9 @@ ${props => (props.direction === 'col'
 
 justify-content: ${props => props.justify || 'flex-start'};
 align-items: ${props => props.align || 'flex-start'};
+gap: ${props => props.gap || '0' };
+padding: ${props => props.pad || '0'};
+
 `;
 
 export const ProfileStatsContainer = styled.div`
