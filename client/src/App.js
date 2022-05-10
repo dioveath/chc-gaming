@@ -1,5 +1,7 @@
 import './App.css';
 import HomePage from './containers/HomePage';
+import DashboardPage from './containers/DashboardPage';
+import OrganizerDashboardPage from './containers/OrganizerDashboardPage';
 import LoginPage from './containers/LoginPage';
 import ProfilePage from './containers/ProfilePage';
 import FifaLeagueRegister from './containers/FifaLeagueRegister';
@@ -62,7 +64,8 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact>
-            <HomePage/>
+            {/* <OrganizerDashboardPage/> */}
+            <DashboardPage/>
           </Route>
           <Route path="/auth">
             <LoginPage/>
