@@ -22,7 +22,7 @@ export function LoginPage(){
 
   return (
     auth.accessToken != null ?
-      <Redirect to={`/profile/${auth.userId}`}/> :    
+      <Redirect to={`/dashboard`}/> :    
     <PageContainer>
       <Marginer vertical="2rem"/>
       <AccountBox/>

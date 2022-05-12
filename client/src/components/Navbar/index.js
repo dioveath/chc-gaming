@@ -13,7 +13,7 @@ const NavbarContainer = styled.nav`
     background-color: rgba(148, 27, 0, 0.6);
     min-height: 60px;
     z-index: 100;
-    position:absolute;
+    position:sticky;
 
     top: 0;
     right: 0;

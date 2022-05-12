@@ -64,12 +64,12 @@ hover:border-gray-700
 
 export default function Button(props){
   if(props.type === "outlined")
-    return <OutlineButton size={props.size} to={ props.to ? props.to : "/" }  onClick={props.onClick}>
-             { props.text }
+    return <OutlineButton size={props.size} to={ props.disabled ? '#' : props.to ? props.to : "/" }  onClick={props.onClick}>
+             { props.text || props.children }
            </OutlineButton>;
   return (
     <FilledButton to={ props.to ? props.to : "/" } onClick={props.onClick}>
-      { props.text }
+      { props.text || props.children }
     </FilledButton>
   );
 }

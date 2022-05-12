@@ -10,6 +10,17 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { Marginer } from '../../components/Marginer';
 
+import {
+  FlexContainer
+} from '../../components/base';
+
+import {
+  Text
+} from '../../components/Text';
+
+import BounceLoader from 'react-spinners/BounceLoader';
+import { MdOutlineError } from 'react-icons/md';
+
 const PageContainer = styled.div`
   background: radial-gradient(#1D0207, #0D0000);
 ${tw`
@@ -26,22 +37,40 @@ px-6
 `;
 
 
-
 export default function DashboardPage(){
-  const user = useSelector(state => state.auth);
+  const { isPending, isError } = useSelector(state => state.user);
+
+  if(isError) return <PageContainer>
+                       <FlexContainer direction='col' justify='center' align='center'>
+                         <MdOutlineError size='4rem' color='white'/>
+                         <Text fontSize='1.4rem'
+                               fontWeight='600'
+                               color='white'> Server Error | 500 </Text>                         
+                       </FlexContainer>
+                     </PageContainer>;
 
   return (
     <>
-      <Navbar/>
-      <Marginer vertical='6rem'/>
-      <PageContainer>
-        
-        {/* <LeftProfileBar/> */}
-        <MainSection/>
-        <RightBarSection/>
+      {isPending ?
+       <PageContainer>
+         <FlexContainer justify='center' align='center'>
+           <BounceLoader color='red'/>
+         </FlexContainer>         
+       </PageContainer>
+       :
+       <>
+         <Navbar/>
+         <Marginer vertical='6rem'/>
+         <PageContainer>
+           
+           <LeftProfileBar/>
+           <MainSection/>
+           <RightBarSection/>
 
-      </PageContainer>
-      <Footer/>
+         </PageContainer>
+         <Footer/>
+       </>
+      }
     </>
   );
 }
