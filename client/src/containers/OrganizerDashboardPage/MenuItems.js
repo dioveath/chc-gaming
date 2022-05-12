@@ -3,28 +3,32 @@ import { FaUserFriends } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
 import {
   GiOrganigram,
-  GiCastle
 } from 'react-icons/gi';
+
+import DashboardHome from './DashboardHome';
+import Tourneys from './Tourneys';
+import { NotFound } from '../NotFoundPage/NotFound.js';
+import TournamentCreatePage from './Tourneys/TourneyCreatePage.js';
 
 export const MenuItems = [
   {
     'name': 'Dashboard',
     'icon': <MdDashboard/>,
+    'content': <DashboardHome/>
   },
   {
-    'name': 'Friends',
-    'icon': <FaUserFriends/>
+    'name': 'Notifications',
+    'icon': <FaUserFriends/>,
+    'content': <TournamentCreatePage/>
   },
   {
-    'name': 'Clans',
-    'icon': <GiCastle/>
+    'name': 'Tournaments',
+    'icon': <GiOrganigram/>,
+    'content': <Tourneys/>
   },
   {
     'name': 'Explore',
-    'icon': <FcLandscape/>
-  },
-  {
-    'name': 'Organizer Suite',
-    'icon': <GiOrganigram/>
-  }    
+    'icon': <FcLandscape/>,
+    'content': <NotFound/>
+  }
 ];

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
@@ -12,35 +12,33 @@ import {
 import { Marginer } from '../../components/Marginer';
 
 import { IconContext } from 'react-icons';
-import { FcLandscape } from 'react-icons/fc';
-import { FaUserFriends } from 'react-icons/fa';
 import { MdCancel } from 'react-icons/md';
 import {
   GiHamburgerMenu,
-  GiOrganigram,
-  GiCastle
 } from 'react-icons/gi';
 
 import { MenuItems } from './MenuItems.js';
+import { setActiveMenu } from '../../redux/OrganizerDashboardSlice.js';
 
 const Container = styled.div`
-position: absolute;
-top: 0;
-left: 0;
-// left: ${props => props.active ? '0' : '-220px'};
-width: ${props => props.active ? '300px' : '90px'};
+// position: absolute;
+// top: 0;
+// left: 0;
+// left: ${props => props.open ? '0' : '-220px'};
+width: ${props => props.open ? '300px' : '90px'};
 
 ${tw`
 bg-black
 h-full
-overflow-hidden
+overflow-x-hidden
+overflow-y-scroll
 transition-all
 `}
 `;
 
 const DashboardLogoContainer = styled.img`
-width: ${props => props.active ? '80px' : '40px'};
-height: ${props => props.active ? '80px' : '40px'};
+width: ${props => props.open ? '80px' : '40px'};
+height: ${props => props.open ? '80px' : '40px'};
 
 ${tw`
 rounded-full
@@ -77,10 +75,14 @@ shadow-sm
 bg-transparent
 transition-all
 cursor-pointer
-hover:bg-gray-600
 `}
 
-justify-content: ${props => props.active ? 'flex-start' : 'center' };
+justify-content: ${props => props.open ? 'flex-start' : 'center' };
+background-color: ${props => props.active ? '#922626' : 'transparent'};
+
+&:hover { 
+background-color: ${props => props.active ? 'rgb(17 24 39)' : 'rgb(31 41 55)'};
+}
 
 `;
 
@@ -91,13 +93,12 @@ px-1
 `}
 `;
 
-
-const MenuItem = ({active, icon, color, name, ...props}) => {
+const MenuItem = ({open, active,  icon, color, name, onClick, ...props}) => {
   return (
     <IconContext.Provider value={{ color: 'white', size: '28'}}>
-      <MenuButtonContainer active={active}>
+      <MenuButtonContainer open={open} active={active} onClick={onClick}>
         { icon }
-        { active ?
+        { open ?
           <>
             <Marginer horizontal='1rem'/>
             <BoldText> { name } </BoldText>        
@@ -108,8 +109,9 @@ const MenuItem = ({active, icon, color, name, ...props}) => {
 };
 
 
-
 export default function LeftSideBar(){
+  const dispatch = useDispatch();
+  const { dashboard } = useSelector(state => state.organizer);  
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleBar = (e) => {
@@ -118,8 +120,12 @@ export default function LeftSideBar(){
     setIsOpen(!isOpen);    
   };
 
+  const changeMenu = (menu) => {
+    dispatch(setActiveMenu(menu));
+  };
+
   return (
-    <Container active={isOpen}>
+    <Container open={isOpen}>
       <FlexContainer justify={isOpen ? 'flex-end' : 'center'} pad='1rem'>
         <InteractableContainer onClick={toggleBar}>
           {isOpen ?
@@ -131,7 +137,7 @@ export default function LeftSideBar(){
       <FlexContainer direction='col'
                      justify='center'
                      align='center'>
-        <DashboardLogoContainer src='/assets/images/chc_gaming_logo.png' active={isOpen}/>
+        <DashboardLogoContainer src='/assets/images/chc_gaming_logo.png' open={isOpen}/>
         <Marginer vertical='0.5rem'/>
         { isOpen ?
           <>
@@ -142,11 +148,14 @@ export default function LeftSideBar(){
 
       <FlexContainer direction='col'
                      justify={isOpen ? 'flex-start' : 'center'}
-                     pad='0rem 0.4rem'>
+                     pad='1rem 0.5rem'>
         { MenuItems.map((item) =>
-          <MenuItem active={isOpen}
+          <MenuItem key={item.name}
+                    open={isOpen}
+                    active={item.name === dashboard.activeMenu}
                     icon={item.icon}
-                    name={item.name}/>)
+                    name={item.name}
+                    onClick={() => { changeMenu(item.name); }}/>)
         }
       </FlexContainer>
     </Container>

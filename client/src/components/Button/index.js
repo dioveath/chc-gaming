@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom';
 
 const BaseButton = styled(Link)`
 ${tw`
+w-full
+flex
+justify-center
+items-center
 px-10
-py-1
+py-2
 outline-none
 rounded-md
 text-white
@@ -20,7 +24,6 @@ focus:outline-none
 transition-all
 duration-300
 ease-in-out
-m-1
 hover:border-2
 hover:border-red-900
 `}

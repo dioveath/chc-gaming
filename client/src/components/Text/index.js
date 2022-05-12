@@ -16,8 +16,15 @@ font-bold
 `}
 `;
 
+const Text = styled.p`
+font-size: ${props => props.fontSize || '1rem'};
+color: ${props => props.color || '#ffefef'};
+font-weight: ${props => props.weight || '400'};
+`;
+
 
 export {
+  Text,
   NormalText,
   BoldText
 };

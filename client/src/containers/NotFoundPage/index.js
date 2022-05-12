@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { GiGamepadCross } from 'react-icons/gi';
+import { NotFound } from './NotFound.js';
 
 const PageContainer = styled.div`
   background: radial-gradient(#1D0207, #0D0000);
@@ -17,23 +17,12 @@ overflow-x-hidden
 `;
 
 
-const Text = styled.p`
-font-size: 1.2rem;
-font-weight: 600;
-color: white;
-`;
-
-const Border = styled.div`
-height: 10px;
-background-color: white;
-`;
 
 
-export default function NotFound(){
+
+export default function NotFoundPage(){
   return <PageContainer>
-           <GiGamepadCross size='40px' color='white'/>
-           <Border/>
-           <Text> 404 | Not Found </Text>
+           <NotFound/>
          </PageContainer>;
 }
   
