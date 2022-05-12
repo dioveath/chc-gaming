@@ -36,7 +36,7 @@ export default function DashboardPage(){
       <Marginer vertical='6rem'/>
       <PageContainer>
         
-        <LeftProfileBar/>
+        {/* <LeftProfileBar/> */}
         <MainSection/>
         <RightBarSection/>
 

@@ -37,8 +37,7 @@ export function LoginForm(props){
 					"email": email.current.value,
 					"password": password.current.value
                                       });
-      console.log(response);
-      if(response.data.status == 'success') {
+      if(response.data.status === 'success') {
 	dispatch(login({
           accessToken: response.data.accessToken,
           userId: response.data.userId

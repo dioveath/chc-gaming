@@ -57,18 +57,28 @@ function App() {
       }
      })();
 
-  });
+  }, [auth.accessToken, auth.userId, dispatch]);
+
+  const user = useSelector(state => state.user);
 
   return (
     <>
       <Router>
         <Switch>
           <Route path="/" exact>
-            {/* <OrganizerDashboardPage/> */}
+            <HomePage/>
+          </Route>
+
+          <Route path='/dashboard'>
             <DashboardPage/>
           </Route>
+
           <Route path="/auth">
             <LoginPage/>
+          </Route>
+
+          <Route path='/organizer'>
+            <OrganizerDashboardPage/>
           </Route>
 
           <Route path="/tourneys/:tourneyId">
