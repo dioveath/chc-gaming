@@ -121,6 +121,18 @@ export default function TourneyCreatePage(){
 
       <Marginer vertical='1rem'/>
 
+      <BoldText> No. of Players </BoldText>
+      <Marginer vertical='0.5rem'/>
+      <Select id="" name="">
+        <SelectOption> 8 </SelectOption>        
+        <SelectOption> 16 </SelectOption>
+        <SelectOption> 32 </SelectOption>
+        <SelectOption> 64 </SelectOption>
+        <SelectOption> 128 </SelectOption>                
+      </Select>      
+
+      <Marginer vertical='1rem'/>
+
       <BoldText> Media </BoldText>
       <Text fontSize='0.7rem'>
         Share photos or a video. Medias can't exceed 10 photos & 1 video

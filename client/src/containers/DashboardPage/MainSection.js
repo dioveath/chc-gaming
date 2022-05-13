@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 
 const MainSectionContainer = styled.div`
-min-width: 600px;
 ${tw`
 `}
 `;

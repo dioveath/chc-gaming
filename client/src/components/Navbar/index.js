@@ -13,10 +13,10 @@ const NavbarContainer = styled.nav`
     background-color: rgba(148, 27, 0, 0.6);
     min-height: 60px;
     z-index: 100;
-    position:sticky;
+    position: sticky;
 
     top: 0;
-    right: 0;
+    left: 0;
 
 @media only screen and (max-width: 640px) {
 position: sticky;

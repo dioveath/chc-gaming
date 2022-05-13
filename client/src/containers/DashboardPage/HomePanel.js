@@ -8,7 +8,7 @@ import {
 import Post from '../../components/Post/index.js';
 
 const HomePanelContainer = styled.div`
-min-width: 600px;
+
 ${tw`
 flex
 flex-col
@@ -20,6 +20,7 @@ my-4
 const AllBadgesContainer = styled.div`
 ${tw`
 flex
+flex-wrap
 gap-2
 `}
 `;
@@ -59,6 +60,10 @@ export default function HomePanel(){
       </AllBadgesContainer>
 
       <Post/>
+      <Post/>
+      <Post/>
+      <Post/>
+      <Post/>      
 
     </HomePanelContainer>
   );

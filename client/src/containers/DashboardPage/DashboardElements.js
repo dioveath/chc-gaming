@@ -2,24 +2,28 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 
 export const LeftBarContainer = styled.div`
-min-width: 372px;
+width: ${props => props.active ? '372px' : '60px'};
+position: ${props => props.active ? 'fixed' : 'sticky'};
+left: 0;
+top: 0;
 ${tw`
 bg-black
-// bg-[#141414]
-rounded-md
 shadow-md
+transition-all
+h-screen
 `
 }`;
 
 export const ProfileContainer = styled.img`
-width: 100px;
-height: 100px;
+width: ${props => props.active ? '80px' : '50px'};
+height: ${props => props.active ? '80px' : '50px'};
 ${tw`
 rounded-full
 overflow-hidden
 object-cover
 shadow-md
-border-4 border-purple-800
+border-2 border-purple-800
+transition-all
 `}
 
 `;
@@ -45,6 +49,7 @@ bg-[#BE2222]
 py-4
 px-6
 justify-around
+transition-all
 `}
 `;
 
@@ -75,6 +80,7 @@ flex-col
 
 export const MenuButtonContainer = styled.div`
 ${tw`
+w-full
 px-6
 py-4
 flex
@@ -86,5 +92,6 @@ transition-all
 cursor-pointer
 
 hover:bg-gray-600
+transition-all
 `}
 `;

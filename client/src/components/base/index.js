@@ -9,6 +9,9 @@ flex
 ${props => (props.direction === 'col' 
 || props.direction === 'column') && tw`flex-col`}
 
+background: ${props => props.bg || 'initial'};
+width: ${props => props.w || 'auto'};
+height: ${props => props.h || 'auto'};
 justify-content: ${props => props.justify || 'flex-start'};
 align-items: ${props => props.align || 'flex-start'};
 gap: ${props => props.gap || '0' };

@@ -3,6 +3,7 @@ import './App.css';
 import HomePage from './containers/HomePage';
 import DashboardPage from './containers/DashboardPage';
 import OrganizerDashboardPage from './containers/OrganizerDashboardPage';
+import TourneyDashboardPage from './containers/TourneyDashboardPage';
 import LoginPage from './containers/LoginPage';
 import ProfilePage from './containers/ProfilePage';
 import FifaLeagueRegister from './containers/FifaLeagueRegister';
@@ -77,6 +78,11 @@ function App() {
             <Route path="/auth">
               <LoginPage/>
             </Route>
+
+            <Route path='/organizer/tourneys/:tourneyId'>
+              { auth.accessToken === null && <Redirect to={`/`}/>}            
+              <TourneyDashboardPage/>
+            </Route>            
 
             <Route path='/organizer'>
               { auth.accessToken === null && <Redirect to={`/`}/>}            

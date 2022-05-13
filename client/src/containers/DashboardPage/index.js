@@ -21,56 +21,54 @@ import {
 import BounceLoader from 'react-spinners/BounceLoader';
 import { MdOutlineError } from 'react-icons/md';
 
+
 const PageContainer = styled.div`
   background: radial-gradient(#1D0207, #0D0000);
+// margin-left: 70px;
 ${tw`
 flex
-flex-wrap
 w-screen
 h-screen
-items-start
 justify-center
 overflow-x-hidden
-gap-4
-px-6
 `}
 `;
+
 
 
 export default function DashboardPage(){
   const { isPending, isError } = useSelector(state => state.user);
 
-  if(isError) return <PageContainer>
-                       <FlexContainer direction='col' justify='center' align='center'>
-                         <MdOutlineError size='4rem' color='white'/>
-                         <Text fontSize='1.4rem'
-                               fontWeight='600'
-                               color='white'> Server Error | 500 </Text>                         
-                       </FlexContainer>
-                     </PageContainer>;
+  if(isError) return <FlexContainer bg={'radial-gradient(#1D0207, #0D0000)'}
+                                    w='100vw'
+                                    h='100vh'
+                                    justify='center'
+                                    align='center'>
+                       <MdOutlineError size='4rem' color='white'/>
+                       <Text fontSize='1.4rem'
+                             fontWeight='600'
+                             color='white'> Server Error | 500 </Text>                         
+                     </FlexContainer>;
+
+  if(isPending) return <FlexContainer bg={'radial-gradient(#1D0207, #0D0000)'}
+                                       w='100vw'
+                                       h='100vh'
+                                       justify='center'
+                                       align='center'>
+                          <BounceLoader color='red'/>
+                        </FlexContainer>;
 
   return (
     <>
-      {isPending ?
-       <PageContainer>
-         <FlexContainer justify='center' align='center'>
-           <BounceLoader color='red'/>
-         </FlexContainer>         
-       </PageContainer>
-       :
-       <>
-         <Navbar/>
-         <Marginer vertical='6rem'/>
-         <PageContainer>
-           
-           <LeftProfileBar/>
-           <MainSection/>
-           <RightBarSection/>
-
-         </PageContainer>
-         <Footer/>
-       </>
-      }
+      <PageContainer>
+        <LeftProfileBar/>
+        <FlexContainer justify='center'
+                       pad='0.5rem'
+                       gap='1rem'>
+          <MainSection/>
+          {/* <RightBarSection/>           */}
+        </FlexContainer>
+      </PageContainer>
     </>
   );
 }

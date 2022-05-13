@@ -9,12 +9,12 @@ import { AiFillHeart, AiOutlineComment } from 'react-icons/ai';
 import { IoMdShareAlt } from 'react-icons/io';
 import { BsFillBookmarkHeartFill } from 'react-icons/bs';
 
-
 const PostContainer = styled.div`
 ${tw`
 flex
 flex-col
 gap-4
+max-w-lg
 `}
 `;
 
@@ -42,7 +42,6 @@ gap-4
 const PostCardContainer = styled.div`
 ${tw`
 rounded-md
-// bg-[#141414]
 bg-black
 overflow-hidden
 `}
@@ -128,7 +127,6 @@ export default function Post(){
       <PostCardContainer>
         <MediaContainer>
           <img alt="" src="assets/images/celebration.jpg"
-               width="600px" height='300px'
                objectFit='cover'/>
         </MediaContainer>
         
@@ -139,7 +137,7 @@ export default function Post(){
           <FlexContainer>
             <AiFillHeart color='red'/> <SmallText> 3.2 LIkes </SmallText>
           </FlexContainer>
-          <FlexContainer gap='1rem'>
+          <FlexContainer>
             <SmallText> 12.8K Views </SmallText>
             <SmallText> 1.2K Comments </SmallText>
             <SmallText> 394K Shares </SmallText>                        

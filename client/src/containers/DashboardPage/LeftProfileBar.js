@@ -1,95 +1,121 @@
-import LogoProfile from '../../assets/images/logo_profile.png';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
   LeftBarContainer,
   ProfileContainer,
-  FlexContainer,
   NormalText,
   BoldText,
   ProfileStatsContainer,
-  MenuContainer,
-  MenuButtonContainer
 } from './DashboardElements.js';
+
+import MenuItem from '../../components/LeftNavbar/MenuItem.js';
+
+import {
+  FlexContainer
+} from '../../components/base';
 
 import {
   Text
 } from '../../components/Text';
 
+import MainSection from './MainSection.js';
 import { Marginer } from '../../components/Marginer';
-import { FaUserFriends } from 'react-icons/fa';
+import { FaUserFriends, FaTimes } from 'react-icons/fa';
 import { FcLandscape } from 'react-icons/fc';
-import { GiCastle, GiOrganigram } from 'react-icons/gi';
-
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import { GiCastle, GiHamburgerMenu } from 'react-icons/gi';
+import { MdDashboard } from 'react-icons/md';
 
 
-export default function LeftProfileBar(){
+const MenuItems = [
+  {
+    'name': 'Dashboard',
+    'icon': <MdDashboard/>,
+    'content': <MainSection/>
+  },
+  {
+    'name': 'Friends',
+    'icon': <FaUserFriends/>,
+    'content': <MainSection/>
+  },
+  {
+    'name': 'Your Clan',
+    'icon': <GiCastle/>,
+    'content': <MainSection/>
+  },
+  {
+    'name': 'Explore',
+    'icon': <FcLandscape/>,
+    'content': <MainSection/>
+  }  
+];
+
+
+export default function LeftProfileBar({ menuItems }){
   const { data, isPending, error } = useSelector(state => state.user);
+  const [ open, setOpen] = useState(true);
+  const [ activeMenu, setActiveMenu] = useState(MenuItems[0].name);
 
   return (
-    <LeftBarContainer>
-      <FlexContainer align='center' gap='1rem' pad='1rem 1.6rem'>
-        <ProfileContainer
-          src='assets/images/altair.jpg'>
+    <LeftBarContainer active={open}>
+
+      <Marginer vertical='4rem'/>
+      <FlexContainer justify={ open ? 'flex-end' : 'center'}
+                     onClick={() => { setOpen(!open); }}
+                     pad={ open ? '2rem' : '1rem'}>
+        { open ?
+          <FaTimes size='2rem' color='white'/> :
+          <GiHamburgerMenu size='2rem' color='white'/>}
+      </FlexContainer>
+      
+      <FlexContainer align='center' justify='center' gap='1rem' pad='1rem 0rem'>
+        <ProfileContainer src='assets/images/altair.jpg'
+                          active={open}>
         </ProfileContainer>
-        <FlexContainer direction='col'>
-          <BoldText> { data.first_name + ' ' + data.last_name } </BoldText>
-          <Text fontSize='0.7rem'
-                fontWeight='400'> @{ data.gaming_name }</Text>
-          <Text fontSize='0.8rem'
-                fontWeight='500'> { 'Immortal' }</Text>          
-        </FlexContainer>
+        
+
+        { open && <FlexContainer direction='col'>
+                    <BoldText> { data.first_name + ' ' + data.last_name } </BoldText>
+                    <Text fontSize='0.7rem'
+                          fontWeight='400'> @{ data.gaming_name }</Text>
+                    <Text fontSize='0.8rem'
+                          fontWeight='500'> { 'Immortal' }</Text>          
+                  </FlexContainer> }
+
       </FlexContainer>
 
-      <ProfileStatsContainer>
-        <FlexContainer direction='col'
-                       justify='center'
-                       align='center'>
-          <BoldText> 57 </BoldText>
-          <NormalText> Clips </NormalText>
-        </FlexContainer>
-        <FlexContainer direction='col'
-                       justify='center'
-                       align='center'>
-          <BoldText> 10.2K  </BoldText>
-          <NormalText> Followers </NormalText>
-        </FlexContainer>
-        <FlexContainer direction='col'
-                       justify='center'
-                       align='center'>
-          <BoldText> 2.7K  </BoldText>
-          <NormalText> Following </NormalText>
-        </FlexContainer>                
-      </ProfileStatsContainer>
+      { open && <ProfileStatsContainer>
+                    <FlexContainer direction='col'
+                                   justify='center'
+                                   align='center'>
+                      <BoldText> 57 </BoldText>
+                      <NormalText> Clips </NormalText>
+                    </FlexContainer>
+                    <FlexContainer direction='col'
+                                   justify='center'
+                                   align='center'>
+                      <BoldText> 10.2K  </BoldText>
+                      <NormalText> Followers </NormalText>
+                    </FlexContainer>
+                    <FlexContainer direction='col'
+                                   justify='center'
+                                   align='center'>
+                      <BoldText> 2.7K  </BoldText>
+                      <NormalText> Following </NormalText>
+                    </FlexContainer>                
+                  </ProfileStatsContainer> }
 
-      <MenuContainer>
-        <MenuButtonContainer>
-          <FaUserFriends size='32' color='royalblue'/>
-          <Marginer horizontal='1rem'/>
-          <BoldText> Friends </BoldText>
-        </MenuButtonContainer>
-
-        <MenuButtonContainer>
-          <GiCastle size='32' color='orange'/>
-          <Marginer horizontal='1rem'/>
-          <BoldText> Your clan </BoldText>
-        </MenuButtonContainer>
-
-        <MenuButtonContainer>
-          <FcLandscape size='32' color='royalblue'/>
-          <Marginer horizontal='1rem'/>
-          <BoldText> Explore </BoldText>
-        </MenuButtonContainer>
-
-
-        <MenuButtonContainer>
-          <GiOrganigram size='32' color='pink'/>
-          <Marginer horizontal='1rem'/>
-          <BoldText> Tournament Organizer </BoldText>
-        </MenuButtonContainer>      
-      </MenuContainer>
+      <FlexContainer direction='col'
+                     pad='1rem 0.4rem'
+                     gap='0.5rem'>
+        { MenuItems.map((item) => {
+          return (<MenuItem open={open}
+                       active={activeMenu === item.name}
+                       icon={item.icon}
+                       name={item.name}
+                       onClick={() => { setActiveMenu(item.name); }}/>);
+        })}
+      </FlexContainer>
 
     </LeftBarContainer>    
   );
