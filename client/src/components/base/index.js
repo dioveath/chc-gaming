@@ -6,7 +6,7 @@ export const FlexContainer = styled.div`
 ${tw`
 flex
 `}
-${props => (props.direction === 'col' 
+${props => (props.direction === 'col'
 || props.direction === 'column') && tw`flex-col`}
 
 background: ${props => props.bg || 'initial'};

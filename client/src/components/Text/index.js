@@ -19,7 +19,7 @@ font-bold
 const Text = styled.p`
 font-size: ${props => props.fontSize || '1rem'};
 color: ${props => props.color || '#ffefef'};
-font-weight: ${props => props.weight || '400'};
+font-weight: ${props => props.weight || props.fontWeight || '400'};
 `;
 
 

@@ -4,10 +4,16 @@ import {
   NormalText,
   BoldText
 } from '../Text';
+import {
+  FlexContainer
+} from '../base';
 
 import { AiFillHeart, AiOutlineComment } from 'react-icons/ai';
 import { IoMdShareAlt } from 'react-icons/io';
 import { BsFillBookmarkHeartFill } from 'react-icons/bs';
+
+import { useMediaQuery } from 'react-responsive';
+import { SCREENS } from '../Responsive';
 
 const PostContainer = styled.div`
 ${tw`
@@ -76,13 +82,6 @@ text-white
 `}
 `;
 
-const FlexContainer = styled.div`
-${tw`
-flex
-`}
-
-gap: ${props => props.gap || '0.25rem'}
-`;
 
 const StatsContainer = styled.div`
 ${tw`
@@ -107,6 +106,8 @@ hover:bg-[#222222]
 `;
 
 export default function Post(){
+  const isMobile = useMediaQuery({maxWidth: SCREENS.sm});
+  console.log(isMobile);
   
   return (
     <PostContainer>
@@ -134,10 +135,14 @@ export default function Post(){
           <BoldText> Wonder Goal </BoldText>
         </DescriptionContainer>
         <StatsContainer>
-          <FlexContainer>
+          <FlexContainer
+            direction={isMobile && 'column'}
+            align={isMobile && 'center'}>
             <AiFillHeart color='red'/> <SmallText> 3.2 LIkes </SmallText>
           </FlexContainer>
-          <FlexContainer>
+          <FlexContainer gap={ isMobile ? '0.2rem' : '2rem'}
+                         direction={isMobile && 'column'}
+                         align='flex-end'>
             <SmallText> 12.8K Views </SmallText>
             <SmallText> 1.2K Comments </SmallText>
             <SmallText> 394K Shares </SmallText>                        
@@ -145,16 +150,20 @@ export default function Post(){
         </StatsContainer>
         <InteractableContainer>
           <CardButton>
-            <AiFillHeart color='red'/> <SmallText> Like </SmallText>            
+            <AiFillHeart color='red'/>
+            { isMobile || <SmallText> Like </SmallText> }
           </CardButton>
           <CardButton>
-            <AiOutlineComment color='royalblue'/> <SmallText> Comment </SmallText>            
+            <AiOutlineComment color='royalblue'/>
+            { isMobile || <SmallText> Comment </SmallText> }
           </CardButton>
           <CardButton>
-            <IoMdShareAlt color='orange'/> <SmallText> Share </SmallText>            
+            <IoMdShareAlt color='orange'/>
+            { isMobile || <SmallText> Share </SmallText> }
           </CardButton>
           <CardButton>
-            <BsFillBookmarkHeartFill color='pink'/> <SmallText> Save </SmallText>            
+            <BsFillBookmarkHeartFill color='pink'/>
+            { isMobile || <SmallText> Save </SmallText> }
           </CardButton>                              
         </InteractableContainer>
       </PostCardContainer>

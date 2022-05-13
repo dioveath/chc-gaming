@@ -155,10 +155,9 @@ export function UserItems(){
 
 export function NavItems(){
   const {data, isPending} = useSelector((state) => state.user);
-  // const isAuth = useSelector((state) => state.auth).accessToken != null;
+  const isAuth = useSelector((state) => state.auth).accessToken != null;
   const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
   const dispatch = useDispatch();
-
   const history = useHistory();
 
   const handleLogoutClick = (e) => {
@@ -187,7 +186,7 @@ export function NavItems(){
             <hr/>
           </NavItem>
           
-          { !isPending ?
+          { isAuth && !isPending ?
             <UserMobileContainer>
               <NavItem menu to={`/profile/${data.id}`}> {data.first_name} </NavItem>
               <NavItem menu onClick={handleLogoutClick}> Logout </NavItem>
@@ -202,7 +201,6 @@ export function NavItems(){
               </NavItem>
             </UserMobileContainer>
           }
-
 
         </ListContainer>
       </Menu>

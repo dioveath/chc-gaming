@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   LeftBarContainer,
@@ -10,6 +10,7 @@ import {
 } from './DashboardElements.js';
 
 import MenuItem from '../../components/LeftNavbar/MenuItem.js';
+import { setActiveMenu } from '../../redux/UserDashboardSlice.js';
 
 import {
   FlexContainer
@@ -19,42 +20,22 @@ import {
   Text
 } from '../../components/Text';
 
-import MainSection from './MainSection.js';
 import { Marginer } from '../../components/Marginer';
-import { FaUserFriends, FaTimes } from 'react-icons/fa';
-import { FcLandscape } from 'react-icons/fc';
-import { GiCastle, GiHamburgerMenu } from 'react-icons/gi';
-import { MdDashboard } from 'react-icons/md';
+import { useMediaQuery } from 'react-responsive';
+import { SCREENS } from '../../components/Responsive';
+import { FaTimes } from 'react-icons/fa';
+import { GiHamburgerMenu } from 'react-icons/gi';
 
-
-const MenuItems = [
-  {
-    'name': 'Dashboard',
-    'icon': <MdDashboard/>,
-    'content': <MainSection/>
-  },
-  {
-    'name': 'Friends',
-    'icon': <FaUserFriends/>,
-    'content': <MainSection/>
-  },
-  {
-    'name': 'Your Clan',
-    'icon': <GiCastle/>,
-    'content': <MainSection/>
-  },
-  {
-    'name': 'Explore',
-    'icon': <FcLandscape/>,
-    'content': <MainSection/>
-  }  
-];
 
 
 export default function LeftProfileBar({ menuItems }){
   const { data, isPending, error } = useSelector(state => state.user);
-  const [ open, setOpen] = useState(true);
-  const [ activeMenu, setActiveMenu] = useState(MenuItems[0].name);
+  const { dashboard } = useSelector(state => state.userDashboard);
+  const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
+  const [ open, setOpen] = useState(!isMobile);
+  const dispatch = useDispatch();
+
+  console.log(dashboard);
 
   return (
     <LeftBarContainer active={open}>
@@ -108,12 +89,12 @@ export default function LeftProfileBar({ menuItems }){
       <FlexContainer direction='col'
                      pad='1rem 0.4rem'
                      gap='0.5rem'>
-        { MenuItems.map((item) => {
+        { menuItems.map((item) => {
           return (<MenuItem open={open}
-                       active={activeMenu === item.name}
-                       icon={item.icon}
-                       name={item.name}
-                       onClick={() => { setActiveMenu(item.name); }}/>);
+                            active={dashboard.activeMenu === item.name}
+                            icon={item.icon}
+                            name={item.name}
+                            onClick={() => { dispatch(setActiveMenu(item.name)); }}/>);
         })}
       </FlexContainer>
 

@@ -4,6 +4,8 @@ import tw from 'twin.macro';
 import { useSelector } from 'react-redux';
 import LeftProfileBar from './LeftProfileBar.js';
 import MainSection from './MainSection.js';
+import FriendsPage from './Friends';
+import ClanPage from './Clan';
 import RightBarSection from './RightBarSection.js';
 
 import Navbar from '../../components/Navbar';
@@ -20,11 +22,15 @@ import {
 
 import BounceLoader from 'react-spinners/BounceLoader';
 import { MdOutlineError } from 'react-icons/md';
+import { FaUserFriends } from 'react-icons/fa';
+import { FcLandscape } from 'react-icons/fc';
+import { GiCastle } from 'react-icons/gi';
+import { MdDashboard } from 'react-icons/md';
 
 
 const PageContainer = styled.div`
   background: radial-gradient(#1D0207, #0D0000);
-// margin-left: 70px;
+padding-left: 60px;
 ${tw`
 flex
 w-screen
@@ -35,9 +41,35 @@ overflow-x-hidden
 `;
 
 
+const MenuItems = [
+  {
+    'name': 'Dashboard',
+    'icon': <MdDashboard/>,
+    'content': <MainSection/>
+  },
+  {
+    'name': 'Friends',
+    'icon': <FaUserFriends/>,
+    'content': <FriendsPage/>
+  },
+  {
+    'name': 'Your Clan',
+    'icon': <GiCastle/>,
+    'content': <ClanPage/>
+  },
+  {
+    'name': 'Explore',
+    'icon': <FcLandscape/>,
+    'content': <MainSection/>
+  }  
+];
+
+
 
 export default function DashboardPage(){
   const { isPending, isError } = useSelector(state => state.user);
+  const { dashboard } = useSelector(state => state.userDashboard);
+  const renderContent = MenuItems.find((menu) => menu.name === dashboard.activeMenu).content;  
 
   if(isError) return <FlexContainer bg={'radial-gradient(#1D0207, #0D0000)'}
                                     w='100vw'
@@ -61,12 +93,11 @@ export default function DashboardPage(){
   return (
     <>
       <PageContainer>
-        <LeftProfileBar/>
+        <LeftProfileBar menuItems={MenuItems}/>
         <FlexContainer justify='center'
                        pad='0.5rem'
                        gap='1rem'>
-          <MainSection/>
-          {/* <RightBarSection/>           */}
+          { renderContent }
         </FlexContainer>
       </PageContainer>
     </>
