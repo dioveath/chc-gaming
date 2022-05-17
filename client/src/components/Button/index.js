@@ -68,8 +68,32 @@ export default function Button(props){
              { props.text || props.children }
            </OutlineButton>;
   return (
-    <FilledButton to={ props.to ? props.to : "/" } onClick={props.onClick}>
+    <FilledButton to={ props.to ? props.to : "/" } onClick={props.onClick} {...props}>
       { props.text || props.children }
     </FilledButton>
   );
 }
+
+
+export const SubmitButton = styled.button`
+color: #fff;
+
+width: 100%;
+font-size: 15px;
+font-weight: 600;
+padding: 7px 20px;
+
+border: none;
+border-radius: 4px;
+
+cursor: pointer;
+transition: all 240ms ease-in-out;
+background: rgb(183,27,27);
+background: linear-gradient(180deg, rgba(183,27,27,1) 36%, rgba(120,0,0,1) 100%);
+
+z-index: 100;
+
+&:hover { 
+filter: brightness(1.3);
+}
+` ;

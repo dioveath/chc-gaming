@@ -31,9 +31,12 @@ function addTourney(tourneyInfo){
     managers: tourney.getManagers(),
     sponserships: tourney.getSponserships(),
     prizes: tourney.getPrizes(),
+    matches: tourney.getMatches(),
+    game: tourney.getGame(),
+    max_players: tourney.getMaxPlayers(),
+    location: tourney.getLocation(),
     start_date: tourney.getStartDate(),
     end_date: tourney.getEndDate(),
-    matches: tourney.getMatches(),
     registration_fee: tourney.getRegistrationFee()
   };
   return Tourney.create(newTourney).then(serialize).catch(errorFormatter);

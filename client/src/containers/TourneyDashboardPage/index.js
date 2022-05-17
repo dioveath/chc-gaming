@@ -1,5 +1,8 @@
+
 import styled from 'styled-components';
 import tw from 'twin.macro';
+
+import { useParams } from 'react-router-dom';
 
 import {
   FlexContainer
@@ -18,6 +21,9 @@ h-screen
 `;
 
 export default function TourneyDashboardPage(){
+  const { tourneyId } = useParams();
+  console.log(tourneyId);
+
   return (
     <Container>
       <FlexContainer direction='col'>

@@ -9,9 +9,12 @@ var buildMakeTourney = function(tourneyValidator){
     managers,
     sponserships,
     prizes,
+    matches,
+    game,
+    max_players,
+    location,
     start_date,
     end_date,
-    matches,
     registration_fee
   } = {}) => {
 
@@ -22,9 +25,12 @@ var buildMakeTourney = function(tourneyValidator){
       managers,
       sponserships,
       prizes,
+      matches,
+      game,
+      max_players,
+      location,
       start_date,
       end_date,
-      matches,
       registration_fee
     });
 
@@ -37,9 +43,12 @@ var buildMakeTourney = function(tourneyValidator){
       getManagers: () => managers,
       getSponserships: () => sponserships,
       getPrizes: () => prizes,
+      getMatches: () => matches,
       getStartDate: () => start_date,
       getEndDate: () => end_date,
-      getMatches: () => matches,
+      getGame: () => game,
+      getMaxPlayers: () => max_players,
+      getLocation: () => location,
       getRegistrationFee: () => registration_fee
     });
 

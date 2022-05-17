@@ -5,13 +5,9 @@
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@reduxjs/toolkit": "^1.6.1",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
     "@thelevicole/youtube-to-html5-loader": "^4.0.1",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.4",
-    "babel-jest": "^26.6.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "framer-motion": "^4.1.17",

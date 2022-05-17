@@ -8,12 +8,14 @@ var TourneySchema = new Schema({
   members: Array,
   managers: Array,
   sponserships: Array,
-  prizes: Map,
+  prizes: Array,
   matches: Array,
-  registration_fee: Number,
+  game: String,
+  max_players: Number,
+  location: String,
   start_date: Date,
-  end_date: Date
-
+  end_date: Date,
+  registration_fee: Number
 }, { timestamps: true });
 
 

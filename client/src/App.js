@@ -30,6 +30,7 @@ function App() {
   const dispatch = useDispatch();
   var auth = useSelector((state => state.auth));
 
+
   useEffect(() => {
 
     (async() => {
@@ -87,6 +88,10 @@ function App() {
             <Route path='/organizer'>
               { auth.accessToken === null && <Redirect to={`/`}/>}            
               <OrganizerDashboardPage/>
+            </Route>
+
+            <Route path='/organizer/tourney/:tourneyId'>
+              <TourneyDashboardPage/>
             </Route>
 
             <Route path="/tourneys/:tourneyId">

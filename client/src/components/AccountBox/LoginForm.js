@@ -1,18 +1,13 @@
 import React from 'react';
 import { useRef } from 'react';
-import styled from 'styled-components';
-import tw from 'twin.macro';
 
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, pending, error } from '../../redux/AuthSlice';
-import { Link } from 'react-router-dom';
 
 import { BoxContainer, FormContainer, ErrorMessage,  Input, MutedLink, BoldLink, SubmitButton} from './FormElements';
 import { Marginer } from '../../components/Marginer';
 
-import { MdArrowBackIosNew } from 'react-icons/md';
 
 import config from '../../config/config.js';
 
