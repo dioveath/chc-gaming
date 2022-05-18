@@ -17,10 +17,6 @@ app.use(cors());
 const APIRoute = require('./routes/api/v1');
 const authRoute = require('./routes/auth/index');
 
-const isAuthenticated = require('./middlewares/is-authenticated');
-const isAuthorized = require('./middlewares/is-authorized');
-
-
 require('./config/passport')(passport);
 app.use(passport.initialize());
 

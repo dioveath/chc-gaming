@@ -1,5 +1,3 @@
-
-
 const Tourney = require('../../../db/mongodb/models/tourney');
 const serialize = require('./serializer');
 const makeTourney = require('../../../models/tourney/index').makeTourney;

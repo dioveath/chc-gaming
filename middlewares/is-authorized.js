@@ -6,7 +6,7 @@ module.exports = function isAuthorized(){
 
     let permissions = [];
 
-    console.log(req.user);
+    // console.log(req.user);
 
     for(let i = 0; i < req.user.roles.length; i++){
       try {
@@ -15,11 +15,11 @@ module.exports = function isAuthorized(){
           permissions = permissions.concat(rolePayload.permissions);
         }
       } catch (error){
-        console.log(error);
+        // console.log(error);
       }
     }
 
-    console.log(permissions);
+    // console.log(permissions);
 
     if(isPermissionGranted(req, permissions)){
       return next();
@@ -38,18 +38,18 @@ module.exports = function isAuthorized(){
 
 
 function isPermissionGranted(req, permissions){
-  console.log("method: " + req.method);
-  console.log("baseUrl: " + req.baseUrl);
-  console.log("paramsId: " + req.params.id);
-  console.log("req.url: " + req.url);
-  console.log("permissions: " + permissions);
+  // console.log("method: " + req.method);
+  // console.log("baseUrl: " + req.baseUrl);
+  // console.log("paramsId: " + req.params.id);
+  // console.log("req.url: " + req.url);
+  // console.log("permissions: " + permissions);
 
   let pathSplitted = req.baseUrl.split('/');
   const resourceType = pathSplitted[pathSplitted.length-1];
   const resourceId = req.url.replace('/', '');
 
-  console.log("resourceId: " + resourceId);
-  console.log(req.method);
+  // console.log("resourceId: " + resourceId);
+  // console.log(req.method);
 
   switch(req.method){
   case 'GET':
@@ -59,15 +59,15 @@ function isPermissionGranted(req, permissions){
       if(symbols[0] != 'read') continue;
       if(symbols[1] != resourceType) continue;
 
-      console.log("symbols[2]: " + symbols[2]);
+      // console.log("symbols[2]: " + symbols[2]);
 
       if(resourceId !== undefined && symbols[2] == resourceId){
-        console.log("returning true params.id");        
+        // console.log("returning true params.id");        
         return true;
       }
 
       if(symbols[2] == "all") {
-        console.log("returning true with all");
+        // console.log("returning true with all");
         return true;
       }
 
@@ -80,20 +80,20 @@ function isPermissionGranted(req, permissions){
       let symbols = permissions[i].split(':');
 
       if(symbols[0] != 'update' && symbols[0] != 'create') {
-        console.log('it was neither update nor create');
+        // console.log('it was neither update nor create');
         continue;
       }
       if(symbols[1] != resourceType) continue;
 
-      console.log("symbols[2]: " + symbols[2]);
+      // console.log("symbols[2]: " + symbols[2]);
 
       if(resourceId !== undefined && symbols[2] == resourceId) {
-        console.log("returning true params.id");                
+        // console.log("returning true params.id");                
         return true;
       }
 
       if(symbols[2] == "all"){
-        console.log("returning true with all");
+        // console.log("returning true with all");
         return true;
       }
     }    
@@ -107,12 +107,12 @@ function isPermissionGranted(req, permissions){
       if(symbols[1] != resourceType) continue;
 
       if(resourceId !== undefined && symbols[2] == resourceId){
-        console.log("returning true params.id");        
+        // console.log("returning true params.id");        
         return true;
       }
 
       if(symbols[2] == "all") {
-        console.log("returning true with all");
+        // console.log("returning true with all");
         return true;
       }      
 
@@ -120,7 +120,7 @@ function isPermissionGranted(req, permissions){
     
     break;
   default:
-    console.log("Unknown method!");
+    // console.log("Unknown method!");
     return false;
   }
 

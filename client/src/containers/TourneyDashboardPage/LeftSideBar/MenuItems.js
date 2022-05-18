@@ -1,5 +1,7 @@
+import { Redirect }  from 'react-router-dom';
 import { FcLandscape } from 'react-icons/fc';
 import { RiSettings5Fill } from 'react-icons/ri';
+import { IoGameController } from 'react-icons/io5';
 import { MdDashboard, MdAppRegistration } from 'react-icons/md';
 import {
   GiOrganigram,
@@ -31,7 +33,7 @@ export const MenuItems = [
   },
   {
     'name': 'Participants',
-    'icon': <FcLandscape/>,
+    'icon': <IoGameController/>,
     'content': <NotFound/>
   },
   {
@@ -53,5 +55,11 @@ export const MenuItems = [
     'name': 'Share',
     'icon': <FcLandscape/>,
     'content': <NotFound/>
-  },    
+  },
+
+  {
+    'name': 'Organizer Dashboard',
+    'icon': <MdDashboard/>,
+    'content': <Redirect to='/organizer'/>
+  }
 ];

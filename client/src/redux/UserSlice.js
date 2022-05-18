@@ -24,12 +24,13 @@ const userSlice = createSlice({
     error: (state, action) => {
       state.isError = true;
       state.isPending = false;
-
-      // state.errorMessages = action.payload.errorMessages;
+      state.errorMessages = action.payload;
     },
 
     deleteUser: (state, action) => {
       state.data = null;
+      state.isPending = false;
+      state.isError = false;
     }
     
   }

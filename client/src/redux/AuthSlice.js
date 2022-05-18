@@ -46,7 +46,6 @@ const authSlice = createSlice({
       if(token == null) return;
 
       var decodedToken = jwt_decode(token);
-
       var currentDate = new Date();
 
       if(decodedToken.exp * 1000 < currentDate.getTime()) {
@@ -54,6 +53,8 @@ const authSlice = createSlice({
         state.userId = null;
       }
 
+      state.isPending = false;
+      state.isError = false;
     },
 
     logout: (state, action) => {
@@ -61,6 +62,8 @@ const authSlice = createSlice({
       localStorage.removeItem('userId');
       state.accessToken = null;
       state.userId = null;
+      state.isPending = false;
+      state.isError = false;
     }
   }
 

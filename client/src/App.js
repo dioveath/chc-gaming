@@ -19,8 +19,8 @@ import {
 import axios from "axios";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateToken } from "./redux/AuthSlice";
-import { updateUser, pending, error, deleteUser } from "./redux/UserSlice";
+import { updateToken, logout } from "./redux/AuthSlice";
+import { updateUser, pending, deleteUser } from "./redux/UserSlice";
 
 import config from "./config/config.js";
 
@@ -50,8 +50,10 @@ function App() {
             dispatch(updateUser(response.data.user));
           }
         } catch (e) {
-          console.log(e);
-          dispatch(error());
+          console.log(e.response);
+          // dispatch(error(e.response.data.errorList));
+          dispatch(logout());
+          dispatch(deleteUser());
         }
       }
     })();
@@ -65,19 +67,25 @@ function App() {
       <Router>
         <Switch>
 
-          {auth.accessToken === null &&
-           <Redirect to={`/`} />}          
-
           <Route path="/" exact>
               <HomePage />
           </Route>
 
-          <Route path="/dashboard">
-            <DashboardPage />
-          </Route>
-
           <Route path="/auth">
             <LoginPage />
+          </Route>
+
+          <Route path="/profile/:profileId">
+            <ProfilePage />
+          </Route>          
+
+          {auth.accessToken === null &&
+           <Redirect to='/' />}
+
+          {/* Below will be protected routes  */}
+
+          <Route path="/dashboard">
+            <DashboardPage />
           </Route>
 
           <Route path="/organizer/tourneys/:tourneyId">
@@ -100,9 +108,7 @@ function App() {
             <TourneysPage />
           </Route>
 
-          <Route path="/profile/:profileId">
-            <ProfilePage />
-          </Route>
+
         </Switch>
       </Router>
       {/* </SkeletonTheme>     */}

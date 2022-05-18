@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 const organizerSlice = createSlice({
   name: 'organizer',
   initialState: {
