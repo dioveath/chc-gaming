@@ -4,7 +4,7 @@ import tw from 'twin.macro';
 import {
   NormalText,
   BoldText
-} from '../../../components/base';
+} from '../../../components/Text';
 import {
   FlexContainer
 } from '../../../components/base';

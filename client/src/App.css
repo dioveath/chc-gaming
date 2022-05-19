@@ -17,3 +17,8 @@
   background-color: darkgrey;
   outline: 1px solid slategrey;
 }
+
+* {
+    scrollbar-width: none;
+    scrollbar-color: rebeccapurple green;
+}

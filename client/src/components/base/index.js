@@ -10,13 +10,19 @@ ${props => (props.direction === 'col'
 || props.direction === 'column') && tw`flex-col`}
 
 background: ${props => props.bg || 'initial'};
-width: ${props => props.w || 'auto'};
-height: ${props => props.h || 'auto'};
+width: ${props => props.w || props.width || 'auto'};
+height: ${props => props.h || props.height || 'auto'};
 justify-content: ${props => props.justify || 'flex-start'};
 align-items: ${props => props.align || 'flex-start'};
 gap: ${props => props.gap || '0' };
 padding: ${props => props.pad || '0'};
 
+`;
+
+export const WrapContainer = styled(FlexContainer)`
+${tw`
+flex-wrap
+`}
 `;
 
 export const NormalText = styled.p`

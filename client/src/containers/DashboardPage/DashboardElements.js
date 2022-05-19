@@ -3,7 +3,6 @@ import tw from 'twin.macro';
 
 export const LeftBarContainer = styled.div`
 width: ${props => props.active ? '372px' : '60px'};
-// position: ${props => props.active ? 'fixed' : 'sticky'};
 position: fixed;
 left: 0;
 top: 0;
@@ -12,6 +11,9 @@ bg-black
 shadow-md
 transition-all
 h-screen
+z-10
+overflow-x-hidden
+overflow-y-scroll
 `
 }`;
 
@@ -89,7 +91,6 @@ items-center
 rounded-md
 shadow-sm
 bg-transparent
-transition-all
 cursor-pointer
 
 hover:bg-gray-600

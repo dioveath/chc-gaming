@@ -9,9 +9,12 @@ const _serializeSingle = (tourney) => {
     "managers": tourney.managers,
     "sponserships": tourney.sponserships,
     "prizes": tourney.prizes,
+    "matches": tourney.matches,
+    "game": tourney.game,
+    "max_players": tourney.max_players,
+    "location": tourney.location,
     "start_date": tourney.start_date,
     "end_date": tourney.end_date,
-    "matches": tourney.matches,
     "registration_fee": tourney.registration_fee
   };
 };

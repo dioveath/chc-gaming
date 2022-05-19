@@ -2,15 +2,13 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import tw from 'twin.macro';
 import { Link } from 'react-router-dom';
+import { FlexContainer } from './../base';
 
 const BaseButton = styled(Link)`
 ${tw`
-w-full
 flex
 justify-center
 items-center
-px-10
-py-2
 outline-none
 rounded-md
 text-white
@@ -28,6 +26,8 @@ hover:border-2
 hover:border-red-900
 `}
 
+${props => props.pad || css`${tw`px-10 py-2`}`}
+
 ${props => props.size === 'large' && css`
 ${tw`
 px-40
@@ -38,7 +38,6 @@ text-black
 `}
 
 `;
-
 
 
 const OutlineButton = styled(BaseButton)`
@@ -71,6 +70,18 @@ export default function Button(props){
     <FilledButton to={ props.to ? props.to : "/" } onClick={props.onClick} {...props}>
       { props.text || props.children }
     </FilledButton>
+  );
+}
+
+export function IconButton({ icon, ...props }) {
+  return (
+    <BaseButton {...props}>
+      <FlexContainer justify='center'
+                     align='center'
+                     gap='1rem'>
+        { icon } { props.children }
+      </FlexContainer>
+    </BaseButton>
   );
 }
 

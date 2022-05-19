@@ -21,10 +21,6 @@ import { MenuItems } from './MenuItems.js';
 import { setActiveMenu } from '../../redux/OrganizerDashboardSlice.js';
 
 const Container = styled.div`
-// position: absolute;
-// top: 0;
-// left: 0;
-// left: ${props => props.open ? '0' : '-220px'};
 width: ${props => props.open ? '300px' : '90px'};
 
 ${tw`

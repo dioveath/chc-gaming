@@ -7,7 +7,10 @@ const tourneySlice = createSlice({
     selectedTourney: null,
     isPending: false,
     isError: false,
-    errorMessages: []
+    errorMessages: [],
+    dashboard: {
+      activeMenu: 'Overview'
+    }
   },
 
   reducers: {
@@ -44,6 +47,10 @@ const tourneySlice = createSlice({
       state.isPending = false;
       state.isError = true;
       state.errorMessages = action.payload;
+    },
+
+    setActiveMenu: (state, action) => {
+      state.dashboard.activeMenu = action.payload;
     }
   }
 
@@ -55,8 +62,9 @@ export const {
   setSelectedTourney,
   addTourney,
   removeTourney,
+  setActiveMenu,
   pending,
-  error
+  error,
 } = tourneySlice.actions;
 
 export default tourneySlice.reducer;
