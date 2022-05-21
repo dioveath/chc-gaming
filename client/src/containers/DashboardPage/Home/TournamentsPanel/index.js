@@ -4,24 +4,13 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import axios from "axios";
 
-import { setTourneys, pending, error } from "../../../redux/TourneySlice";
-import TournamentCard from "./TournamentCard.js";
-import config from "../../../config/config";
+import { setTourneys, pending, error } from "../../../../redux/TourneySlice";
+import config from "../../../../config/config";
 
-const Container = styled.div`
-  ${tw`
-p-4
-`}
-`;
+import { Text } from "../../../../components/Text";
+import TournamentCard from "./TourneyCard";
 
-const HTitleText = styled.h1`
-  ${tw`
-font-semibold
-leading-tight
-text-5xl
-text-white
-`}
-`;
+const Container = styled.div``;
 
 const TournamentListContainer = styled.div`
   ${tw`
@@ -32,7 +21,7 @@ my-4
 `}
 `;
 
-export default function Tourneys() {
+export default function TournamentsPanel() {
   const { allTourneys } = useSelector((state) => state.tourney);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -60,15 +49,15 @@ export default function Tourneys() {
     })();
   }, [auth.accessToken, dispatch]);
 
-  console.log(allTourneys);
-
   return (
     <Container>
-      <HTitleText> Your Tournaments </HTitleText>
+      <Text fontSize="2rem" fontWeight="700">
+        Upcoming Tournaments
+      </Text>
+
       <TournamentListContainer>
         {allTourneys.map((tourney) => {
-          return <TournamentCard key={tourney.id}
-                                 tourney={tourney} />;
+          return <TournamentCard key={tourney.id} tourney={tourney} />;
         })}
       </TournamentListContainer>
     </Container>

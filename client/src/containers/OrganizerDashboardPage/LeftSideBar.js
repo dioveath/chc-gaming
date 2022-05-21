@@ -10,20 +10,23 @@ import {
 } from '../../components/base';
 
 import { Marginer } from '../../components/Marginer';
-
-import { IconContext } from 'react-icons';
 import { MdCancel } from 'react-icons/md';
 import {
   GiHamburgerMenu,
 } from 'react-icons/gi';
 
 import { MenuItems } from './MenuItems.js';
+import MenuItem from '../../components/LeftNavbar/MenuItem';
 import { setActiveMenu } from '../../redux/OrganizerDashboardSlice.js';
 
 const Container = styled.div`
-width: ${props => props.open ? '300px' : '90px'};
+width: ${props => props.open ? '372px' : '60px'};
 
 ${tw`
+fixed
+left-0
+top-0
+z-50
 bg-black
 h-full
 overflow-x-hidden
@@ -89,20 +92,20 @@ px-1
 `}
 `;
 
-const MenuItem = ({open, active,  icon, color, name, onClick, ...props}) => {
-  return (
-    <IconContext.Provider value={{ color: 'white', size: '28'}}>
-      <MenuButtonContainer open={open} active={active} onClick={onClick}>
-        { icon }
-        { open ?
-          <>
-            <Marginer horizontal='1rem'/>
-            <BoldText> { name } </BoldText>        
-          </> : <></>}
-      </MenuButtonContainer>
-    </IconContext.Provider>
-  );
-};
+// const MenuItem = ({open, active,  icon, color, name, onClick, ...props}) => {
+//   return (
+//     <IconContext.Provider value={{ color: 'white', size: '28'}}>
+//       <MenuButtonContainer open={open} active={active} onClick={onClick}>
+//         { icon }
+//         { open ?
+//           <>
+//             <Marginer horizontal='1rem'/>
+//             <BoldText> { name } </BoldText>        
+//           </> : <></>}
+//       </MenuButtonContainer>
+//     </IconContext.Provider>
+//   );
+// };
 
 
 export default function LeftSideBar(){

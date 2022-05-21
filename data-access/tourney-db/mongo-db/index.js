@@ -41,6 +41,7 @@ function addTourney(tourneyInfo){
 }
 
 
+
 async function updateTourney(id, updateTourneyInfo){
   if(!id)
     throw new Error("You must supply id!");

@@ -15,6 +15,8 @@ import {
 import LeftSideBar from "./LeftSideBar";
 import { MenuItems } from "./LeftSideBar/MenuItems.js";
 import { FlexContainer } from "../../components/base";
+import { Text } from "../../components/Text";
+import { MdOutlineError } from "react-icons/md";
 
 const Container = styled.div`
   background: radial-gradient(#1d0207, #0d0000);
@@ -34,14 +36,17 @@ p-2
 `}
 `;
 
+const ListContainer = styled.ul``;
+
+const List = styled.li``;
+
 export default function TourneyDashboardPage() {
   const { tourneyId } = useParams();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-  const { dashboard, selectedTourney, isPending } = useSelector(
-    (state) => state.tourney
-  );
+  const { dashboard, selectedTourney, isPending, isError, errorMessages } =
+    useSelector((state) => state.tourney);
 
   useEffect(() => {
     dispatch(pending());
@@ -76,15 +81,37 @@ export default function TourneyDashboardPage() {
         onChangeMenu={(menuName) => dispatch(setActiveMenu(menuName))}
       />
       <ContentContainer>
-        {isPending || !selectedTourney ? (
-          <FlexContainer justify='center'
-                         align='center'
-                         w='100%'
-                         h='100%'>
-            <BounceLoader color="red"/>
+        {isError && (
+          <FlexContainer
+            justify="center"
+            align="center"
+            w="100%"
+            h="100%"
+            direction="col"
+          >
+            <MdOutlineError size="30" color="white" />
+            <Text fontSize="2rem" fontWeight="600">
+              {" "}
+              ERROR{" "}
+            </Text>
+            <ListContainer>
+              {errorMessages.map((err) => {
+                return (
+                  <List>
+                    <Text> {err} </Text>
+                  </List>
+                );
+              })}
+            </ListContainer>
+          </FlexContainer>
+        )}
+
+        {(isPending || !selectedTourney) ? (
+          <FlexContainer justify="center" align="center" w="100%" h="100%">
+            <BounceLoader color="red" />
           </FlexContainer>
         ) : (
-          renderContent
+          !isError && renderContent
         )}
       </ContentContainer>
     </Container>

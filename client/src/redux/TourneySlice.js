@@ -32,6 +32,13 @@ const tourneySlice = createSlice({
       state.isError = false;      
     },
 
+    editTourney: (state, action) => {
+      state.allTourneys = state.allTourneys.filter(t => t.id !== action.payload.id);
+      state.allTourneys.push(action.payload);
+      state.isPending = true;
+      state.isError = false;
+    },
+
     setSelectedTourney: (state, action) => {
       state.selectedTourney = action.payload;
       state.isPending = false;
@@ -61,6 +68,7 @@ export const {
   setTourneys,
   setSelectedTourney,
   addTourney,
+  updateTourney,
   removeTourney,
   setActiveMenu,
   pending,

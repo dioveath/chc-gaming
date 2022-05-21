@@ -7,6 +7,7 @@ import { MenuItems } from './MenuItems.js';
 
 const PageContainer = styled.div`
   background: radial-gradient(#1D0207, #0D0000);
+padding-left: 60px;
 ${tw`
 flex
 w-screen
@@ -17,17 +18,26 @@ gap-4
 
 `;
 
+const ContentContainer = styled.div`
+  ${tw`
+w-full
+h-full
+p-2
+flex
+justify-center
+`}
+`;
 
 export default function OrganizerDashboardPage(){
   const { dashboard } = useSelector(state => state.organizer);
   const renderContent = MenuItems.find((menu) => menu.name === dashboard.activeMenu);
 
   return (
-    <>
       <PageContainer>
         <LeftSideBar/>
-        { renderContent?.content }
+	<ContentContainer>
+          { renderContent?.content }
+        </ContentContainer>
       </PageContainer>      
-    </>
   );
 }

@@ -63,7 +63,6 @@ function App() {
     <>
       {/* <SkeletonTheme> */}
 
-
       <Router>
         <Switch>
 
@@ -111,7 +110,9 @@ function App() {
 
         </Switch>
       </Router>
+
       {/* </SkeletonTheme>     */}
+
     </>
   );
 }

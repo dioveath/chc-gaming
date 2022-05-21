@@ -31,7 +31,7 @@ opacity-60
 `;
 
 
-export default function TournamentCard(props){
+export default function TournamentCard({ tourney }){
   return (
     <TournamentCardContainer>
       <TournamentCardImage alt="Tournament Cover Image"
@@ -45,7 +45,7 @@ export default function TournamentCard(props){
                        'transform': 'translate(0, -100%)'
                      }}>
         <FlexContainer direction='col' >
-          <NormalText> FIFA 22 </NormalText>
+          <NormalText> { tourney.game } </NormalText>
           <BoldText> Tournament </BoldText>            
         </FlexContainer>
 
@@ -53,7 +53,7 @@ export default function TournamentCard(props){
         <FlexContainer justify='space-between'>
           <FlexContainer direction='col'>
             <NormalText> Players </NormalText>
-            <BoldText> 32 Players </BoldText>
+            <BoldText> {tourney.max_players} Players </BoldText>
           </FlexContainer>
 
           <FlexContainer direction='col'>
@@ -67,8 +67,10 @@ export default function TournamentCard(props){
           <BoldText> Solo </BoldText>
         </FlexContainer>
 
-        <FlexContainer justify='center'>
-          <Button text='Edit Tourney'/>
+        <FlexContainer justify='center' w='100%'>
+          <Button text='Edit Tourney'
+                  w='100%'
+                  to={`/organizer/tourneys/${tourney.id}`}/>
         </FlexContainer>
       </FlexContainer>
     </TournamentCardContainer>);

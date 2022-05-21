@@ -1,11 +1,11 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import tw from 'twin.macro';
-import { Link } from 'react-router-dom';
-import { FlexContainer } from './../base';
+import React from "react";
+import styled, { css } from "styled-components";
+import tw from "twin.macro";
+import { Link } from "react-router-dom";
+import { FlexContainer } from "./../base";
 
 const BaseButton = styled(Link)`
-${tw`
+  ${tw`
 flex
 justify-center
 items-center
@@ -26,49 +26,70 @@ hover:border-2
 hover:border-red-900
 `}
 
-${props => props.pad || css`${tw`px-10 py-2`}`}
+width: ${props => props.w || "auto" };
+height: ${props => props.h || "auto" };
 
-${props => props.size === 'large' && css`
-${tw`
+  ${(props) =>
+    props.pad ||
+    css`
+      ${tw`px-10 py-2`}
+    `}
+
+${(props) =>
+    props.size === "large" &&
+    css`
+      ${tw`
 px-40
 py-5
 text-xl
 text-black
 `}
-`}
-
+    `}
 `;
 
-
 const OutlineButton = styled(BaseButton)`
-    background-color: #220303;
-${tw`
+  background-color: #220303;
+  ${tw`
 hover:bg-transparent
 hover:border-red-400
 hover:border-2
 `}
 `;
 
-
 const FilledButton = styled(BaseButton)`
-background-color: #B71B1B;
-${tw`
-hover:bg-gray-900
+  background-color: ${props => props.disabled ? tw`bg-gray-900` : '#b71b1b'};
+  ${tw`
+hover:bg-gray-800
 hover:border-2
 hover:border-gray-700
 `}
 `;
 
-
-
-export default function Button(props){
-  if(props.type === "outlined")
-    return <OutlineButton size={props.size} to={ props.disabled ? '#' : props.to ? props.to : "/" }  onClick={props.onClick}>
-             { props.text || props.children }
-           </OutlineButton>;
+export default function Button({
+  type,
+  to,
+  text,
+  size,
+  onClick,
+  disabled,
+  children,
+  ...props
+}) {
+  if (type === "outlined")
+    return (
+      <OutlineButton
+        size={size}
+        to={disabled ? "#" : to ? to : "/"}
+        onClick={disabled ? () => {} : onClick}
+        disabled={disabled}
+        {...props}
+      >
+        {text || children}
+      </OutlineButton>
+    );
   return (
-    <FilledButton to={ props.to ? props.to : "/" } onClick={props.onClick} {...props}>
-      { props.text || props.children }
+    <FilledButton to={disabled ? "#" : to ? to : "/"} onClick={disabled ? () => { } : onClick} disabled={disabled} {...props}>
+      {text || children}
     </FilledButton>
   );
 }
@@ -76,35 +97,36 @@ export default function Button(props){
 export function IconButton({ icon, ...props }) {
   return (
     <BaseButton {...props}>
-      <FlexContainer justify='center'
-                     align='center'
-                     gap='1rem'>
-        { icon } { props.children }
+      <FlexContainer justify="center" align="center" gap="1rem">
+        {icon} {props.children}
       </FlexContainer>
     </BaseButton>
   );
 }
 
-
 export const SubmitButton = styled.button`
-color: #fff;
+  color: #fff;
 
-width: 100%;
-font-size: 15px;
-font-weight: 600;
-padding: 7px 20px;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 7px 20px;
 
-border: none;
-border-radius: 4px;
+  border: none;
+  border-radius: 4px;
 
-cursor: pointer;
-transition: all 240ms ease-in-out;
-background: rgb(183,27,27);
-background: linear-gradient(180deg, rgba(183,27,27,1) 36%, rgba(120,0,0,1) 100%);
+  cursor: pointer;
+  transition: all 240ms ease-in-out;
+  background: rgb(183, 27, 27);
+  background: linear-gradient(
+    180deg,
+    rgba(183, 27, 27, 1) 36%,
+    rgba(120, 0, 0, 1) 100%
+  );
 
-z-index: 100;
+  z-index: 100;
 
-&:hover { 
-filter: brightness(1.3);
-}
-` ;
+  &:hover {
+    filter: brightness(1.3);
+  }
+`;

@@ -8,7 +8,6 @@ const tourneyUpdateSchema = Joi.object().keys({
   members: Joi.array().items(Joi.object().keys({
     member_id: Joi.objectId().required(),
     reg_id: Joi.string().min(6).required(),
-    matches_played: Joi.array().items(Joi.objectId()).required(),
   })),
   managers: Joi.array().items(Joi.objectId()),
   sponserships: Joi.array(),
