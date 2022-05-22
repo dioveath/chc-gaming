@@ -71,6 +71,7 @@ function App() {
           </Route>
 
           <Route path="/auth">
+            { auth.accessToken !== null && <Redirect to='/dashboard'/>}
             <LoginPage />
           </Route>
 

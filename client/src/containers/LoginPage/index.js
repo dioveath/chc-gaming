@@ -3,10 +3,6 @@ import styled from 'styled-components';
 import { AccountBox } from '../../components/AccountBox';
 import { Marginer } from '../../components/Marginer';
 
-import { Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
- 
-
 const PageContainer = styled.div`
 width: 100%;
 display: flex;
@@ -17,12 +13,7 @@ justify-content: center;
 
 
 export function LoginPage(){
-
-  const auth = useSelector((state) => state.auth);
-
   return (
-    auth.accessToken != null ?
-      <Redirect to={`/dashboard`}/> :    
     <PageContainer>
       <Marginer vertical="2rem"/>
       <AccountBox/>
