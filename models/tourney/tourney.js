@@ -5,6 +5,8 @@ var buildMakeTourney = function(tourneyValidator){
   return ({
     title,
     description,
+    status,
+    medias,
     members,
     managers,
     sponserships,
@@ -13,6 +15,7 @@ var buildMakeTourney = function(tourneyValidator){
     game,
     max_players,
     location,
+    live_link,
     start_date,
     end_date,
     registration_fee
@@ -21,6 +24,8 @@ var buildMakeTourney = function(tourneyValidator){
     var error = tourneyValidator({
       title,
       description,
+      status,
+      medias,
       members,
       managers,
       sponserships,
@@ -29,6 +34,7 @@ var buildMakeTourney = function(tourneyValidator){
       game,
       max_players,
       location,
+      live_link,
       start_date,
       end_date,
       registration_fee
@@ -39,16 +45,19 @@ var buildMakeTourney = function(tourneyValidator){
     return Object.freeze({
       getTitle: () => title,
       getDescription: () => description,
+      getStatus: () => status,
+      getMedias: () => medias,
       getMembers: () => members,
       getManagers: () => managers,
       getSponserships: () => sponserships,
       getPrizes: () => prizes,
       getMatches: () => matches,
-      getStartDate: () => start_date,
-      getEndDate: () => end_date,
       getGame: () => game,
       getMaxPlayers: () => max_players,
       getLocation: () => location,
+      getLiveLink: () => live_link,
+      getStartDate: () => start_date,
+      getEndDate: () => end_date,      
       getRegistrationFee: () => registration_fee
     });
 

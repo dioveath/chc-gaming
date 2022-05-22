@@ -13,21 +13,18 @@ import { Marginer } from "../../../components/Marginer";
 
 import Button, { SubmitButton } from "../../../components/Button";
 import ListTileImage from "./MediaListTile.js";
+import ClipLoader from 'react-spinners/ClipLoader';
 
 import config from "../../../config/config.js";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  pending,
-  error,
-  addTourney,
-  setSelectedTourney,
-} from "../../../redux/TourneySlice.js";
+import { pending, error, addTourney } from "../../../redux/TourneySlice.js";
 
 const Container = styled.div`
   ${tw`
 max-w-lg
 w-full
+my-4
 `}
 `;
 
@@ -102,6 +99,30 @@ w-full
 `}
 `;
 
+const ErrorListBox = styled.ul`
+  ${tw`
+w-full
+rounded-md
+border
+border-red-800
+p-2
+my-4
+`}
+`;
+
+const ErrorContainer = styled.li`
+  ${tw`
+text-xs
+text-red-600
+`}
+`;
+
+const BottomMargin = styled.div`
+  ${tw`
+h-96
+`}
+`;
+
 export default function TourneyCreatePage() {
   const title = useRef();
   const description = useRef();
@@ -114,6 +135,8 @@ export default function TourneyCreatePage() {
 
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
+  const { isPending, isError, errorMessages } = useSelector((state) => state.tourney);
+
   const history = useHistory();
 
   const submitHandler = async (e) => {
@@ -124,8 +147,10 @@ export default function TourneyCreatePage() {
       const tourney = {
         title: title.current.value,
         description: description.current.value,
+        status: "pending",
         game: game.current.value,
         max_players: maxPlayers.current.value,
+        medias: [],
         location: venue.current.value,
         registration_fee: registrationFee.current.value,
         start_date: startDate.current.value,
@@ -135,6 +160,7 @@ export default function TourneyCreatePage() {
         sponserships: [],
         prizes: [],
         matches: [],
+        live_link: "https://www.youtube.com/watch?v=hKIGnR4LKdM&t=54s",
       };
 
       const options = {
@@ -147,11 +173,12 @@ export default function TourneyCreatePage() {
         data: tourney,
       };
 
+      console.log(tourney);
+
       const response = await axios.request(options);
       dispatch(addTourney(response.data.newTourney));
       history.push("/organizer/tourneys/" + response.data.newTourney.id);
     } catch (e) {
-      console.log(e.message);
       dispatch(error(e.response.data.errorList));
     }
   };
@@ -160,7 +187,7 @@ export default function TourneyCreatePage() {
     <Container>
       <FormContainer onSubmit={submitHandler}>
         <BoldText> Title </BoldText>
-        <Marginer vertical="0.5rem"/>
+        <Marginer vertical="0.5rem" />
         <Input
           type="text"
           placeholder="Charicha FIFA 22 Tournament"
@@ -232,8 +259,17 @@ export default function TourneyCreatePage() {
           ref={registrationFee}
         ></Input>
 
+        <ErrorListBox>
+          {isError &&
+            errorMessages.map((e) => (
+              <ErrorContainer key={e}>{e}</ErrorContainer>
+            ))}
+          { isPending && <ClipLoader color='red' size={10}/>}
+        </ErrorListBox>
+
         <SubmitButton type="submit"> Create Tourney </SubmitButton>
       </FormContainer>
+      <BottomMargin />
     </Container>
   );
 }

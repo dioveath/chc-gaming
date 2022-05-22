@@ -27,6 +27,8 @@ function addMatch(matchInfo){
   var match = makeMatch(matchInfo);
   var newMatch = {
     summary: match.getSummary(),
+    status: match.getStatus(),
+    is_neutral: match.getIsNeutral(),
     home_player: match.getHomePlayer(),
     away_player: match.getAwayPlayer(),
     home_goals: match.getHomeGoals(),

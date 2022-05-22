@@ -28,6 +28,7 @@ module.exports = function makeRegisterPlayerTourney(tourneyAccess) {
             {
               member_id: httpRequest.params.playerId,
               reg_id: rand.generate(),
+              status: 'pending'
             },
           ],
         }

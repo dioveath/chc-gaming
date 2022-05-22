@@ -5,6 +5,8 @@ var Schema = mongoose.Schema;
 var TourneySchema = new Schema({
   title: { type: String, unique: true },
   description: String,
+  status: String,
+  medias: Array,
   members: Array,
   managers: Array,
   sponserships: Array,
@@ -13,6 +15,7 @@ var TourneySchema = new Schema({
   game: String,
   max_players: Number,
   location: String,
+  live_link: String,
   start_date: Date,
   end_date: Date,
   registration_fee: Number

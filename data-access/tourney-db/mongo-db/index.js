@@ -25,6 +25,8 @@ function addTourney(tourneyInfo){
   var newTourney = {
     title: tourney.getTitle(),
     description: tourney.getDescription(),
+    status: tourney.getStatus(),
+    medias: tourney.getMedias(),
     members: tourney.getMembers(),
     managers: tourney.getManagers(),
     sponserships: tourney.getSponserships(),
@@ -33,6 +35,7 @@ function addTourney(tourneyInfo){
     game: tourney.getGame(),
     max_players: tourney.getMaxPlayers(),
     location: tourney.getLocation(),
+    live_link: tourney.getLiveLink(),
     start_date: tourney.getStartDate(),
     end_date: tourney.getEndDate(),
     registration_fee: tourney.getRegistrationFee()

@@ -6,6 +6,8 @@ const _serializeSingle = (match) => {
 
   return {
     "id": match._id,
+    "status": match.status,
+    "is_neutral": match.is_neutral,
     "summary": match.summary,
     "home_player": match.home_player,
     "away_player": match.away_player,

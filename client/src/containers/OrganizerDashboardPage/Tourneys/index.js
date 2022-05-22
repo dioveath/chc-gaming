@@ -60,8 +60,6 @@ export default function Tourneys() {
     })();
   }, [auth.accessToken, dispatch]);
 
-  console.log(allTourneys);
-
   return (
     <Container>
       <HTitleText> Your Tournaments </HTitleText>
