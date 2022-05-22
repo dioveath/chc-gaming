@@ -31,9 +31,7 @@ height: ${props => props.h || "auto" };
 
   ${(props) =>
     props.pad ||
-    css`
-      ${tw`px-10 py-2`}
-    `}
+    tw`px-10 py-2`}
 
 ${(props) =>
     props.size === "large" &&
@@ -94,10 +92,10 @@ export default function Button({
   );
 }
 
-export function IconButton({ icon, ...props }) {
+export function IconButton({ icon, gap, ...props }) {
   return (
     <BaseButton {...props}>
-      <FlexContainer justify="center" align="center" gap="1rem">
+      <FlexContainer justify="center" align="center" gap={gap || "1rem"}>
         {icon} {props.children}
       </FlexContainer>
     </BaseButton>

@@ -13,7 +13,7 @@ import {
   setSelectedTourney,
 } from "../../redux/TourneySlice";
 import LeftSideBar from "./LeftSideBar";
-import { MenuItems } from "./LeftSideBar/MenuItems.js";
+import { MenuItems } from "./MenuItems.js";
 import { FlexContainer } from "../../components/base";
 import { Text } from "../../components/Text";
 import { MdOutlineError } from "react-icons/md";

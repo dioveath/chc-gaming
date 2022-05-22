@@ -11,6 +11,23 @@
 ** DONE Combine Frontend with Backend
 ** DONE Buy Domain and Hosting and deploy the Site. (Used heroku free)
 
+* User / Players
+** DONE Needs to get his Upcoming Matches  
+** Needs to get Upcoming Tournaments based on his ranks and other stats
+
+* Tournament Organizer
+** Tournament Dashboard Create all UIs without states
+   
+
+* TO FIX
+** DONE running in production mode...! Where this coming from? FROM Mongoose connection
+** IN-PROGRESS fix UIs components to a stable system
+   
+
+* TO RESEARCH
+** Needs refactoring permissions, role system
+** TODO Create a flexible UI component system for further UI works (Create kind of like Chakra UI)   
+
    
 * TODOS
 ** DONE Upgrade Commander to Support multiple commands
@@ -19,26 +36,12 @@
 ** DELEGATED Implement Test Cases for all the testable modules.
 ** DONE Build Workable API for Users only.
 ** DONE [#C] Build More robust Validation System for User.
-** IN-PROGRESS [#B] Research & Design more about CHC League System
-** TODO Add Twilio Phone Number Verification
 ** DONE [#B] Add models - Match, Tourney
-** TODO Build Robust Khalti Verification API
 ** DONE Design a Frontend in Fig  ma - Ref iglnetwork.com | esports.pubgmobile.com
-** TODO Create a flexible UI component system for further UI works (Create kind of like Chakra UI)
-** TODO Refactor User Model in server (more data)
-
-
-* User / Players
-** Needs to get his Upcoming Matches  
-** Needs to get Upcoming Tournaments based on his ranks and other stats
-
-* Tournament Organizer
-** Tournament Creator & Management  
-
-* TO FIX
-** DONE running in production mode...! Where this coming from? FROM Mongoose connection
-** IN-PROGRESS fix UIs components to a stable system
-   
-
-* TO RESEARCH
-** Needs refactoring permissions, role system  
+** DONE Build stateless UIs for Tourney Dashboard
+** IN-PROGRESS Build stateless UIs for User Dashboard
+** TODO Upgrade Tournament Organizer with tournament fixture maker
+** TODO Make Stateful Tournament Organizer
+** TODO Upgrade Users Model with permissions for self, and ranking system   
+** TODO Build Robust Khalti Verification API
+** TODO Add Twilio Phone Number Verification

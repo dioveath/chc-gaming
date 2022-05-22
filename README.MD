@@ -54,7 +54,7 @@ Independent of any external agency. In fact your business rules simply don't kno
 
 ## Role Based Users Usage | Access Control API
 	Access Control is done with JWT Token. 
-
+	
 
 ### Gamer
 - Can register play tournaments overall Charicha Gaming main focus
@@ -90,12 +90,39 @@ From Manager to Admin, we have got ranks for all.
 - Legendary
 - Immortal
 
+## Permissions
+	Permissions is an array of string with specific syntax,
+### Syntax
+	`<action>:<resourceType>:<resourceId>`
+#### Action
+- read
+- update
+- create
+- delete
+- own (combination of all action)
+
+#### Resource Type
+- Users
+- Tourneys
+- Matches
+- Roles
+
+### Resource ID
+- <resourceId> Specific ID:  (like, 6278f1102a76784ab87b45fe)
+- all (all resources)
+
+### Example
+	`read:users:6278f1102a76784ab87b45fe`
+
+
 
 ## Matches
 - A Match Resource Represents a single match. 
 
 ## Tourneys
 - A Tourney Resource Represents a single Tourney.
+
+
 
 ## Getting Started
 

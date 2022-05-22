@@ -2,13 +2,20 @@ import { Redirect }  from 'react-router-dom';
 import { FcLandscape } from 'react-icons/fc';
 import { RiSettings5Fill } from 'react-icons/ri';
 import { IoGameController } from 'react-icons/io5';
-import { MdDashboard, MdAppRegistration } from 'react-icons/md';
+import { MdDashboard, MdAppRegistration, MdLeaderboard } from 'react-icons/md';
 import {
   GiOrganigram,
+  GiCheckboxTree
 } from 'react-icons/gi';
+import { VscListTree } from 'react-icons/vsc';
+import { AiOutlineShareAlt } from 'react-icons/ai';
 
-import { NotFound } from '../../NotFoundPage/NotFound.js';
-import OverviewPage from './../Overview';
+import { NotFound } from '../NotFoundPage/NotFound.js';
+import OverviewPage from './Overview';
+import Participants from './Participants';
+import Registrations from './Registrations';
+import Structure from './Structure';
+import Placements from './Placements';
 
 export const MenuItems = [
   {
@@ -24,36 +31,36 @@ export const MenuItems = [
   {
     'name': 'Structure',
     'icon': <GiOrganigram/>,
-    'content': <NotFound/>
+    'content': <Structure/>
   },
   {
     'name': 'Registrations',
     'icon': <MdAppRegistration/>,
-    'content': <NotFound/>
+    'content': <Registrations/>
   },
   {
     'name': 'Participants',
     'icon': <IoGameController/>,
-    'content': <NotFound/>
+    'content': <Participants/>
   },
   {
     'name': 'Placements',
-    'icon': <FcLandscape/>,
-    'content': <NotFound/>
+    'icon': <VscListTree/>,
+    'content': <Placements/>
   },
   {
     'name': 'Matches',
-    'icon': <FcLandscape/>,
+    'icon': <GiCheckboxTree/>,
     'content': <NotFound/>
   },
   {
     'name': 'Final Standings',
-    'icon': <FcLandscape/>,
+    'icon': <MdLeaderboard/>,
     'content': <NotFound/>
   },
   {
     'name': 'Share',
-    'icon': <FcLandscape/>,
+    'icon': <AiOutlineShareAlt/>,
     'content': <NotFound/>
   },
 

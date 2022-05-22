@@ -24,7 +24,7 @@ function findUserById(id){
 
 async function addUser(userInfo){
   // defaults
-  userInfo.roles = ['614b6844e28ef411e800368d']; // gamer role
+  userInfo.roles = ['628a15b4697db52918b69f1c']; // gamer role
 
   var user = await makeUser(userInfo);
 
