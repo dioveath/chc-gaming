@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
-
-export const FlexContainer = styled.div`
+export const FlexContainer = styled.div.attrs(props => ({
+  className: props.className
+}))`
 ${tw`
 flex
 `}

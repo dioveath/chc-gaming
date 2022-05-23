@@ -13,7 +13,7 @@ import { Text } from "../../components/Text";
 
 import BounceLoader from "react-spinners/BounceLoader";
 import { MdOutlineError } from "react-icons/md";
-import { FaUserFriends } from "react-icons/fa";
+import { IoIosPeople } from 'react-icons/io';
 import { FcLandscape } from "react-icons/fc";
 import { GiCastle } from "react-icons/gi";
 import { MdDashboard } from "react-icons/md";
@@ -38,8 +38,8 @@ const MenuItems = [
     content: <MainSection />,
   },
   {
-    name: "Friends",
-    icon: <FaUserFriends />,
+    name: "Following",
+    icon: <IoIosPeople />,
     content: <FriendsPage />,
   },
   {

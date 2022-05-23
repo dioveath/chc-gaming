@@ -45,6 +45,7 @@ text-black
     `}
 `;
 
+
 const OutlineButton = styled(BaseButton)`
   background-color: #220303;
   ${tw`
@@ -77,7 +78,7 @@ export default function Button({
     return (
       <OutlineButton
         size={size}
-        to={disabled ? "#" : to ? to : "/"}
+        to={disabled ? "#" : (to ? to : "#")}
         onClick={disabled ? () => {} : onClick}
         disabled={disabled}
         {...props}
@@ -86,21 +87,12 @@ export default function Button({
       </OutlineButton>
     );
   return (
-    <FilledButton to={disabled ? "#" : to ? to : "/"} onClick={disabled ? () => { } : onClick} disabled={disabled} {...props}>
+    <FilledButton to={disabled ? "#" : (to ? to : "#")} onClick={disabled ? () => { } : onClick} disabled={disabled} {...props}>
       {text || children}
     </FilledButton>
   );
 }
 
-export function IconButton({ icon, gap, ...props }) {
-  return (
-    <BaseButton {...props}>
-      <FlexContainer justify="center" align="center" gap={gap || "1rem"}>
-        {icon} {props.children}
-      </FlexContainer>
-    </BaseButton>
-  );
-}
 
 export const SubmitButton = styled.button`
   color: #fff;
@@ -128,3 +120,40 @@ export const SubmitButton = styled.button`
     filter: brightness(1.3);
   }
 `;
+
+export const NormalButton = styled.button.attrs(props => ({
+  className: props.className,
+}))`
+
+${tw`
+flex
+justify-center
+items-center
+outline-none
+rounded-md
+text-white
+text-xs
+md:text-sm
+font-semibold
+border-transparent
+border-2
+border-solid
+focus:outline-none
+transition-all
+duration-300
+ease-in-out
+hover:border-2
+hover:border-red-900
+`}
+
+`;
+
+export function IconButton({ icon, gap, ...props }) {
+  return (
+    <NormalButton {...props}>
+      <FlexContainer justify="center" align="center" gap={gap || "1rem"}>
+        {icon} {props.children}
+      </FlexContainer>
+    </NormalButton>
+  );
+}
