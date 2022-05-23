@@ -9,7 +9,15 @@ const userUpdateSchema = Joi.object().keys({
   address: Joi.string(),
   phone_number: Joi.string().length(10).pattern(/^[0-9]+$/),
   dob: Joi.date().min('1-1-1970').max('1-1-2020'), // MM-DD-YYYY
-  roles: Joi.array().items(Joi.objectId())
+  roles: Joi.array().items(Joi.objectId()),
+  permissions: Joi.array().items(Joi.string()),
+  profile_link: Joi.string().allow(''),
+  cover_link: Joi.string().allow(''),
+  exp_points: Joi.number(),
+  achievements: Joi.array().items(Joi.objectId()),
+  trophies: Joi.array().items(Joi.objectId()),
+  followers: Joi.array().items(Joi.objectId()),
+  following: Joi.array().items(Joi.objectId())
 }).min(1);
 
 const userSchema = userUpdateSchema.options({ presence: 'required'});

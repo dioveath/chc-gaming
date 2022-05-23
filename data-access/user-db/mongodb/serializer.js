@@ -16,6 +16,14 @@ const _serializeSingle = (user) => {
     "phone_verified": user.phone_verified,
     "email_verified": user.email_verified,
     "roles": user.roles,
+    "permissions": user.permissions,
+    "profile_link": user.profile_link,
+    "cover_link": user.cover_link,
+    "exp_points": user.exp_points,
+    "achievements": user.achievements,
+    "trophies": user.trophies,
+    "followers": user.followers,
+    "following": user.following,
     "createdAt": user.createdAt,
     "updatedAt": user.updatedAt
   };

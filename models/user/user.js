@@ -10,7 +10,15 @@ var buildMakeUser = function(userValidator, bcrypt){
     address,
     phone_number,
     dob,
-    roles
+    roles,
+    permissions,
+    profile_link,
+    cover_link,
+    exp_points,
+    achievements,
+    trophies,
+    followers,
+    following
   } = {}) => {
 
     var error = userValidator({
@@ -22,7 +30,15 @@ var buildMakeUser = function(userValidator, bcrypt){
       address,
       phone_number,
       dob,
-      roles
+      roles,
+      permissions,
+      profile_link,
+      cover_link,
+      exp_points,
+      achievements,
+      trophies,
+      followers,
+      following      
     });
 
     if(error instanceof Object) throw new Error(error.errorList);
@@ -46,10 +62,17 @@ var buildMakeUser = function(userValidator, bcrypt){
       getPhoneNumber: () => phone_number,      
       getAddress: () => address,
       getDOB: () => dob,
-      // getSalt: () => salt,
-      getRoles: () => roles
+      getRoles: () => roles,
+      getPermissions: () => permissions,
+      getProfileLink: () => profile_link,
+      getCoverLink: () => cover_link,
+      getExpPoints: () => exp_points,
+      getAchievements: () => achievements,
+      getTrophies: () => trophies,
+      getFollowers: () => followers,
+      getFollowing: () => following
     });
-
+    
   };
 
 };

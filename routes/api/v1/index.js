@@ -11,6 +11,6 @@ const isAuthorized = require('../../../middlewares/is-authorized');
 router.use('/users', [isAuthenticated, isAuthorized()], userApi);
 router.use('/matches',[isAuthenticated, isAuthorized()], matchApi);
 router.use('/tourneys', [isAuthenticated, isAuthorized()], tourneyApi);
-router.use('/roles', roleApi);
+router.use('/roles', [isAuthenticated], roleApi);
 
 module.exports = router;

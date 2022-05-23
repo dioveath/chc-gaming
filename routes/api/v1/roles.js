@@ -4,11 +4,12 @@ const router = new Router();
 
 const roleController = require('../../../controllers/role');
 const makeExpressCallback = require('./helpers/express-callback');
+const isAuthorized = require('../../../middlewares/is-authorized');
 
 router.get('/', makeExpressCallback(roleController.listRoles));
 router.get('/:id', makeExpressCallback(roleController.getRole));
-router.post('/', makeExpressCallback(roleController.createRole));
-router.post('/:id', makeExpressCallback(roleController.updateRole));
-router.delete('/:id', makeExpressCallback(roleController.deleteRole));
+router.post('/', [isAuthorized], makeExpressCallback(roleController.createRole));
+router.post('/:id', [isAuthorized], makeExpressCallback(roleController.updateRole));
+router.delete('/:id', [isAuthorized], makeExpressCallback(roleController.deleteRole));
 
 module.exports = router;

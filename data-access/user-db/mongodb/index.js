@@ -25,6 +25,14 @@ function findUserById(id){
 async function addUser(userInfo){
   // defaults
   userInfo.roles = ['628a15b4697db52918b69f1c']; // gamer role
+  userInfo.permissions = [];
+  userInfo.profile_link = '';
+  userInfo.cover_link = '';
+  userInfo.exp_points = 0;
+  userInfo.achievements = [];
+  userInfo.trophies = [];
+  userInfo.followers = [];
+  userInfo.following = [];
 
   var user = await makeUser(userInfo);
 
@@ -38,8 +46,16 @@ async function addUser(userInfo){
     address: user.getAddress(),
     dob: user.getDOB(),
     roles: user.getRoles(),
+    permissions: user.getPermissions(),
     phone_verified: false,
     email_verified: false,
+    profile_link: user.getProfileLink(),
+    cover_link: user.getCoverLink(),
+    exp_points: user.getExpPoints(),
+    achievements: user.getAchievements(),
+    trophies: user.getTrophies(),
+    followers: user.getFollowers(),
+    following: user.getFollowing()
   };
 
   return User.create(newUser).then(serialize).catch(errorFormatter);
@@ -55,8 +71,14 @@ async function updateUser(id, updateUserInfo){
 
   const validUpdateUserData = await makeUpdateUser(updateUserInfo);
 
+  const { phone_number } = updateUserInfo;
+
   if(updateUserInfo.hasOwnProperty('password')) {
     updateUserInfo.password = validUpdateUserData.getPassword();
+  }
+
+  if(phone_number){
+    updateUserInfo.phone_verified = false;
   }
 
   // if error is not thrown, then we can update with updateUserInfo in database

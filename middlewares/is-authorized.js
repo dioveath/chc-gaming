@@ -1,12 +1,9 @@
-const axios = require('axios') ;
 const RoleAccess = require('../data-access/role-db/index.js');
 
 module.exports = function isAuthorized(){
   return async (req, res, next) => {
 
     let permissions = [];
-
-    // console.log(req.user);
 
     for(let i = 0; i < req.user.roles.length; i++){
       try {
@@ -21,7 +18,20 @@ module.exports = function isAuthorized(){
 
     // console.log(permissions);
 
+
     if(isPermissionGranted(req, permissions)){
+      // stripping out roles & permissions, so that it can't be updated
+      // TODO: find a way to update roles by specific permissions       
+      let { roles, permissions, ...updateInfo } = req.body; 
+      req.body = updateInfo;
+      if(roles || permissions)
+        return res.status(401).json({
+          status: 'fail',
+          errorList: [
+            'Unauthorized: Permissions not granted for updating roles & permissions!'
+          ]
+        });
+
       return next();
     } else {
       return res.status(401).json({
@@ -43,6 +53,7 @@ function isPermissionGranted(req, permissions){
   // console.log("paramsId: " + req.params.id);
   // console.log("req.url: " + req.url);
   // console.log("permissions: " + permissions);
+
 
   let pathSplitted = req.baseUrl.split('/');
   const resourceType = pathSplitted[pathSplitted.length-1];
@@ -92,7 +103,7 @@ function isPermissionGranted(req, permissions){
         return true;
       }
 
-      if(symbols[2] == "all"){
+      if(symbols[2] === "all" || (symbols[2] === 'self' && resourceId === req.user.sub)){
         // console.log("returning true with all");
         return true;
       }
@@ -111,10 +122,10 @@ function isPermissionGranted(req, permissions){
         return true;
       }
 
-      if(symbols[2] == "all") {
+      if(symbols[2] === "all" || (symbols[2] === 'self' && resourceId === req.user.sub)){
         // console.log("returning true with all");
         return true;
-      }      
+      }
 
     }  
     

@@ -14,7 +14,7 @@ module.exports = function isAuthenticated (req, res, next){
       return res.status(401).json({
         status: 'fail',
         errorList: [
-          "Unauthorized: You're not unauthorized!"
+          "Unauthenticated: You're not unauthenticated!"
         ]
       });
     }
