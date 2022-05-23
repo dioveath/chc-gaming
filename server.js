@@ -16,6 +16,7 @@ app.use(cors());
 
 const APIRoute = require('./routes/api/v1');
 const authRoute = require('./routes/auth/index');
+const verifyRoute = require('./routes/verify/index');
 
 require('./config/passport')(passport);
 app.use(passport.initialize());
@@ -24,6 +25,7 @@ app.use(passport.initialize());
 // API Routes
 app.use('/auth', authRoute);
 app.use('/api/v1', APIRoute);
+app.use('/verify', verifyRoute);
 
 
 app.use(express.static(path.join(__dirname, "client", "build")));

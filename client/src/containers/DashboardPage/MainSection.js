@@ -1,6 +1,7 @@
 import { Tab, TabPanel } from '../../components/Tab';
 import HomePanel from './HomePanel.js';
 import TournamentsPanel from './Home/TournamentsPanel';
+import MatchesPanel from './Home/MatchesPanel';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
@@ -17,7 +18,9 @@ export default function MainSection(){
           <HomePanel/>
         </TabPanel>
         <TabPanel name='Clips'></TabPanel>
-        <TabPanel name='Your Matches'></TabPanel>
+        <TabPanel name='Your Matches'>
+          <MatchesPanel/>
+        </TabPanel>
         <TabPanel name='Tournaments'>
           <TournamentsPanel/>
         </TabPanel>

@@ -1,32 +1,29 @@
-const Router = require('express').Router;
-const config = require('../../config');
+const Router = require("express").Router;
 
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const UserAccess = require('../../data-access/user-db');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
+const config = require("../../config");
+const UserAccess = require("../../data-access/user-db");
 
 const authRouter = new Router();
 
-authRouter.post('/login', async (req, res) => {
-  if(!req.body.email || !req.body.password)
+
+authRouter.post("/login", async (req, res) => {
+  if (!req.body.email || !req.body.password)
     return res.send({
-      status: 'fail',
-      errorList: [
-        "Please give proper credentials."
-      ]
+      status: "fail",
+      errorList: ["Please give proper credentials."],
     });
 
-  const user = await UserAccess.findUserBy('email', req.body.email);
+  const user = await UserAccess.findUserBy("email", req.body.email);
 
-  if(user){
+  if (user) {
     const match = await bcrypt.compare(req.body.password, user.password);
-    if(!match){
+    if (!match) {
       return res.send({
         status: "fail",
-        errorList: [
-          "User or Password don't match!"
-        ]
+        errorList: ["User or Password don't match!"],
       });
     }
 
@@ -34,49 +31,47 @@ authRouter.post('/login', async (req, res) => {
     return res.send({
       status: "success",
       userId: user.id,
-      accessToken: accessToken
+      accessToken: accessToken,
     });
   }
 
   return res.send({
     status: "fail",
-    errorList: [
-      "User not found with email, " + req.body.email
-    ]
+    errorList: ["User not found with email, " + req.body.email],
   });
-
 });
 
-
-authRouter.post('/register', async (req, res) => {
+authRouter.post("/register", async (req, res) => {
   try {
     const user = await UserAccess.addUser(req.body);
     const accessToken = issueJwt(user.id, user.roles);
     return res.send({
       status: "success",
       userId: user.id,
-      accessToken: accessToken
+      accessToken: accessToken,
     });
-  } catch (error){
+  } catch (error) {
     return res.send({
-      status: 'fail',
-      errorList: error.message.split(',')
+      status: "fail",
+      errorList: error.message.split(","),
     });
   }
-
 });
 
 
-function issueJwt(userId, userRoles){
+function issueJwt(userId, userRoles) {
   const tokenOptions = {
-    expiresIn: '1h'
-  };  
-  return jwt.sign({
-    sub: userId,
-    iss: config.JWT_ISSUER,
-    roles: userRoles
-  } , config.JWT_SECRET, tokenOptions);
+    expiresIn: "1h",
+  };
+  return jwt.sign(
+    {
+      sub: userId,
+      iss: config.JWT_ISSUER,
+      roles: userRoles,
+    },
+    config.JWT_SECRET,
+    tokenOptions
+  );
 }
-
 
 module.exports = authRouter;

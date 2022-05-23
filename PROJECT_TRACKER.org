@@ -39,7 +39,7 @@
 ** DONE [#B] Add models - Match, Tourney
 ** DONE Design a Frontend in Fig  ma - Ref iglnetwork.com | esports.pubgmobile.com
 ** DONE Build stateless UIs for Tourney Dashboard
-** IN-PROGRESS Build stateless UIs for User Dashboard
+** DONE Build stateless UIs for User Dashboard
 ** TODO Upgrade Tournament Organizer with tournament fixture maker
 ** TODO Make Stateful Tournament Organizer
 ** TODO Upgrade Users Model with permissions for self, and ranking system   

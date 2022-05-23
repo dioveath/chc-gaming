@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 
 import { Text } from '../../../components/Text';
-import { FlexContainer } from '../../../components/base';
-import Button from '../../../components/Button';
+import { FlexContainer, WrapContainer } from '../../../components/base';
+import { Marginer } from '../../../components/Marginer';
 
 import ProfileCard from './components/ProfileCard.js';
 
@@ -13,29 +13,14 @@ w-full
 `}
 `;
 
-const ProfileImage = styled.img`
+const CardsContainer = styled(WrapContainer)`
 ${tw`
-w-64
-h-48
-object-cover
+w-full
+items-center
+justify-center
 `}
 `;
 
-const ProfileCardContainer = styled(FlexContainer)`
-${tw`
-w-56
-bg-black
-rounded-md
-shadow-md
-overflow-hidden
-`}
-`;
-
-const ProfileContainer = styled(FlexContainer)`
-${tw`
-
-`}
-`;
 
 export default function FriendsPage(){
   return (
@@ -46,12 +31,13 @@ export default function FriendsPage(){
         <Text fontSize='1.2rem'
               fontWeight='700'> Friend Requests </Text>
       </FlexContainer>
-      <FlexContainer gap='1rem'>
+      <Marginer vertical='1.2rem'/>
+      <CardsContainer gap='1rem' >
         <ProfileCard/>
         <ProfileCard/>
         <ProfileCard/>
         <ProfileCard/>      
-      </FlexContainer>
+      </CardsContainer>
       
     </Container>
   );

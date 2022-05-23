@@ -1,6 +1,7 @@
 // simple utils for passport.authenticate('jwt') middleware
 
 const passport = require('passport');
+// const UserAcces = require('../data-access/user-db/index');
 
 module.exports = function isAuthenticated (req, res, next){
   passport.authenticate('jwt', { session: false }, (err, user, _info) => {
@@ -17,6 +18,8 @@ module.exports = function isAuthenticated (req, res, next){
         ]
       });
     }
+
+    // const userData = await UserAccess.findUserById(user.sub);
 
     req.user = user;
     return next();
