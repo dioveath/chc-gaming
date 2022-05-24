@@ -11,24 +11,26 @@ import {
   NormalText,
   BoldText,
   ProfileStatsContainer,
-} from "./DashboardElements.js";
+} from "./StyledElements.js";
 
-import MenuItem from "../../components/LeftNavbar/MenuItem.js";
-import { setActiveMenu } from "../../redux/UserDashboardSlice.js";
-import { FlexContainer } from "../../components/base";
-import { IconButton } from '../../components/Button';
-import { Text } from "../../components/Text";
+import MenuItem from "../../../components/LeftNavbar/MenuItem.js";
+import { setActiveMenu } from "../../../redux/UserDashboardSlice.js";
+import { FlexContainer } from "../../../components/base";
+import { IconButton } from '../../../components/Button';
+import { Text } from "../../../components/Text";
 
 import { useMediaQuery } from "react-responsive";
-import { SCREENS } from "../../components/Responsive";
+import { SCREENS } from "../../../components/Responsive";
 import { FaTimes } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RiEditCircleFill } from 'react-icons/ri';
 import { MdFileDownloadDone } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
-import config from '../../config/config';
-import { storage, ref, uploadString, getDownloadURL } from '../../lib/firebase';
-import { updateUser } from '../../redux/UserSlice';
+
+import config from '../../../config/config';
+import { storage, ref, uploadString, getDownloadURL } from '../../../lib/firebase';
+import { updateUser } from '../../../redux/UserSlice';
 
 const ProfileImageContainer = styled.div`
 ${tw`
@@ -42,7 +44,7 @@ hidden
 `}
 `;
 
-export default function LeftProfileBar({ menuItems }) {
+export default function LeftSideBar({ menuItems }) {
   const { data, isPending, error } = useSelector((state) => state.user);
   const auth = useSelector(state => state.auth);
   const { dashboard } = useSelector((state) => state.userDashboard);
@@ -63,14 +65,15 @@ export default function LeftProfileBar({ menuItems }) {
       setNewProfileImage(readerEvent.target.result);
     };
 
+    toast.info("New Profile Image Picked!");
   };
 
-  const removeProfileImage = (e) => {
+  const removeProfileImage = () => {
     setNewProfileImage(null);
     filePickerRef.current.value = "";
   };
 
-  const updateProfileImage = async (e) => {
+  const updateProfileImage = async (_e) => {
     console.log("Uploading profile image!");
     if(newProfileImage) {
       try {
@@ -95,6 +98,8 @@ export default function LeftProfileBar({ menuItems }) {
 
         const response = await axios.request(options);
         dispatch(updateUser(response.data.updatedUser));
+
+        toast.success("Profile Photo Updated");
 
       } catch(e){
         console.log(e.message);
@@ -129,17 +134,21 @@ export default function LeftProfileBar({ menuItems }) {
             active={open}>
           </ProfileContainer>
           { open && (
-            <FlexContainer className="absolute right-0">
-              { newProfileImage &&
-                <IconButton className="p-1"
-                            icon={<MdFileDownloadDone size='30'color='green'/>}
-                            onClick={updateProfileImage}/>}
-
-              <IconButton className="p-1"
-                          icon={<RiEditCircleFill size='30' color='royalblue'/>}
+            <FlexContainer className="absolute -right-20 -top-14"
+                           gap="1rem"
+                           justify="center"
+                           items="center">
+              <IconButton className="p-1 px-2"
+                          gap="0.4rem"
+                          icon={<RiEditCircleFill size='30' color='white'/>}
                           onClick={() => {
                             filePickerRef.current.click();
-                          }}/>
+                          }}>Edit</IconButton>
+              { newProfileImage &&
+                <IconButton className="p-1 px-2"
+                            icon={<MdFileDownloadDone size='30'color='green'/>}
+                            onClick={updateProfileImage}> Save </IconButton>}
+
 	      <FileInput type="file"
                          onChange={onProfileImageChange}
                          ref={filePickerRef}

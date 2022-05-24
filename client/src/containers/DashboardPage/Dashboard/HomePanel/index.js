@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
-import {
-  BoldText,
-} from './DashboardElements.js';
-
-import Post from '../../components/Post/index.js';
+import { BoldText } from '../../../../components/Text';
+import Post from '../../../../components/Post';
+import UploadClipModal from './UploadClipModal';
 
 const HomePanelContainer = styled.div`
 
@@ -37,15 +35,16 @@ bg-[#BE2222]
 border border-transparent
 transition-all
 `}
-
 ${props => props.outlined && tw`bg-transparent border-white`}
-
 `;
 
 export default function HomePanel(){
   
   return (
     <HomePanelContainer>
+      
+      <UploadClipModal/>
+
       <BoldText> Highlights </BoldText>
       <AllBadgesContainer>
         <BadgeContainer>

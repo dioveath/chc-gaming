@@ -6,7 +6,7 @@ import {
   NormalText,
   BoldText,
   ProfileStatsContainer,
-} from './../../DashboardPage/DashboardElements.js';
+} from './../../DashboardPage/LeftSideBar/StyledElements.js';
 
 import MenuItem from '../../../components/LeftNavbar/MenuItem';
 

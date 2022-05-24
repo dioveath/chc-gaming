@@ -28,6 +28,13 @@
 ** Needs refactoring permissions, role system
 ** TODO Create a flexible UI component system for further UI works (Create kind of like Chakra UI)   
 
+
+* FUTURE IDEAS
+** For Gamers
+   - Service to create, generate & download custom stream overlay with their stats for streaming.
+
+** For Organizers     
+   - Service to create, generate & download custom stream overlay for tourneys with Live score updating, player stats, etc for streaming.
    
 * TODOS
 ** DONE Upgrade Commander to Support multiple commands

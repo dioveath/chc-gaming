@@ -16,7 +16,9 @@ font-bold
 `}
 `;
 
-const Text = styled.p`
+const Text = styled.p.attrs(props => ({
+  className: props.className
+}))`
 font-size: ${props => props.fontSize || '1rem'};
 color: ${props => props.color || '#ffefef'};
 font-weight: ${props => props.weight || props.fontWeight || '400'};

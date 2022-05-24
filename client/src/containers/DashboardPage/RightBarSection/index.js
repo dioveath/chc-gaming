@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import {
-  NormalText,
   BoldText
 } from '../../components/Text';
 import AdCard from './AdCard.js';

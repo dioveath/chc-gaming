@@ -15,7 +15,7 @@ z-10
 overflow-x-hidden
 overflow-y-scroll
 `
-}`;
+	}`;
 
 export const ProfileContainer = styled.img`
 width: ${props => props.active ? '80px' : '50px'};
@@ -35,12 +35,12 @@ export const FlexContainer = styled.div`
 ${tw`
 flex
 `}
-${props => (props.direction === 'col' 
-|| props.direction === 'column') && tw`flex-col`}
+${props => (props.direction === 'col'
+		|| props.direction === 'column') && tw`flex-col`}
 
 justify-content: ${props => props.justify || 'flex-start'};
 align-items: ${props => props.align || 'flex-start'};
-gap: ${props => props.gap || '0' };
+gap: ${props => props.gap || '0'};
 padding: ${props => props.pad || '0'};
 
 `;

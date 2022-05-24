@@ -14,8 +14,8 @@
 }
  
 *::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
+    background-color: #b71b1b;
+  /* outline: 1px solid slategrey; */
 }
 
 * {

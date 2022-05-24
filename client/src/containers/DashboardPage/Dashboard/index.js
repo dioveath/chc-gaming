@@ -1,7 +1,7 @@
-import { Tab, TabPanel } from '../../components/Tab';
-import HomePanel from './HomePanel.js';
-import TournamentsPanel from './Home/TournamentsPanel';
-import MatchesPanel from './Home/MatchesPanel';
+import { Tab, TabPanel } from '../../../components/Tab';
+import HomePanel from './HomePanel';
+import TournamentsPanel from './TournamentsPanel';
+import MatchesPanel from './MatchesPanel';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
@@ -10,7 +10,7 @@ ${tw`
 `}
 `;
 
-export default function MainSection(){
+export default function Dashboard(){
   return (
     <MainSectionContainer>
       <Tab>

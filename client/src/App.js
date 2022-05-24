@@ -24,6 +24,10 @@ import { updateUser, pending, deleteUser } from "./redux/UserSlice";
 
 import config from "./config/config.js";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+
+
 function App() {
   const dispatch = useDispatch();
   var auth = useSelector((state) => state.auth);
@@ -114,6 +118,7 @@ function App() {
 
       {/* </SkeletonTheme>     */}
 
+      <ToastContainer/>
     </>
   );
 }

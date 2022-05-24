@@ -2,8 +2,8 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 import { useSelector } from "react-redux";
-import LeftProfileBar from "./LeftProfileBar.js";
-import MainSection from "./MainSection.js";
+import LeftSideBar from "./LeftSideBar";
+import Dashboard from "./Dashboard";
 import FriendsPage from "./Friends";
 import ClanPage from "./Clan";
 
@@ -35,7 +35,7 @@ const MenuItems = [
   {
     name: "Dashboard",
     icon: <MdDashboard />,
-    content: <MainSection />,
+    content: <Dashboard />,
   },
   {
     name: "Following",
@@ -50,7 +50,7 @@ const MenuItems = [
   {
     name: "Explore",
     icon: <FcLandscape />,
-    content: <MainSection />,
+    content: <Dashboard />,
   },
   {
     name: "Log out",
@@ -99,7 +99,7 @@ export default function DashboardPage() {
   return (
     <>
       <PageContainer>
-        <LeftProfileBar menuItems={MenuItems} />
+        <LeftSideBar menuItems={MenuItems} />
         <FlexContainer justify="center" pad="0.5rem" gap="1rem">
           {renderContent}
         </FlexContainer>
