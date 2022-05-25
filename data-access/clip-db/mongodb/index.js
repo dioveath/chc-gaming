@@ -9,8 +9,23 @@ const makeUpdateClip = require('../../../models/clip/index').makeUpdateClip;
 const errorFormatter = require('./errorFormatter');
 
 
-function listClips(){
-  return Clip.find({}).then(serialize).catch(errorFormatter);
+function listClips(httpQuery){
+  const { pageQuery, ...query } = httpQuery;
+
+  let paginationParams = [
+    query ?? {},
+    typeof pageQuery === "string" ? JSON.parse(pageQuery ?? "{}") : pageQuery,
+  ];
+
+  return Clip.paginate(...paginationParams)
+    .then((result) => {
+      const { docs, ...pagination } = result;
+      return {
+        pagination,
+        clips: serialize(docs),
+      };
+    })
+    .catch(errorFormatter);
 }
 
 function findClipBy(prop, val){

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from 'react-redux';
 import styled from "styled-components";
 import tw from "twin.macro";
@@ -11,6 +11,8 @@ import Button from "../../../../components/Button";
 import { FlexContainer, WrapContainer } from "../../../../components/base";
 import { FiUploadCloud } from "react-icons/fi";
 
+import axios from 'axios';
+import config from '../../../../config/config';
 import { toast } from 'react-toastify';
 
 const ModalContainer = styled.div.attrs((props) => ({
@@ -102,9 +104,28 @@ transition-all
 `}
 `;
 
+
+const OverlayContainer = styled.div.attrs((props) => ({
+  className: props.className,
+}))`
+${tw`
+fixed
+z-40
+top-0
+left-0
+w-full
+h-full
+bg-white/30
+backdrop-filter
+`}
+`;
+
+
 export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
   const { data } = useSelector(state => state.user);
+  const auth = useSelector(state => state.auth);
   const [previewVideo, setPreviewVideo] = useState(null);
+  const [videoMeta, setVideoMeta] = useState({});
   const [isUploading, setIsUploading] = useState(false);
   const fileRef = useRef(null);
   const videoPreviewRef = useRef(null);
@@ -119,7 +140,6 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
     reader.onload = (readerEvent) => {
       setPreviewVideo(readerEvent.target.result);
     };
-    
   };
 
   const onVideoCancel = (_e) => {
@@ -128,13 +148,37 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
   };
 
   const uploadVideoClip = async (_e) => {
-    const toastId = toast.loading("Uploading...");    
+    setIsUploading(true);
+    const toastId = toast.loading("Uploading...");
     if(previewVideo){
-      try { 
-        const videoRef = ref(storage, `clips/${data.id}/${titleRef.current.value}:${Date.now()}`);
+      try {
+        const videoRef = ref(storage, `clips/${data.id}/${videoMeta.name}`);
 
         const uploadResult = await uploadString(videoRef, previewVideo, 'data_url');
         const downloadUrl = await getDownloadURL(uploadResult.ref);
+
+        const clip = {
+          title: titleRef.current.value,
+          author: auth.userId,
+          privacy: privacyRef.current.value,
+          video_url: downloadUrl,
+          video_meta: videoMeta,
+          likes: [],
+          comments: []
+        };
+
+        const options = {
+          'method': 'POST',
+          'url': `${config.serverUrl}/api/v1/clips`,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.accessToken,
+          },
+          data: clip
+        };
+
+        const response = await axios.request(options);
+        console.log(response.data);
 
         toast.update(toastId, {
           render: "Clipped successfully!",
@@ -142,21 +186,51 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
           isLoading: false,
           autoClose: 2000,
         });        
-        
+
+        setIsUploading(false);
       } catch(e){
+        
         console.log(e);
         toast.update(toastId, {
           render: e.message,
           type: "error",
           isLoading: false,
           autoClose: 2000,
-        });        
+        });
+        setIsUploading(false);
       }
     }
   };
 
+
+  useEffect(() => {
+
+  const onMetadataLoaded = () => {
+    const file = fileRef.current.files[0];
+
+    if(!file){
+      toast.error("File is missing!");
+      console.error("file is missing!");
+      return;
+    }
+
+    setVideoMeta({
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      duration: videoPreviewRef.current.duration,
+      width: videoPreviewRef.current.videoWidth,
+      height: videoPreviewRef.current.videoHeight
+    });
+  };
+
+    videoPreviewRef.current.addEventListener("loadedmetadata", onMetadataLoaded);
+  }, [videoMeta]);
+
   return (
-    <ModalContainer className={!isModalOpen && "hidden"}>
+    <>
+      <OverlayContainer className={!isUploading && "hidden"}/>
+      <ModalContainer className={!isModalOpen && "hidden"}>
       <ModalHeader className='relative'>
         <FlexContainer w="100%" items="center" justify="center">
           <BoldText> Upload Clip </BoldText>
@@ -232,10 +306,10 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
             <BoldText className="mt-2"> Title </BoldText>
             <Input type="text" ref={titleRef}/>
             <BoldText> Cover </BoldText>
-            <Select>
-              <SelectOption> Private </SelectOption>
-              <SelectOption> Followers </SelectOption>
-              <SelectOption> Public </SelectOption>
+            <Select ref={privacyRef}>
+              <SelectOption value='private'> Private </SelectOption>
+              <SelectOption value='followers'> Followers </SelectOption>
+              <SelectOption value='public'> Public </SelectOption>
             </Select>
 
             <BoldText> Run a copyright check </BoldText>
@@ -264,5 +338,7 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
         </FlexContainer>
       </ModalFooter>
     </ModalContainer>
+
+    </>
   );
 }

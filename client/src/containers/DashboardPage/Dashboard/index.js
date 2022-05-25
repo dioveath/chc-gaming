@@ -8,6 +8,8 @@ import tw from 'twin.macro';
 
 const MainSectionContainer = styled.div`
 ${tw`
+w-full
+h-full
 `}
 `;
 

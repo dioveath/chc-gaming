@@ -5,6 +5,7 @@ import regReducer from './RegisterSlice';
 import tourneyReducer from './TourneySlice.js';
 import organizerReducer from './OrganizerDashboardSlice.js';
 import userDashboardReducer from './UserDashboardSlice.js';
+import clipReducer from './ClipSlice';
 
 export default configureStore({
 
@@ -14,7 +15,8 @@ export default configureStore({
     reg: regReducer,
     tourney: tourneyReducer,
     organizer: organizerReducer,
-    userDashboard: userDashboardReducer
+    userDashboard: userDashboardReducer,
+    clip: clipReducer
   }
 
 });

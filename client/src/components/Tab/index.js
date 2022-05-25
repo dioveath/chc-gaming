@@ -1,12 +1,19 @@
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import tw from 'twin.macro';
 
 const TabContainer = styled.div`
+${tw`
+w-full
+h-full
+`}
 `;
 const TabPanelContainer = styled.div`
+${tw`
+w-full
+h-full
+`}
 `;
 
 const TabHeaderContainer = styled.div`

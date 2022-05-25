@@ -6,8 +6,9 @@ const clipUpdateSchema = Joi.object().keys({
   privacy: Joi.string().valid('public', 'followers', 'private'),
   video_url: Joi.string().max(2048),
   video_meta: Joi.object().keys({
+    name: Joi.string().max(2048),
     type: Joi.string().valid('video/mp4', 'video/webm'),
-    length: Joi.number().max(120000), // milliseconds
+    duration: Joi.number().max(120000), // milliseconds
     size: Joi.number().max(100000000), // bytes
     width: Joi.number().max(2160),
     height: Joi.number().max(3840)

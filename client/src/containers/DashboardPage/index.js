@@ -59,6 +59,16 @@ const MenuItems = [
   },
 ];
 
+const ContentContainer = styled.div`
+${tw`
+max-w-2xl
+w-full
+h-full
+px-2
+`}
+`;
+
+
 export default function DashboardPage() {
   const { isPending, isError } = useSelector((state) => state.user);
   const { dashboard } = useSelector((state) => state.userDashboard);
@@ -100,9 +110,9 @@ export default function DashboardPage() {
     <>
       <PageContainer>
         <LeftSideBar menuItems={MenuItems} />
-        <FlexContainer justify="center" pad="0.5rem" gap="1rem">
+	<ContentContainer>
           {renderContent}
-        </FlexContainer>
+        </ContentContainer>
       </PageContainer>
     </>
   );

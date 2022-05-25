@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react';
 import styled from "styled-components";
 import tw from "twin.macro";
 
@@ -21,9 +22,32 @@ hover:cursor-pointer
 
 
 export default function ClipCard({ videoSrc, playCount }){
+  const videoRef = useRef(null);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+
+    if(!cardRef.current || !videoRef.current) return;
+    
+    const onMouseOver = () => {
+      videoRef.current.play();
+    };
+    const onMouseOut = () => {
+      videoRef.current.pause();
+    };    
+
+    cardRef.current.addEventListener('mouseover', onMouseOver);
+    cardRef.current.addEventListener('mouseout', onMouseOut);
+  
+  });
+
   return (
-      <ClipCardContainer>
-	<video src={videoSrc} autoplay="autoplay" muted disablePictureInPicture></video>
+      <ClipCardContainer ref={cardRef}>
+	<video src={videoSrc}
+               ref={videoRef}
+               autoPlay="autoplay"
+               muted
+               disablePictureInPicture></video>
 	<FlexContainer className='absolute bottom-0 px-4 py-8'
                        gap='0.2rem'
                        align='center'>

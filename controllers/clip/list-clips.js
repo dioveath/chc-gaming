@@ -6,7 +6,7 @@ module.exports = function makeListClips(clipAccess){
       'Content-Type': 'application/json'
     };
     try {
-      const clips = await clipAccess.listClips();
+      const clips = await clipAccess.listClips(httpRequest.query);
       return {
         headers,
         statusCode: 200,
