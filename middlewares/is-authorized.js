@@ -18,7 +18,6 @@ module.exports = function isAuthorized(){
 
     // console.log(permissions);
 
-
     if(isPermissionGranted(req, permissions)){
       // stripping out roles & permissions, so that it can't be updated
       // TODO: find a way to update roles by specific permissions       

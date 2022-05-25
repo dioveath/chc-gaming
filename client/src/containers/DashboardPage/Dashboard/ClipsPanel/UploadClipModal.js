@@ -7,7 +7,7 @@ import { storage, ref, uploadString, getDownloadURL } from '../../../../lib/fire
 
 import { Text, BoldText } from "../../../../components/Text";
 import { Input, Select, SelectOption } from "../../../../components/Form";
-import Button, { IconButton } from "../../../../components/Button";
+import Button from "../../../../components/Button";
 import { FlexContainer, WrapContainer } from "../../../../components/base";
 import { FiUploadCloud } from "react-icons/fi";
 
@@ -102,9 +102,8 @@ transition-all
 `}
 `;
 
-export default function UploadClipModal() {
+export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
   const { data } = useSelector(state => state.user);
-  const [isOpen, setModelOpen] = useState(false);
   const [previewVideo, setPreviewVideo] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const fileRef = useRef(null);
@@ -157,16 +156,16 @@ export default function UploadClipModal() {
   };
 
   return (
-    <ModalContainer className={!isOpen && "hidden"}>
+    <ModalContainer className={!isModalOpen && "hidden"}>
       <ModalHeader className='relative'>
         <FlexContainer w="100%" items="center" justify="center">
           <BoldText> Upload Clip </BoldText>
         </FlexContainer>
-        <IconButton className='absolute px-2 py-1 right-0'
+        <Button className='absolute right-0'
                     onClick={() => {
                       onVideoCancel();
-                      setModelOpen(false);
-                    }}> Cancel </IconButton>
+                      setIsModalOpen(false);
+                    }}> Cancel </Button>
       </ModalHeader>
       <ModalBody>
         <WrapContainer w="100%" justify="center" gap='2rem'>
@@ -250,14 +249,14 @@ export default function UploadClipModal() {
       </ModalBody>
       <ModalFooter>
         <FlexContainer
-          className="mt-2"
+          className="my-6"
           w="100%"
           gap="0.5rem"
-          justify="space-between"
+          justify="space-between "
         >
           <Button type="outlined" w="100%" onClick={() => {
             onVideoCancel();
-            setModelOpen(false);
+            setIsModalOpen(false);
           }}>
             Discard
           </Button>

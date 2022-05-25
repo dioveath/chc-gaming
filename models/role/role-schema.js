@@ -2,7 +2,7 @@
 const Joi = require("joi");
 
 const roleUpdateSchema = Joi.object().keys({
-  role_name: Joi.string().min(3).max(20).required(),
+  role_name: Joi.string().min(3).max(20),
   permissions: Joi.array().items(Joi.string())
 });
 
