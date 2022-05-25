@@ -1,6 +1,5 @@
-
 // other controllers and drivers that rely on this API (findUser, listUsers, addUser)
-// FIXME: Gateway | Interactor  -- 
+// TODO: Learn more about Gateway | Interactor  -- 
 
 const { listUsers,
         findUserBy,

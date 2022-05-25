@@ -1,6 +1,3 @@
-
-
-
 const buildMakeMatch = require('./match');
 const matchSchema = require('./match-schema').matchSchema;
 const matchUpdateSchema = require('./match-schema').matchUpdateSchema;
