@@ -91,7 +91,7 @@ export default function MatchesPanel() {
           </Button>
         </FlexContainer>
       </MatchDetailsContainer>
-    </MatchCardContainer>
+        </MatchCardContainer>
       </WrapContainer>
     </Container>
   );

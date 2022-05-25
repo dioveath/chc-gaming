@@ -118,7 +118,9 @@ function App() {
 
       {/* </SkeletonTheme>     */}
 
-      <ToastContainer closeOnClick
+      <ToastContainer theme="dark"
+                      position="bottom-center"
+                      closeOnClick
                       pauseOnFocusLoss
                       pauseOnHover
                       autoClose={5000}/>

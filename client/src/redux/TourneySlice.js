@@ -26,6 +26,15 @@ const tourneySlice = createSlice({
       state.isError = false;      
     },
 
+    updateTourney: (state, action) => {
+      const filtered = state.allTourneys.filter(t => t.id !== action.payload.id);
+      filtered.push(action.payload);
+
+      state.allTourneys = filtered;
+      state.isPending = false;
+      state.isError = false;
+    },
+
     removeTourney: (state, action) => {
       // TODO: implement
       state.isPending = false;

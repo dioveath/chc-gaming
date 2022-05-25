@@ -13,7 +13,8 @@ module.exports = function makeExpressCallback(controller){
         'Content-Type': req.get('Content-Type'),
         Referer: req.get('referer'),
         'User-Agent': req.get('User-Agent')
-      }
+      },
+      user: req.user
     };
     
     controller(httpRequest).then(httpResponse => {

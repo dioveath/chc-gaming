@@ -112,7 +112,7 @@ export default function LeftSideBar({ menuItems }) {
           render: "Profile changed successfully!",
           type: "success",
           isLoading: false,
-          autoClose: 2000,
+          autoClose: 3000,
         });
       } catch (e) {
         console.log(e.message);
@@ -120,7 +120,7 @@ export default function LeftSideBar({ menuItems }) {
           render: e.message,
           type: "error",
           isLoading: false,
-          autoClose: 2000,
+          autoClose: 3000,
         });
       }
     }

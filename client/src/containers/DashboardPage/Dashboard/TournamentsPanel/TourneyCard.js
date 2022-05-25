@@ -8,7 +8,9 @@ import { NormalText, BoldText, Text } from "../../../../components/Text";
 import Button from "../../../../components/Button";
 
 import axios from "axios";
-import { updateTourney } from "../../../../redux/TourneySlice";
+import { toast } from 'react-toastify';
+
+import { updateTourney, pending, error } from "../../../../redux/TourneySlice";
 import config from "../../../../config/config";
 
 const TournamentCardContainer = styled.div`
@@ -52,8 +54,7 @@ rounded-md
 export default function TournamentCard({ tourney }) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const [isPending, setPending] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const { isPending } = useSelector(state => state.tourney);
 
   const [isRegistered, setRegistered] = useState(
     tourney.members.filter((m) => m.member_id === auth.userId).length > 0
@@ -61,11 +62,13 @@ export default function TournamentCard({ tourney }) {
 
   const onRegisterHandler = async (e) => {
     e.preventDefault();
-    setPending(true);
+    dispatch(pending());
+    
+    const toastId = toast.loading("Registering");
 
     const options = {
       method: "POST",
-      url: `${config.serverUrl}/api/v1/tourneys/${tourney.id}/register/${auth.userId}`,
+      url: `${config.serverUrl}/api/v1/tourneys/${tourney.id}/register`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + auth.accessToken,
@@ -74,16 +77,24 @@ export default function TournamentCard({ tourney }) {
 
     try {
       const response = await axios.request(options);
-      dispatch(updateTourney(response.data.updatedTourney));
       setRegistered(
-        tourney.members.filter((m) => m.member_id === auth.userId).length > 0
+        response.data.updatedTourney.members.filter((m) => m.member_id === auth.userId).length > 0
       );
-      setPending(false);
-      setErrors([]);
+      dispatch(updateTourney(response.data.updatedTourney));
+      toast.update(toastId, {
+        render: "Registered Successfully",
+        type: "Success",
+        isLoading: false,
+        autoClose: 3000
+      });
     } catch (e) {
       console.log(e);
-      setPending(false);
-      setErrors(e.response.data.errorList);
+      toast.update(toastId, {
+        render: e.response ? e.response.data.errorList[0] : e.message,
+        type: 'error',
+        isLoading: false,
+        autoclose: 3000
+      });
     }
   };
 
@@ -123,18 +134,6 @@ export default function TournamentCard({ tourney }) {
         <FlexContainer direction="col">
           <NormalText> Modes </NormalText>
           <BoldText> Solo </BoldText>
-        </FlexContainer>
-
-        <FlexContainer direction="col">
-          <ErrorListBox />
-          {errors.map((e) => (
-            <ErrorContainer key={e}>
-              <Text fontSize="0.5rem" color="white">
-                {e}
-              </Text>
-            </ErrorContainer>
-          ))}
-          <ErrorListBox />
         </FlexContainer>
 
         <FlexContainer justify="center" w="100%">
