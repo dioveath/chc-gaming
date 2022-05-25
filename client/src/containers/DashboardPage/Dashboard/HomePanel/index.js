@@ -3,7 +3,6 @@ import tw from 'twin.macro';
 
 import { BoldText } from '../../../../components/Text';
 import Post from '../../../../components/Post';
-import UploadClipModal from './UploadClipModal';
 
 const HomePanelContainer = styled.div`
 
@@ -42,8 +41,6 @@ export default function HomePanel(){
   
   return (
     <HomePanelContainer>
-      
-      <UploadClipModal/>
 
       <BoldText> Highlights </BoldText>
       <AllBadgesContainer>

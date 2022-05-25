@@ -1,9 +1,9 @@
 import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import tw from 'twin.macro';
-import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import tw from "twin.macro";
+import axios from "axios";
 
 import {
   LeftBarContainer,
@@ -16,37 +16,41 @@ import {
 import MenuItem from "../../../components/LeftNavbar/MenuItem.js";
 import { setActiveMenu } from "../../../redux/UserDashboardSlice.js";
 import { FlexContainer } from "../../../components/base";
-import { IconButton } from '../../../components/Button';
+import { IconButton } from "../../../components/Button";
 import { Text } from "../../../components/Text";
 
 import { useMediaQuery } from "react-responsive";
 import { SCREENS } from "../../../components/Responsive";
 import { FaTimes } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { RiEditCircleFill } from 'react-icons/ri';
-import { MdFileDownloadDone } from 'react-icons/md';
-import { toast } from 'react-toastify';
+import { RiEditCircleFill } from "react-icons/ri";
+import { MdFileDownloadDone } from "react-icons/md";
+import { toast } from "react-toastify";
 
-
-import config from '../../../config/config';
-import { storage, ref, uploadString, getDownloadURL } from '../../../lib/firebase';
-import { updateUser } from '../../../redux/UserSlice';
+import config from "../../../config/config";
+import {
+  storage,
+  ref,
+  uploadString,
+  getDownloadURL,
+} from "../../../lib/firebase";
+import { updateUser } from "../../../redux/UserSlice";
 
 const ProfileImageContainer = styled.div`
-${tw`
+  ${tw`
 relative
 `}
 `;
 
 const FileInput = styled.input`
-${tw`
+  ${tw`
 hidden
 `}
 `;
 
 export default function LeftSideBar({ menuItems }) {
   const { data, isPending, error } = useSelector((state) => state.user);
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const { dashboard } = useSelector((state) => state.userDashboard);
   const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
   const [open, setOpen] = useState(!isMobile);
@@ -58,8 +62,7 @@ export default function LeftSideBar({ menuItems }) {
 
   const onProfileImageChange = (e) => {
     const reader = new FileReader();
-    if(e.target.files[0])
-      reader.readAsDataURL(e.target.files[0]);
+    if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
 
     reader.onload = (readerEvent) => {
       setNewProfileImage(readerEvent.target.result);
@@ -74,35 +77,51 @@ export default function LeftSideBar({ menuItems }) {
   };
 
   const updateProfileImage = async (_e) => {
-    console.log("Uploading profile image!");
-    if(newProfileImage) {
+    const toastId = toast.loading("Changing profile picture..!");
+    if (newProfileImage) {
       try {
+        const profileRef = ref(
+          storage,
+          `users/${data.id}/images/profile_image`
+        );
+        const uploadResult = await uploadString(
+          profileRef,
+          newProfileImage,
+          "data_url"
+        );
 
-      const profileRef = ref(storage, `users/${data.id}/images/profile_image`);
-      const uploadResult = await uploadString(profileRef, newProfileImage, 'data_url');
-        
-        removeProfileImage();        
-      const downloadUrl = await getDownloadURL(uploadResult.ref);
+        removeProfileImage();
+        const downloadUrl = await getDownloadURL(uploadResult.ref);
 
-      const options = {
-        method: 'POST',
-        url: `${config.serverUrl}/api/v1/users/${auth.userId}`,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.accessToken,
-        },                
-        data: {
-          profile_link: downloadUrl
-        }
-      };
+        const options = {
+          method: "POST",
+          url: `${config.serverUrl}/api/v1/users/${auth.userId}`,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.accessToken,
+          },
+          data: {
+            profile_link: downloadUrl,
+          },
+        };
 
         const response = await axios.request(options);
         dispatch(updateUser(response.data.updatedUser));
 
-        toast.success("Profile Photo Updated");
-
-      } catch(e){
+        toast.update(toastId, {
+          render: "Profile changed successfully!",
+          type: "success",
+          isLoading: false,
+          autoClose: 2000,
+        });
+      } catch (e) {
         console.log(e.message);
+        toast.update(toastId, {
+          render: e.message,
+          type: "error",
+          isLoading: false,
+          autoClose: 2000,
+        });
       }
     }
   };
@@ -123,37 +142,48 @@ export default function LeftSideBar({ menuItems }) {
         )}
       </FlexContainer>
 
-      <FlexContainer align="center"
-                     justify="center"
-                     gap="1rem"
-                     pad="1rem 0rem">
-	<FlexContainer direction='col'
-                       className="relative">
+      <FlexContainer align="center" justify="center" gap="1rem" pad="1rem 0rem">
+        <FlexContainer direction="col" className="relative">
           <ProfileContainer
-            src={ newProfileImage || data.profile_link }
-            active={open}>
-          </ProfileContainer>
-          { open && (
-            <FlexContainer className="absolute -right-20 -top-14"
-                           gap="1rem"
-                           justify="center"
-                           items="center">
-              <IconButton className="p-1 px-2"
-                          gap="0.4rem"
-                          icon={<RiEditCircleFill size='30' color='white'/>}
-                          onClick={() => {
-                            filePickerRef.current.click();
-                          }}>Edit</IconButton>
-              { newProfileImage &&
-                <IconButton className="p-1 px-2"
-                            icon={<MdFileDownloadDone size='30'color='green'/>}
-                            onClick={updateProfileImage}> Save </IconButton>}
+            src={newProfileImage || data.profile_link}
+            active={open}
+          ></ProfileContainer>
+          {open && (
+            <FlexContainer
+              className="absolute -right-20 -top-14"
+              gap="1rem"
+              justify="center"
+              items="center"
+            >
+              <IconButton
+                className="p-1 px-2"
+                gap="0.4rem"
+                icon={<RiEditCircleFill size="30" color="white" />}
+                onClick={() => {
+                  filePickerRef.current.click();
+                }}
+              >
+                Edit
+              </IconButton>
+              {newProfileImage && (
+                <IconButton
+                  className="p-1 px-2"
+                  icon={<MdFileDownloadDone size="30" color="green" />}
+                  onClick={updateProfileImage}
+                >
+                  {" "}
+                  Save{" "}
+                </IconButton>
+              )}
 
-	      <FileInput type="file"
-                         onChange={onProfileImageChange}
-                         ref={filePickerRef}
-                         accept="image/png, image/gif, image/jpeg"/>
-            </FlexContainer>)}
+              <FileInput
+                type="file"
+                onChange={onProfileImageChange}
+                ref={filePickerRef}
+                accept="image/png, image/gif, image/jpeg"
+              />
+            </FlexContainer>
+          )}
         </FlexContainer>
 
         {open && (
@@ -172,15 +202,15 @@ export default function LeftSideBar({ menuItems }) {
       {open && (
         <ProfileStatsContainer>
           <FlexContainer direction="col" justify="center" align="center">
-            <BoldText> { 0 } </BoldText>
+            <BoldText> {0} </BoldText>
             <NormalText> Clips </NormalText>
           </FlexContainer>
           <FlexContainer direction="col" justify="center" align="center">
-            <BoldText> { data.followers.length }</BoldText>
+            <BoldText> {data.followers.length}</BoldText>
             <NormalText> Followers </NormalText>
           </FlexContainer>
           <FlexContainer direction="col" justify="center" align="center">
-            <BoldText> { data.following.length } </BoldText>
+            <BoldText> {data.following.length} </BoldText>
             <NormalText> Following </NormalText>
           </FlexContainer>
         </ProfileStatsContainer>
@@ -196,7 +226,7 @@ export default function LeftSideBar({ menuItems }) {
               icon={item.icon}
               name={item.name}
               onClick={() => {
-                if(item.name === "Log out") {
+                if (item.name === "Log out") {
                   history.push("/auth/logout");
                   return;
                 }

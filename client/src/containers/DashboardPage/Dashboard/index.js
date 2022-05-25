@@ -1,5 +1,6 @@
 import { Tab, TabPanel } from '../../../components/Tab';
 import HomePanel from './HomePanel';
+import ClipsPanel from './ClipsPanel';
 import TournamentsPanel from './TournamentsPanel';
 import MatchesPanel from './MatchesPanel';
 import styled from 'styled-components';
@@ -17,7 +18,9 @@ export default function Dashboard(){
         <TabPanel name='Home'>
           <HomePanel/>
         </TabPanel>
-        <TabPanel name='Clips'></TabPanel>
+        <TabPanel name='Clips'>
+          <ClipsPanel/>
+        </TabPanel>
         <TabPanel name='Your Matches'>
           <MatchesPanel/>
         </TabPanel>

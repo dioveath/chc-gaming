@@ -1,24 +1,28 @@
 import { useState, useRef } from "react";
+import { useSelector } from 'react-redux';
 import styled from "styled-components";
 import tw from "twin.macro";
+
+import { storage, ref, uploadString, getDownloadURL } from '../../../../lib/firebase';
 
 import { Text, BoldText } from "../../../../components/Text";
 import { Input, Select, SelectOption } from "../../../../components/Form";
 import Button, { IconButton } from "../../../../components/Button";
 import { FlexContainer, WrapContainer } from "../../../../components/base";
-
 import { FiUploadCloud } from "react-icons/fi";
+
+import { toast } from 'react-toastify';
 
 const ModalContainer = styled.div.attrs((props) => ({
   className: props.className
 }))`
   ${tw`
 fixed
-z-50
-w-[80%]
-h-[80%]
-top-[10%]
-left-[10%]
+z-30
+w-full
+h-full
+left-0
+top-0
 overflow-scroll
 bg-black
 border-2
@@ -99,22 +103,57 @@ transition-all
 `;
 
 export default function UploadClipModal() {
-  const [isOpen, setModelOpen] = useState(true);
+  const { data } = useSelector(state => state.user);
+  const [isOpen, setModelOpen] = useState(false);
   const [previewVideo, setPreviewVideo] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
   const fileRef = useRef(null);
   const videoPreviewRef = useRef(null);
+  const titleRef = useRef(null);
+  const privacyRef = useRef(null);
 
   const onVideoChange = (e) => {
-    let fileUrl = "";
-    if (e.target.files[0]) {
-      fileUrl = window.URL.createObjectURL(e.target.files[0]);
-      setPreviewVideo(fileUrl);
-    }
+    const reader = new FileReader();
+    if (e.target.files[0])
+      reader.readAsDataURL(e.target.files[0]);
+
+    reader.onload = (readerEvent) => {
+      setPreviewVideo(readerEvent.target.result);
+    };
+    
   };
 
-  const onVideoCancel = (e) => {
+  const onVideoCancel = (_e) => {
     videoPreviewRef.current.src = "";
     setPreviewVideo(null);
+  };
+
+  const uploadVideoClip = async (_e) => {
+    const toastId = toast.loading("Uploading...");    
+    if(previewVideo){
+      try { 
+        const videoRef = ref(storage, `clips/${data.id}/${titleRef.current.value}:${Date.now()}`);
+
+        const uploadResult = await uploadString(videoRef, previewVideo, 'data_url');
+        const downloadUrl = await getDownloadURL(uploadResult.ref);
+
+        toast.update(toastId, {
+          render: "Clipped successfully!",
+          type: "success",
+          isLoading: false,
+          autoClose: 2000,
+        });        
+        
+      } catch(e){
+        console.log(e);
+        toast.update(toastId, {
+          render: e.message,
+          type: "error",
+          isLoading: false,
+          autoClose: 2000,
+        });        
+      }
+    }
   };
 
   return (
@@ -125,6 +164,7 @@ export default function UploadClipModal() {
         </FlexContainer>
         <IconButton className='absolute px-2 py-1 right-0'
                     onClick={() => {
+                      onVideoCancel();
                       setModelOpen(false);
                     }}> Cancel </IconButton>
       </ModalHeader>
@@ -136,7 +176,8 @@ export default function UploadClipModal() {
               src={previewVideo}
               ref={videoPreviewRef}
               controls
-            ></video>
+            >
+            </video>
 
 
           </VideoContainer>
@@ -190,7 +231,7 @@ export default function UploadClipModal() {
 
           <FlexContainer direction="col" gap="0.4rem">
             <BoldText className="mt-2"> Title </BoldText>
-            <Input type="text" />
+            <Input type="text" ref={titleRef}/>
             <BoldText> Cover </BoldText>
             <Select>
               <SelectOption> Private </SelectOption>
@@ -214,10 +255,13 @@ export default function UploadClipModal() {
           gap="0.5rem"
           justify="space-between"
         >
-          <Button type="outlined" w="100%">
+          <Button type="outlined" w="100%" onClick={() => {
+            onVideoCancel();
+            setModelOpen(false);
+          }}>
             Discard
           </Button>
-          <Button w="100%"> Publish </Button>
+          <Button w="100%" onClick={uploadVideoClip} isLoading={isUploading}> Publish </Button>
         </FlexContainer>
       </ModalFooter>
     </ModalContainer>

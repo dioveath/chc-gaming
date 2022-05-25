@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import tw from "twin.macro";
 import { Link } from "react-router-dom";
 import { FlexContainer } from "./../base";
+import CircleLoader from "react-spinners/CircleLoader";
 
 const BaseButton = styled(Link)`
   ${tw`
@@ -26,14 +27,12 @@ hover:border-2
 hover:border-red-900
 `}
 
-width: ${props => props.w || "auto" };
-height: ${props => props.h || "auto" };
+  width: ${(props) => props.w || "auto"};
+  height: ${(props) => props.h || "auto"};
+
+  ${(props) => props.pad || tw`px-10 py-2`}
 
   ${(props) =>
-    props.pad ||
-    tw`px-10 py-2`}
-
-${(props) =>
     props.size === "large" &&
     css`
       ${tw`
@@ -45,7 +44,6 @@ text-black
     `}
 `;
 
-
 const OutlineButton = styled(BaseButton)`
   background-color: #220303;
   ${tw`
@@ -56,7 +54,8 @@ hover:border-2
 `;
 
 const FilledButton = styled(BaseButton)`
-  background-color: ${props => props.disabled ? tw`bg-gray-900` : '#b71b1b'};
+  background-color: ${(props) =>
+    props.disabled ? tw`bg-gray-900` : "#b71b1b"};
   ${tw`
 hover:bg-gray-800
 hover:border-2
@@ -69,30 +68,36 @@ export default function Button({
   to,
   text,
   size,
+  isLoading,
   onClick,
   disabled,
   children,
   ...props
 }) {
+
   if (type === "outlined")
     return (
       <OutlineButton
         size={size}
-        to={disabled ? "#" : (to ? to : "#")}
+        to={disabled ? "#" : to ? to : "#"}
         onClick={disabled ? () => {} : onClick}
-        disabled={disabled}
+        disabled={isLoading ? true : disabled}
         {...props}
       >
-        {text || children}
+        {isLoading ? <CircleLoader size={'1.3rem'} color='red'/> : text || children}
       </OutlineButton>
     );
   return (
-    <FilledButton to={disabled ? "#" : (to ? to : "#")} onClick={disabled ? () => { } : onClick} disabled={disabled} {...props}>
-      {text || children}
+    <FilledButton
+      to={disabled ? "#" : to ? to : "#"}
+      onClick={disabled ? () => {} : onClick}
+      disabled={isLoading ? true : disabled}
+      {...props}
+    >
+      {isLoading ? <CircleLoader size={'1.3rem'} color='red'/> : text || children}
     </FilledButton>
   );
 }
-
 
 export const SubmitButton = styled.button`
   color: #fff;
@@ -121,11 +126,10 @@ export const SubmitButton = styled.button`
   }
 `;
 
-export const NormalButton = styled.button.attrs(props => ({
+export const NormalButton = styled.button.attrs((props) => ({
   className: props.className,
 }))`
-
-${tw`
+  ${tw`
 flex
 justify-center
 items-center
@@ -145,7 +149,6 @@ ease-in-out
 hover:border-2
 hover:border-red-900
 `}
-
 `;
 
 export function IconButton({ icon, gap, ...props }) {

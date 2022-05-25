@@ -107,7 +107,6 @@ hover:bg-[#222222]
 
 export default function Post(){
   const isMobile = useMediaQuery({maxWidth: SCREENS.sm});
-  console.log(isMobile);
   
   return (
     <PostContainer>

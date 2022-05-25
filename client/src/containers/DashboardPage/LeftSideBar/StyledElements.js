@@ -7,11 +7,11 @@ position: fixed;
 left: 0;
 top: 0;
 ${tw`
+z-20
 bg-black
 shadow-md
 transition-all
 h-screen
-z-10
 overflow-x-hidden
 overflow-y-scroll
 `
