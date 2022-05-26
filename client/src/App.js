@@ -27,6 +27,10 @@ import config from "./config/config.js";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+import { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -65,8 +69,7 @@ function App() {
 
   return (
     <>
-      {/* <SkeletonTheme> */}
-
+      <SkeletonTheme baseColor="#202020" highlightColor="#444">
       <Router>
         <Switch>
 
@@ -116,8 +119,7 @@ function App() {
         </Switch>
       </Router>
 
-      {/* </SkeletonTheme>     */}
-
+      </SkeletonTheme>    
       <ToastContainer theme="dark"
                       position="bottom-center"
                       closeOnClick

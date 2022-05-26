@@ -34,8 +34,6 @@ p-4
 py-6
 shadow-2xl
 transition-all
-backdrop-filter
-
 `}
 `;
 
@@ -116,7 +114,7 @@ left-0
 w-full
 h-full
 bg-white/30
-backdrop-filter
+blur-sm
 `}
 `;
 
@@ -179,15 +177,17 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
 
         const response = await axios.request(options);
         console.log(response.data);
+        
 
         toast.update(toastId, {
           render: "Clipped successfully!",
           type: "success",
           isLoading: false,
           autoClose: 2000,
-        });        
+        });
 
         setIsUploading(false);
+        closeModal();
       } catch(e){
         
         console.log(e);
@@ -200,6 +200,11 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
         setIsUploading(false);
       }
     }
+  };
+
+  const closeModal = () => {
+    onVideoCancel();
+    setIsModalOpen(false);
   };
 
 

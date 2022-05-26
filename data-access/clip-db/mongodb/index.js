@@ -12,8 +12,12 @@ const errorFormatter = require('./errorFormatter');
 function listClips(httpQuery){
   const { pageQuery, ...query } = httpQuery;
 
+  let queryStr = JSON.stringify(query);
+  queryStr = queryStr.replace(/\b(gt|gte|lt|lte|eq|ne)\b/g, match => `$${match}`);
+  let parsedQuery = JSON.parse(queryStr);
+
   let paginationParams = [
-    query ?? {},
+    parsedQuery ?? {},
     typeof pageQuery === "string" ? JSON.parse(pageQuery ?? "{}") : pageQuery,
   ];
 

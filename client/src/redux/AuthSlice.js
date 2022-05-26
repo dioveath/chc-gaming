@@ -46,9 +46,8 @@ const authSlice = createSlice({
       if(token == null) return;
 
       var decodedToken = jwt_decode(token);
-      var currentDate = new Date();
 
-      if(decodedToken.exp * 1000 < currentDate.getTime()) {
+      if(decodedToken.exp * 1000 < Date.now()) {
         state.accessToken = null;
         state.userId = null;
       }
