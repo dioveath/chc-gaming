@@ -70,8 +70,10 @@ overflow-hidden
 
 const AvatarContainer = styled.div`
 ${tw`
+relative
 h-12
 w-12
+bg-black
 rounded-full
 overflow-hidden
 `}
@@ -122,13 +124,39 @@ hover:bg-[#222222]
 `}
 `;
 
-export default function Post({ clip }){
+export const ProfileContainer = styled.img`
+${tw`
+w-full
+h-full
+rounded-full
+overflow-hidden
+object-cover
+shadow-md
+border-2 border-purple-800
+transition-all
+`}
+
+`;
+
+
+export default function Post({ clip, innerRef }){
   const isMobile = useMediaQuery({maxWidth: SCREENS.sm});
   const auth = useSelector(state => state.auth);
 
   const [ author, setAuthor ] = useState(null);
   const [isLoading, setLoading ] = useState(true);
   const [isError, setError] = useState(false);
+
+
+  const clipTime = Date.now() - new Date(clip.updatedAt).getTime();
+
+  
+  let seconds = Math.floor(clipTime/1000);
+  let minutes = Math.floor(clipTime/(1000*60));
+  let hours = Math.floor(clipTime/(1000*60*60));
+  let days = Math.floor(clipTime/(1000*60*60*24));
+
+  let agoTime = (days ? days + " days" : hours ? hours + " hours" : minutes ? minutes + " minutes" : seconds + " seconds") + " ago";
 
   useEffect(() => {
     
@@ -158,14 +186,19 @@ export default function Post({ clip }){
   }, [auth.accessToken, clip.author]);
 
   return (
-    isError ? <PostContainer>
+    isError ? <PostContainer ref={innerRef}>
                 <BoldText> Something went wrong</BoldText>
               </PostContainer> :
-    <PostContainer>
+    <PostContainer ref={innerRef}>
       <PostStatusContainer>
         <AvatarContainer>
-          { isLoading && <Skeleton circle={true}/>}
-          { !isLoading && <img alt="" src={author.profile_link}/>}
+          { isLoading && <Skeleton height={'80px'}
+                                    width={'80px'}
+                                    style={{
+                                      "position": "absolute",
+                                      "top": "-2px"
+                                    }}/>}
+	  { !isLoading && <ProfileContainer src={author.profile_link}/>}
         </AvatarContainer>
         <StatusContainer>
           <FlexContainer gap='0.4rem'>
@@ -174,7 +207,7 @@ export default function Post({ clip }){
             <NormalText> clipped </NormalText>
             <BoldText> { clip.title } </BoldText>
           </FlexContainer>
-          <SmallText> 5 mins ago </SmallText>
+          <SmallText> {agoTime} </SmallText>
         </StatusContainer>
       </PostStatusContainer>
 

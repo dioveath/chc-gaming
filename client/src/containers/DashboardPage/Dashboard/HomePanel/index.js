@@ -1,22 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import axios from 'axios';
 
-import { BoldText, Text } from '../../../../components/Text';
+
+import { Text } from '../../../../components/Text';
 import { FlexContainer } from '../../../../components/base';
 import Post from '../../../../components/Post';
 
-import config from '../../../../config/config';
-import { setClips, pending, error } from '../../../../redux/ClipSlice';
+import { useGetClipsQuery } from '../../../../redux/ClipApi';
 
 import Skeleton from 'react-loading-skeleton';
 import { MdError } from 'react-icons/md';
 
 
-const HomePanelContainer = styled.div`
+const Container = styled.div`
 ${tw`
+w-full
 flex
 flex-col
 gap-6
@@ -54,90 +54,68 @@ place-items-center
 `}
 `;
 
+
 export default function HomePanel(){
   const auth = useSelector(state => state.auth);
-  const dispatch = useDispatch();
-  const {
-    allClips: { clips, pagination },
-    isPending,
-    isError
-  } = useSelector((state) => state.clip);  
+  const [page, setPage] = useState(1);
+  const [clips, setClips] = useState([]);
+
+  const { data, error, isLoading, isFetching } = useGetClipsQuery({ limit: 3, sort: '-createdAt', page: page});
+  
+  const observer = useRef();
+  const lastClipElementRef = useCallback(node => {
+    if(isLoading || isFetching) return;
+    if(observer.current) observer.current.disconnect();
+
+    observer.current = new IntersectionObserver(entries => {
+      if(entries[0].isIntersecting)
+        if(data?.clips?.pagination?.hasNextPage) {
+          setPage(data?.clips?.pagination?.nextPage);
+        }
+    });
+
+    if(node) observer.current.observe(node);
+  }, [isFetching, isLoading, data?.clips?.pagination?.hasNextPage, data?.clips?.pagination?.nextPage]);
 
   useEffect(() => {
-    
-    (async () => {
-      dispatch(pending());
+    const filteredClips = data?.clips?.clips?.filter(c => c.author !== auth.userId);
+    const allClips = [...new Set(clips.concat(filteredClips ? filteredClips : []))];
+    setClips(allClips);
+    console.log("fsadfin");
+  }, [data?.clips?.pagination?.page, auth.userId]);
 
-      try {
-        const options = {
-          method: 'GET',
-          url: `${config.serverUrl}/api/v1/clips`,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + auth.accessToken
-          },
-          params: {
-            privacy: 'public',
-            author: { 'ne': auth.userId }
-          },
-          paramsSerializer: (params) => {
-            return Object.entries(params).map(([key, value]) => {
-              if(typeof value !== 'object')
-                return `${key}=${value}`;
-              return Object.entries(value).map(([k, v]) => `${key}[${k}]=${v}`).join('&');
-            }).join('&');
-            // return params;
-          }
-        };
-
-        const response = await axios.request(options);
-        dispatch(setClips(response.data.clips));
-        
-      } catch(e){
-        console.log(e);
-        dispatch(error(e.response ? e.response.data.errorList : e.message));
-      }
-
-    })();
-
-  }, [auth.accessToken, dispatch, auth.userId]);
-  
   return (
-    <HomePanelContainer>
-
-      <BoldText> Highlights </BoldText>
-      <AllBadgesContainer>
-        <BadgeContainer>
-          FIFA 
-        </BadgeContainer>
-        <BadgeContainer outlined>
-          PUBG Mobile 
-        </BadgeContainer>
-        <BadgeContainer outlined>
-          DOTA 2
-        </BadgeContainer>                        
-      </AllBadgesContainer>
-
+    <Container>
+      <Text fontSize='1.2rem' fontWeight='700'> Highlights </Text>
       {
-        isPending ?
-	  <Skeleton count={10}/>
-          : clips.map((clip) => {
-            return <Post clip={clip}/>;
-          })
+        (isLoading || !clips) ?
+       	  <Skeleton count={10}/>
+        : clips.map((clip, index) => {
+          if(clips.length === index + 1) {
+            return <Post innerRef={lastClipElementRef} key={clip.id} clip={clip}/>;
+          }
+          return <Post key={clip.id} clip={clip}/>;          
+        })
       }
 
-      { isError &&
+      { isFetching && <>
+                        <Skeleton count={10}/>
+			<br />
+                        <Skeleton count={10}/>                        
+                      </> }
+
+      { error &&
         <CenterContainer>
 	  <FlexContainer direction='col'
-                                    align='center'
-                                    justify='center'>
-                       <MdError size={40} color='white'/>
-		       <Text className="text-xl fomt-semibold"> Something went wrong!</Text>                       
-                     </FlexContainer>        
+                         align='center'
+                         justify='center'>
+            <MdError size={40} color='white'/>
+	    <Text className="text-xl fomt-semibold"> Something went wrong!</Text>                       
+          </FlexContainer>        
       </CenterContainer>
     }
 
-    </HomePanelContainer>
+    </Container>
   );
 
 }

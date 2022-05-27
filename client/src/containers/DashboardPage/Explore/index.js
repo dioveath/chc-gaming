@@ -1,9 +1,10 @@
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
 
-import { BoldText, Text } from '../../../components/Text';
+import { Text } from '../../../components/Text';
 import { FlexContainer } from '../../../components/base';
 import Post from '../../../components/Post';
 
@@ -15,6 +16,7 @@ import { MdError } from 'react-icons/md';
 
 const Container = styled.div`
 ${tw`
+w-full
 flex
 flex-col
 gap-6
@@ -53,33 +55,53 @@ place-items-center
 `;
 
 
-export default function HomePanel(){
-  const { data, error, isLoading, isFetching } = useGetClipsQuery();
+export default function ExplorePage(){
   const auth = useSelector(state => state.auth);
+  const [page, setPage] = useState(1);
+  const [clips, setClips] = useState([]);
+
+  const { data, error, isLoading, isFetching } = useGetClipsQuery({ limit: 2, sort: '-createdAt', page: page});
+  
+  const observer = useRef();
+  const lastClipElementRef = useCallback(node => {
+    if(isLoading || isFetching) return;
+    if(observer.current) observer.current.disconnect();
+
+    observer.current = new IntersectionObserver(entries => {
+      if(entries[0].isIntersecting)
+        if(data?.clips?.pagination?.hasNextPage) {
+          setPage(data?.clips?.pagination?.nextPage);
+        }
+    });
+
+    if(node) observer.current.observe(node);
+  }, [isFetching, isLoading, data?.clips?.pagination?.hasNextPage, data?.clips?.pagination?.nextPage]);
+
+  useEffect(() => {
+    const filteredClips = data?.clips?.clips?.filter(c => c.author !== auth.userId);
+    const allClips = [...new Set(clips.concat(filteredClips ? filteredClips : []))];
+    setClips(allClips);
+  }, [data?.clips?.pagination?.page, auth.userId]);
 
   return (
     <Container>
-
-      <BoldText> Highlights </BoldText>
-      <AllBadgesContainer>
-        <BadgeContainer>
-          FIFA 
-        </BadgeContainer>
-        <BadgeContainer outlined>
-          PUBG Mobile 
-        </BadgeContainer>
-        <BadgeContainer outlined>
-          DOTA 2
-        </BadgeContainer>                        
-      </AllBadgesContainer>
-
+      <Text fontSize='1.4rem' fontWeight='700'> Explore </Text>
       {
-        (isFetching || isLoading || !data?.clips?.clips) ?
+        (isLoading || !clips) ?
       	  <Skeleton count={10}/>
-        : data.clips.clips.filter(c => c.author !== auth.userId).map((clip) => {
-          return <Post clip={clip}/>;
+        : clips.map((clip, index) => {
+          if(clips.length === index + 1) {
+            return <Post innerRef={lastClipElementRef} key={clip.id} clip={clip}/>;
+          }
+          return <Post key={clip.id} clip={clip}/>;          
         })
       }
+
+      { isFetching && <>
+                        <Skeleton count={10}/>
+			<br />
+                        <Skeleton count={10}/>                        
+                      </> }      
 
       { error &&
         <CenterContainer>

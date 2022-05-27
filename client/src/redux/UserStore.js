@@ -19,6 +19,8 @@ export default configureStore({
     userDashboard: userDashboardReducer,
     clip: clipReducer,
     clipApi: clipApi.reducer
-  }
+  },
+
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(clipApi.middleware)
 
 });

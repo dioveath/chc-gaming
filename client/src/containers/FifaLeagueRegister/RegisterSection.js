@@ -7,7 +7,7 @@ import axios from 'axios';
 import KhaltiCheckout from "khalti-checkout-web";
 import { FaPhoneAlt } from 'react-icons/fa';
 
-import FifaLeaguePoster from '../../assets/images/fifa_league_poster.png';
+// import FifaLeaguePoster from '../../assets/images/fifa_league_poster.png';
 // import FifaS3IntroVideo from '../../assets/videos/fifa_s3_intro.mp4';
 import KhaltiLogo from '../../assets/images/khalti_logo.png';
 

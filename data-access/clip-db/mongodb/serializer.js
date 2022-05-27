@@ -10,7 +10,9 @@ const _serializeSingle = (clip) => {
     "video_url": clip.video_url,
     "video_meta": clip.video_meta,
     "likes": clip.likes,
-    "comments": clip.comments
+    "comments": clip.comments,
+    "createdAt": clip.createdAt,
+    "updatedAt": clip.updatedAt
   };
 };
 
