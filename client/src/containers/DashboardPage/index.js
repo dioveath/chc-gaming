@@ -6,6 +6,7 @@ import LeftSideBar from "./LeftSideBar";
 import Dashboard from "./Dashboard";
 import FriendsPage from "./Friends";
 import ClanPage from "./Clan";
+import ExplorePage from './Explore';
 
 import { FlexContainer } from "../../components/base";
 
@@ -50,7 +51,7 @@ const MenuItems = [
   {
     name: "Explore",
     icon: <FcLandscape />,
-    content: <Dashboard />,
+    content: <ExplorePage />,
   },
   {
     name: "Log out",

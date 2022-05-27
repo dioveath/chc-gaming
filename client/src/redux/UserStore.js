@@ -6,6 +6,7 @@ import tourneyReducer from './TourneySlice.js';
 import organizerReducer from './OrganizerDashboardSlice.js';
 import userDashboardReducer from './UserDashboardSlice.js';
 import clipReducer from './ClipSlice';
+import { clipApi } from './ClipApi';
 
 export default configureStore({
 
@@ -16,7 +17,8 @@ export default configureStore({
     tourney: tourneyReducer,
     organizer: organizerReducer,
     userDashboard: userDashboardReducer,
-    clip: clipReducer
+    clip: clipReducer,
+    clipApi: clipApi.reducer
   }
 
 });
