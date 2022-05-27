@@ -4,3 +4,10 @@ node_modules
 .git
 khalti_secrets.txt
 PROJECT_TRACKER.org
+
+/client/public
+/client/src
+/client/*.*
+/nginx
+/server
+/test

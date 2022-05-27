@@ -32,7 +32,6 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.14",
     "twin.macro": "^2.7.0",
     "video-react": "^0.15.0",
-    "video.js": "^7.18.1",
     "web-vitals": "^1.1.2",
     "webpack": "4.44.2"
   },

@@ -11,8 +11,6 @@ import FifaLeaguePoster from '../../assets/images/fifa_league_poster.png';
 // import FifaS3IntroVideo from '../../assets/videos/fifa_s3_intro.mp4';
 import KhaltiLogo from '../../assets/images/khalti_logo.png';
 
-import VideoJs from 'video.js';
-import 'video.js/dist/video-js.css';
 import Youtube from 'react-youtube';
 
 import { Marginer } from '../../components/Marginer';
