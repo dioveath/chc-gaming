@@ -12,21 +12,30 @@
 ** DONE Buy Domain and Hosting and deploy the Site. (Used heroku free)
 
 * User / Players
-** DONE Needs to get his Upcoming Matches  
-** Needs to get Upcoming Tournaments based on his ranks and other stats
+** DONE Needs to get his Upcoming Matches
+** DELEGATED Compress video files 
+** TODO Rank System,
+** TODO Followers, Following system      
+** TODO Clips Like system
+** TODO Clips share system seo optimized for facebook share
+** TODO Twilio verification client side
+** TODO Needs to get Upcoming Tournaments based on his ranks and other stats
 
 * Tournament Organizer
 ** Tournament Dashboard Create all UIs without states
+** Basic tournament fixture generator based on no. of players
+** Tournament overview page for users
    
 
 * TO FIX
 ** DONE running in production mode...! Where this coming from? FROM Mongoose connection
-** IN-PROGRESS fix UIs components to a stable system
+** DONE fix UIs components to a stable system
+** TODO Fix UI for mobile phones
    
 
 * TO RESEARCH
-** Needs refactoring permissions, role system
-** TODO Create a flexible UI component system for further UI works (Create kind of like Chakra UI)   
+** DELEGATED Needs refactoring permissions, role system
+** DONE Create a flexible UI component system for further UI works (Create kind of like Chakra UI)   
 
 
 * FUTURE IDEAS

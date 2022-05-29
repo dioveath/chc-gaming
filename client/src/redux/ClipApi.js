@@ -16,12 +16,22 @@ export const clipApi = createApi({
   reducerPath: "clipApi",
   baseQuery: baseQuery,
   endpoints: (builder) => ({
-    getClipById: builder.query({ query: (id) => `clips/${id}` }),
+    getClipById: builder.query({
+      query: (id) => `clips/${id}`
+    }),
     getClips: builder.query({
       query: ({ page = 1, sort = "createdAt", limit = 2 }) =>
         `clips?pageQuery=%7B%20%22limit%22%3A%20${limit},%20%22page%22%3A%20${page},%20%22sort%22%3A%20%22${sort}%22%7D`,
     }),
+    updateClip: builder.mutation({ query: (data) => {
+      const { id, ...body } = data;
+      return {
+        url: `clips/${id}`,
+        method: 'POST',
+        body,
+      };
+    }}),
   }),
 });
 
-export const { useGetClipByIdQuery, useGetClipsQuery } = clipApi;
+export const { useGetClipByIdQuery, useGetClipsQuery, useUpdateClipMutation } = clipApi;

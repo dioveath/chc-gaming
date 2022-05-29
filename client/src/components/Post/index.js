@@ -20,9 +20,12 @@ import { useMediaQuery } from 'react-responsive';
 import { SCREENS } from '../Responsive';
 import axios from 'axios';
 import config from '../../config/config';
+import { useUpdateClipMutation } from '../../redux/ClipApi.js';
 
 import { Player, BigPlayButton } from 'video-react';
 import 'video-react/dist/video-react.css';
+
+import { toast } from 'react-toastify';
 
 
 const PostContainer = styled.div.attrs((props) => ({
@@ -146,7 +149,7 @@ export default function Post({ clip, innerRef }){
   const [ author, setAuthor ] = useState(null);
   const [isLoading, setLoading ] = useState(true);
   const [isError, setError] = useState(false);
-
+  const [updateClip, { isLoading: isUpdating }] = useUpdateClipMutation();
 
   const clipTime = Date.now() - new Date(clip.updatedAt).getTime();
 
@@ -238,7 +241,16 @@ export default function Post({ clip, innerRef }){
           </FlexContainer>          
         </StatsContainer>
         <InteractableContainer>
-          <CardButton>
+          <CardButton onClick={() => {
+            let likesCopy = [...(clip.likes)];
+            const index = likesCopy.findIndex(e => e === auth.userId);
+            if(index === -1)
+              likesCopy.push(auth.userId);
+            else
+              likesCopy.splice(index, 1);
+            updateClip({id: clip.id, likes: likesCopy });
+            toast.info("Liking the clip");
+          }}>
             <AiFillHeart color='red'/>
             { isMobile || <SmallText> Like </SmallText> }
           </CardButton>
