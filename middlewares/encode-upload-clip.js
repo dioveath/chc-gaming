@@ -95,6 +95,7 @@ const encodingAndUploading = async (job, done) => {
       })
       .on("error", (err, stdout, stderr) => {
         console.log("Cannot process video: " + err.message, stdout, stderr);
+        fs.unlinkSync(file.tempFilePath);        
         // job.failed().error(err);
       })
       .on("end", async () => {
@@ -126,7 +127,8 @@ const encodingAndUploading = async (job, done) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log('Upload is ' + progress + '% done');
           }, (error) => {
-            console.log('Upload failed:', error.message);            
+            console.log('Upload failed:', error.message);
+            fs.unlinkSync(videoPath);            
           }, async () => {
             console.log('Uploaded a blob or file!');
             const downloadUrl = await getDownloadURL(videoRef);
@@ -134,7 +136,8 @@ const encodingAndUploading = async (job, done) => {
               video_url: downloadUrl,
               metadata
             });
-            // fs.unlinkSync(videoPath);
+
+            fs.unlinkSync(videoPath);
 
             if(encodedUploadedVideos.length == multipleResolution.length) done(encodedUploadedVideos, null);
           });
@@ -150,6 +153,7 @@ const encodingAndUploading = async (job, done) => {
   } catch (error) {
     console.log("Error: ", error);
     done(null, error);
+    fs.unlinkSync(file.tempFilePath);    
   }
 };
 
