@@ -18,3 +18,5 @@ server/khalti_secrets.txt
 server/.env
 server/node_modules
 **/*.mp4
+
+/streams

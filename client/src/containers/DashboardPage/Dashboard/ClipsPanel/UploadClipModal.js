@@ -150,34 +150,22 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
     const toastId = toast.loading("Uploading...");
     if(previewVideo){
       try {
-        const videoRef = ref(storage, `clips/${data.id}/${videoMeta.name}`);
-
-        const uploadResult = await uploadString(videoRef, previewVideo, 'data_url');
-        const downloadUrl = await getDownloadURL(uploadResult.ref);
-
-        const clip = {
-          title: titleRef.current.value,
-          author: auth.userId,
-          privacy: privacyRef.current.value,
-          video_url: downloadUrl,
-          video_meta: videoMeta,
-          likes: [],
-          comments: []
-        };
-
-        const options = {
+        let formData = new FormData();
+        formData.append('clip', fileRef.current.files[0]);
+        formData.append('title', titleRef.current.value);
+        formData.append('privacy', privacyRef.current.value);
+        console.log(formData);
+        let options = {
           'method': 'POST',
-          'url': `${config.serverUrl}/api/v1/clips`,
+          'url': `${config.serverUrl}/api/v1/clips/encode`,
           headers: {
-            "Content-Type": "application/json",
             Authorization: "Bearer " + auth.accessToken,
           },
-          data: clip
+          data: formData
         };
 
-        const response = await axios.request(options);
-        console.log(response.data);
-        
+        let response = await axios.request(options);
+        console.log(response);
 
         toast.update(toastId, {
           render: "Clipped successfully!",

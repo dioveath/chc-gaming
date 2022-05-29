@@ -24,6 +24,8 @@
     "express-fileupload": "^1.4.0",
     "express-openid-connect": "^2.5.0",
     "express-session": "^1.17.2",
+    "firebase": "^9.8.2",
+    "fluent-ffmpeg": "^2.1.2",
     "jest": "^26.6.0",
     "joi": "^17.4.2",
     "joi-oid": "^1.1.2",
