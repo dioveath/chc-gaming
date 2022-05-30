@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import tw from "twin.macro";
 
@@ -10,9 +10,7 @@ import { FlexContainer, WrapContainer } from "../../../../components/base";
 import Button from "../../../../components/Button";
 import { Text } from "../../../../components/Text";
 
-import axios from "axios";
-import config from "../../../../config/config";
-import { setClips, pending, error } from "../../../../redux/ClipSlice";
+import { useGetClipsQuery } from "../../../../redux/ClipApi";
 import BounceLoader from "react-spinners/BounceLoader";
 
 import { MdError } from 'react-icons/md';
@@ -34,39 +32,9 @@ place-items-center
 `;
 
 export default function ClipsPanel() {
-  const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
-  const {
-    allClips: { clips, pagination },
-    isPending,
-    isError
-  } = useSelector((state) => state.clip);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const options = {
-        method: "GET",
-        url: `${config.serverUrl}/api/v1/clips`,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.accessToken,
-        },
-        params: {
-          author: auth.userId,
-        },
-      };
-
-      try {
-        dispatch(pending());
-        const response = await axios.request(options);
-        dispatch(setClips(response.data.clips));
-      } catch (e) {
-        console.log(e);
-        dispatch(error(e.response ? e.response.data.errorList : e.message));
-      }
-    })();
-  }, [auth.accessToken, auth.userId, dispatch]);
+  const auth = useSelector(state => state.auth);
+  const { data, error, isLoading } = useGetClipsQuery({ author: auth.userId });
 
   return (
     <Container>
@@ -83,13 +51,13 @@ export default function ClipsPanel() {
         <Button onClick={() => setIsModalOpen(true)}> Upload Clip </Button>
       </FlexContainer>
 
-      {isPending ? (
+      {isLoading ? (
         <LoadingContainer>
           <BounceLoader color="red" />
         </LoadingContainer>
       ) : (
         <WrapContainer gap="1rem">
-          {clips.map((c) => {
+          {data?.clips?.clips?.map((c) => {
             return (
               <ClipCard key={c.id} clip={c} />
             );
@@ -97,7 +65,7 @@ export default function ClipsPanel() {
         </WrapContainer>
       )}
 
-      {isError && <LoadingContainer>
+      {error && <LoadingContainer>
 		     <FlexContainer direction='col'
                                     align='center'
                                     justify='center'>

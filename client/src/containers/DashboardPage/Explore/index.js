@@ -60,8 +60,8 @@ export default function ExplorePage(){
   const [page, setPage] = useState(1);
   const [clips, setClips] = useState([]);
 
-  const { data, error, isLoading, isFetching } = useGetClipsQuery({ limit: 2, sort: '-createdAt', page: page});
-  
+  const { data, error, isLoading, isFetching } = useGetClipsQuery({ pageQuery: {limit: 3, sort: '-createdAt', page: page}});
+
   const observer = useRef();
   const lastClipElementRef = useCallback(node => {
     if(isLoading || isFetching) return;
@@ -81,7 +81,7 @@ export default function ExplorePage(){
     const filteredClips = data?.clips?.clips?.filter(c => c.author !== auth.userId);
     const allClips = [...new Set(clips.concat(filteredClips ? filteredClips : []))];
     setClips(allClips);
-  }, [data?.clips?.pagination?.page, auth.userId]);
+  }, [data?.clips?.pagination?.page]);
 
   return (
     <Container>

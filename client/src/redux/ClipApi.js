@@ -15,29 +15,53 @@ const baseQuery = fetchBaseQuery({
 export const clipApi = createApi({
   reducerPath: "clipApi",
   baseQuery: baseQuery,
+  tagTypes: ['Clips'],
   endpoints: (builder) => ({
-    getClipById: builder.query({
-      query: (id) => `clips/${id}`
+    getClip: builder.query({
+      query: (id) => `clips/${id}`,
+      providesTags: (_result, _error, id) => [{ type: "Clips", id }],
     }),
     getClips: builder.query({
-      query: ({ page = 1, sort = "createdAt", limit = 2 }) =>
-        `clips?pageQuery=%7B%20%22limit%22%3A%20${limit},%20%22page%22%3A%20${page},%20%22sort%22%3A%20%22${sort}%22%7D`,
+      query: ({ pageQuery, ...query }) => ({
+        url: `clips`,
+        params: { pageQuery: JSON.stringify(pageQuery), ...query }
+      }),
+      // : { page = 1, sort = "createdAt", limit = 3 }      
+      // `clips?pageQuery=%7B%20%22limit%22%3A%20${limit},%20%22page%22%3A%20${page},%20%22sort%22%3A%20%22${sort}%22%7D`,
+      providesTags: (result, _error, _query) =>
+      result?.clips?.clips
+          ? [
+            ...result.clips.clips.map(({ id }) => ({ type: "Clips", id })),
+              { type: "Clips", id: "LIST" },
+            ]
+          : [{ type: "Clips", id: "LIST" }],
     }),
-    updateClip: builder.mutation({ query: (data) => {
-      const { id, ...body } = data;
-      return {
-        url: `clips/${id}`,
-        method: 'POST',
-        body,
-      };
-    }}),
-    deleteClip: builder.mutation({ query: (id) => {
-      return {
-        url: `clips/${id}`,
-        method: 'DELETE'
-      };
-    }})
+    updateClip: builder.mutation({
+      query: (data) => {
+        const { id, ...body } = data;
+        return {
+          url: `clips/${id}`,
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: (_result, _error, { id }) => [{type: 'Clips', id }]
+    }),
+    deleteClip: builder.mutation({
+      query: (id) => {
+        return {
+          url: `clips/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: (_result, _error, id) => [{type: 'Clips', id }]
+    }),
   }),
 });
 
-export const { useGetClipByIdQuery, useGetClipsQuery, useUpdateClipMutation, useDeleteClipMutation } = clipApi;
+export const {
+  useGetClipQuery,
+  useGetClipsQuery,
+  useUpdateClipMutation,
+  useDeleteClipMutation,
+} = clipApi;
