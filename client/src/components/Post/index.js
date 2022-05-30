@@ -20,7 +20,7 @@ import { useMediaQuery } from 'react-responsive';
 import { SCREENS } from '../Responsive';
 import axios from 'axios';
 import config from '../../config/config';
-import { useUpdateClipMutation } from '../../redux/ClipApi.js';
+import { useUpdateClipMutation, useGetClipQuery } from '../../redux/ClipApi.js';
 
 import { Player, BigPlayButton } from 'video-react';
 import 'video-react/dist/video-react.css';
@@ -142,7 +142,7 @@ transition-all
 `;
 
 
-export default function Post({ clip, innerRef }){
+export default function Post({ clip: propClip, innerRef }){
   const isMobile = useMediaQuery({maxWidth: SCREENS.sm});
   const auth = useSelector(state => state.auth);
 
@@ -151,8 +151,10 @@ export default function Post({ clip, innerRef }){
   const [isError, setError] = useState(false);
   const [updateClip, { isLoading: isUpdating }] = useUpdateClipMutation();
 
-  const clipTime = Date.now() - new Date(clip.updatedAt).getTime();
+  const { data, error } = useGetClipQuery(propClip.id);
+  const clip = data?.clip || propClip;
 
+  const clipTime = Date.now() - new Date(clip.createdAt).getTime();
   
   let seconds = Math.floor(clipTime/1000);
   let minutes = Math.floor(clipTime/(1000*60));
@@ -248,8 +250,12 @@ export default function Post({ clip, innerRef }){
               likesCopy.push(auth.userId);
             else
               likesCopy.splice(index, 1);
-            updateClip({id: clip.id, likes: likesCopy });
-            toast.info("Liking the clip");
+
+            toast.promise(updateClip({id: clip.id, likes: likesCopy }), {
+              loading: likesCopy.length > clip.likes.length ? "Liking.." : "Unliking.." ,
+              success: likesCopy.length > clip.likes.length ? "Liked" : "Unliked" ,
+              error: "Couldn't like the clip!"
+            });
           }}>
             <AiFillHeart color='red'/>
             { isMobile || <SmallText> Like </SmallText> }

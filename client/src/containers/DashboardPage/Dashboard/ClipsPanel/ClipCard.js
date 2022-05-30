@@ -8,7 +8,7 @@ import { BsFillPlayFill } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 
 import { Modal, ModalHeader, useModal } from "../../../../components/Modal";
-import { useDeleteClipMutation } from "../../../../redux/ClipApi";
+import { useDeleteClipMutation, useGetClipQuery } from "../../../../redux/ClipApi";
 import { toast } from "react-toastify";
 
 const ClipCardContainer = styled.div`
@@ -25,11 +25,14 @@ hover:cursor-pointer
 `}
 `;
 
-export default function ClipCard({ clip }) {
+export default function ClipCard({ clip: propClip }) {
   const videoRef = useRef(null);
   const cardRef = useRef(null);
   const { isOpen, onClose, onOpen } = useModal();
   const [deleteClip, { isLoading: isUpdating }] = useDeleteClipMutation();
+  const { data, error } = useGetClipQuery(propClip.id);
+
+  const clip = data?.clip || propClip;
 
   useEffect(() => {
     if (!cardRef.current || !videoRef.current) return;
