@@ -91,7 +91,7 @@ export default function ClipsPanel() {
         <WrapContainer gap="1rem">
           {clips.map((c) => {
             return (
-              <ClipCard key={c.id} keyplayCount={10} videoSrc={c.video_url} />
+              <ClipCard key={c.id} clip={c} />
             );
           })}
         </WrapContainer>

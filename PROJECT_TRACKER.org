@@ -13,20 +13,21 @@
 
 * User / Players
 ** DONE Needs to get his Upcoming Matches
-** DELEGATED Compress video files 
+** DONE Compress video files
+** IN-PROGRESS Clips Like feature
+** TODO Clips delete feature   
 ** TODO Rank System,
-** TODO Followers, Following system      
-** TODO Clips Like system
+** TODO Followers, Following system
+** TODO Needs to get Upcoming Tournaments based on his ranks and other stats   
 ** TODO Clips share system seo optimized for facebook share
 ** TODO Twilio verification client side
-** TODO Needs to get Upcoming Tournaments based on his ranks and other stats
+   
 
 * Tournament Organizer
 ** Tournament Dashboard Create all UIs without states
 ** Basic tournament fixture generator based on no. of players
 ** Tournament overview page for users
    
-
 * TO FIX
 ** DONE running in production mode...! Where this coming from? FROM Mongoose connection
 ** DONE fix UIs components to a stable system

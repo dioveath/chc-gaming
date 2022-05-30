@@ -31,7 +31,13 @@ export const clipApi = createApi({
         body,
       };
     }}),
+    deleteClip: builder.mutation({ query: (id) => {
+      return {
+        url: `clips/${id}`,
+        method: 'DELETE'
+      };
+    }})
   }),
 });
 
-export const { useGetClipByIdQuery, useGetClipsQuery, useUpdateClipMutation } = clipApi;
+export const { useGetClipByIdQuery, useGetClipsQuery, useUpdateClipMutation, useDeleteClipMutation } = clipApi;
