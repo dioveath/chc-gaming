@@ -61,7 +61,12 @@ export default function HomePanel(){
   const [page, setPage] = useState(1);
   const [clips, setClips] = useState([]);
 
-  const { data, error, isLoading, isFetching } = useGetClipsQuery({pageQuery: { limit: 3, sort: '-createdAt', page: page}});
+  const followings = user?.following.map((f) => ({ author: f}));
+
+  const { data, error, isLoading, isFetching } = useGetClipsQuery({
+    $or: followings || [],
+    privacy: 'public',
+    pageQuery: { limit: 3, sort: '-createdAt', page: page}});
   
   const observer = useRef();
   const lastClipElementRef = useCallback(node => {

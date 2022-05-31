@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import config from "../config/config";
+import qs from 'qs';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${config.serverUrl}/api/v1`,
@@ -11,12 +12,7 @@ const baseQuery = fetchBaseQuery({
     return headers;
   },
   paramsSerializer: (params) => {
-    const paramString =  Object.entries(params).map(([key, value]) => {
-      if(typeof value !== 'object')
-        return `${key}=${value}`;
-      return Object.entries(value).map(([k, v]) => `${key}[${k}]=${JSON.stringify(v)}`).join('&');
-    }).join('&');
-
+    const paramString = qs.stringify(params);
     return paramString;
   },
 });
@@ -33,7 +29,7 @@ export const clipApi = createApi({
     getClips: builder.query({
       query: ({ pageQuery = {}, ...query }) => ({
         url: `clips`,
-        params: { pageQuery: JSON.stringify(pageQuery), ...query }
+        params: { pageQuery: pageQuery, ...query }
       }),
       providesTags: (result, _error, _query) =>
       result?.clips?.clips

@@ -7,16 +7,15 @@ const serialize = require('./serializer');
 const makeClip = require('../../../models/clip/index').makeClip;
 const makeUpdateClip = require('../../../models/clip/index').makeUpdateClip;
 const errorFormatter = require('./errorFormatter');
+const qs = require('qs');
 
 function listClips(httpQuery){
   const { pageQuery, ...query } = httpQuery;
 
-  let queryStr = JSON.stringify(query);
-  queryStr = queryStr.replace(/\b(gt|gte|lt|lte|eq|ne|or)\b/g, match => `$${match}`);
-  let parsedQuery = JSON.parse(queryStr);
+  console.log(query);
 
   let paginationParams = [
-    parsedQuery ?? {},
+    query,
     typeof pageQuery === "string" ? JSON.parse(pageQuery ?? "{}") : pageQuery,
   ];
 

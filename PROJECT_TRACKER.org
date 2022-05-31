@@ -16,7 +16,7 @@
 ** DONE Compress video files
 ** DONE Clips (Like) feature
 ** DONE Clips delete feature
-** TODO Followers, Following system   
+** DONE Followers, Following system
 ** TODO Rank System,
 ** TODO Needs to get Upcoming Tournaments based on his ranks and other stats   
 ** TODO Clips share system seo optimized for facebook share

@@ -36,7 +36,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "query-string": "^7.1.1",
+    "qs": "^6.10.3",
     "random-key": "^0.3.2",
     "twilio": "^3.77.1"
   },
