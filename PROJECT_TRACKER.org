@@ -1,5 +1,5 @@
 * Welcome to Charicha League  
-
+** Current Version: 0.0.3
 
 * Minimum Viable Product
 ** Basic Premise
@@ -17,6 +17,7 @@
 ** DONE Clips (Like) feature
 ** DONE Clips delete feature
 ** DONE Followers, Following system
+** TODO Image encode & omptimize    
 ** TODO Rank System,
 ** TODO Needs to get Upcoming Tournaments based on his ranks and other stats   
 ** TODO Clips share system seo optimized for facebook share
