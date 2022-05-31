@@ -51,8 +51,6 @@ export default function FriendsPage(){
   }, [ data, user]);
 
 
-  console.log(followings);
-
   return (
     <Container>
       <FlexContainer

@@ -31,7 +31,7 @@ export const clipApi = createApi({
       providesTags: (_result, _error, id) => [{ type: "Clips", id }],
     }),
     getClips: builder.query({
-      query: ({ pageQuery, ...query }) => ({
+      query: ({ pageQuery = {}, ...query }) => ({
         url: `clips`,
         params: { pageQuery: JSON.stringify(pageQuery), ...query }
       }),

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import tw from "twin.macro";
@@ -51,18 +50,32 @@ export default function ProfileCard({ user: propUser }) {
   const followed = !(currentUser.following.findIndex((e) => e === user.id) === -1);
 
   const followHandler = () => {
-    let followingCopy = [...currentUser.following];
-    const index = followingCopy.findIndex((e) => e === user.id);
-    if (index === -1) followingCopy.push(user.id);
-    else followingCopy.splice(index, 1);
+    let currentUserFollowing = [...currentUser.following];
+    let userFollowers = [...user.followers];
 
-    toast.promise(updateUser({ id: currentUser.id, following: followingCopy }), {
+    let  index = currentUserFollowing.findIndex((e) => e === user.id);
+    if (index === -1)
+      currentUserFollowing.push(user.id);
+    else 
+      currentUserFollowing.splice(index, 1);
+
+    index = userFollowers.findIndex((e) => e === currentUser.id);
+    if (index === -1)
+      userFollowers.push(currentUser.id);
+    else 
+      userFollowers.splice(index, 1);  
+
+
+    toast.promise(Promise.all([
+      updateUser({ id: currentUser.id, following: currentUserFollowing }),
+      updateUser({ id: user.id, followers: userFollowers })      
+    ]), {
       loading:
-        followingCopy.length > currentUser.following.length
+        currentUserFollowing.length > currentUser.following.length
           ? "Following.."
           : "Unfollowing..",
       success:
-        followingCopy.length > currentUser.following.length
+        currentUserFollowing.length > currentUser.following.length
           ? "Followed"
           : "Unfollowed",
       error: `Couldn't follow ${user.gaming_name}!`,
