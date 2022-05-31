@@ -14,10 +14,10 @@
 * User / Players
 ** DONE Needs to get his Upcoming Matches
 ** DONE Compress video files
-** IN-PROGRESS Clips Like feature
-** TODO Clips delete feature   
+** DONE Clips (Like) feature
+** DONE Clips delete feature
+** TODO Followers, Following system   
 ** TODO Rank System,
-** TODO Followers, Following system
 ** TODO Needs to get Upcoming Tournaments based on his ranks and other stats   
 ** TODO Clips share system seo optimized for facebook share
 ** TODO Twilio verification client side

@@ -22,6 +22,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateToken, logout } from "./redux/AuthSlice";
 import { updateUser, pending, deleteUser } from "./redux/UserSlice";
 
+import { useGetUserQuery } from './redux/UserApi';
+
 import config from "./config/config.js";
 
 import { ToastContainer } from 'react-toastify';
@@ -34,6 +36,8 @@ import 'react-loading-skeleton/dist/skeleton.css';
 function App() {
   const dispatch = useDispatch();
   var auth = useSelector((state) => state.auth);
+
+  const { data } = useGetUserQuery(auth.userId);
 
   useEffect(() => {
     (async () => {
@@ -64,7 +68,7 @@ function App() {
         }
       }
     })();
-  }, [auth.accessToken, auth.userId, dispatch]);
+  }, [auth.accessToken, auth.userId, dispatch, data?.user]);
 
   return (
     <>

@@ -57,10 +57,11 @@ place-items-center
 
 export default function HomePanel(){
   const auth = useSelector(state => state.auth);
+  const { data: user} = useSelector(state => state.user);
   const [page, setPage] = useState(1);
   const [clips, setClips] = useState([]);
 
-  const { data, error, isLoading, isFetching } = useGetClipsQuery({ pageQuery: { limit: 3, sort: '-createdAt', page: page}});
+  const { data, error, isLoading, isFetching } = useGetClipsQuery({pageQuery: { limit: 3, sort: '-createdAt', page: page}});
   
   const observer = useRef();
   const lastClipElementRef = useCallback(node => {

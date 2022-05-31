@@ -10,6 +10,15 @@ const baseQuery = fetchBaseQuery({
     }
     return headers;
   },
+  paramsSerializer: (params) => {
+    const paramString =  Object.entries(params).map(([key, value]) => {
+      if(typeof value !== 'object')
+        return `${key}=${value}`;
+      return Object.entries(value).map(([k, v]) => `${key}[${k}]=${JSON.stringify(v)}`).join('&');
+    }).join('&');
+
+    return paramString;
+  },
 });
 
 export const clipApi = createApi({
@@ -26,15 +35,13 @@ export const clipApi = createApi({
         url: `clips`,
         params: { pageQuery: JSON.stringify(pageQuery), ...query }
       }),
-      // : { page = 1, sort = "createdAt", limit = 3 }      
-      // `clips?pageQuery=%7B%20%22limit%22%3A%20${limit},%20%22page%22%3A%20${page},%20%22sort%22%3A%20%22${sort}%22%7D`,
       providesTags: (result, _error, _query) =>
       result?.clips?.clips
           ? [
             ...result.clips.clips.map(({ id }) => ({ type: "Clips", id })),
               { type: "Clips", id: "LIST" },
             ]
-          : [{ type: "Clips", id: "LIST" }],
+      : [{ type: "Clips", id: "LIST" }],
     }),
     updateClip: builder.mutation({
       query: (data) => {

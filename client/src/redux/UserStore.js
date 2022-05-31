@@ -7,6 +7,7 @@ import organizerReducer from './OrganizerDashboardSlice.js';
 import userDashboardReducer from './UserDashboardSlice.js';
 import clipReducer from './ClipSlice';
 import { clipApi } from './ClipApi';
+import { userApi } from './UserApi';
 
 export default configureStore({
 
@@ -18,9 +19,10 @@ export default configureStore({
     organizer: organizerReducer,
     userDashboard: userDashboardReducer,
     clip: clipReducer,
-    clipApi: clipApi.reducer
+    clipApi: clipApi.reducer,
+    userApi: userApi.reducer
   },
 
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(clipApi.middleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(clipApi.middleware).concat(userApi.middleware)
 
 });
