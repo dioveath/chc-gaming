@@ -9,7 +9,7 @@ module.exports = function encodeUploadClip(req, res, next) {
   if (!req.files) {
     return res.status(400).json({
       status: "fail",
-      message: "No files were uploaded!",
+      errorList: ["No files were uploaded!"]
     });
   }
 
@@ -41,13 +41,13 @@ module.exports = function encodeUploadClip(req, res, next) {
 };
 
 const encodingAndUploading = async (job, done) => {
-  try {
-    const { media } = job.data;
-    const { file } = media;
-    const fileMD5 = file.md5;
-    const dir = `streams/${fileMD5}`; //dir to save
+  const { media } = job.data;
+  const { file } = media;
 
-    //  Encode to various qualities
+  try {
+    const fileMD5 = file.md5;
+    const dir = `streams/${fileMD5}`;
+
     console.log(`Start ${fileMD5} Encoding...`);
     const multipleResolution = [
       {

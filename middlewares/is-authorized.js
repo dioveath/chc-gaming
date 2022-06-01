@@ -1,5 +1,13 @@
 const RoleAccess = require('../data-access/role-db/index.js');
 
+// NOTE: we're using it to check for a resourceId,
+// if it is not it's probably some action itself
+// FIXME:(Saroj) We're ignoring now for alpha build,  This is bad,
+//  we need to upgrade our roles, permissions system later.
+
+const ObjectId = require('mongoose').Types.ObjectId;
+
+
 module.exports = function isAuthorized(){
   return async (req, res, next) => {
 
@@ -53,13 +61,18 @@ function isPermissionGranted(req, permissions){
   // console.log("req.url: " + req.url);
   // console.log("permissions: " + permissions);
 
-
   let pathSplitted = req.baseUrl.split('/');
   const resourceType = pathSplitted[pathSplitted.length-1];
-  const resourceId = req.url.replace('/', '');
+  let resourceId = req.url.replace('/', '');
 
+  if(!ObjectId.isValid(resourceId)) {
+    // console.log(`resourceId: ${resourceId}, Operation on itself, changed to self`);
+    resourceId = 'self';
+  }
+
+  // console.log("action: " + req.method);
+  // console.log("resourceType: " + resourceType);
   // console.log("resourceId: " + resourceId);
-  // console.log(req.method);
 
   switch(req.method){
   case 'GET':
@@ -93,6 +106,7 @@ function isPermissionGranted(req, permissions){
         // console.log('it was neither update nor create');
         continue;
       }
+
       if(symbols[1] != resourceType) continue;
 
       // console.log("symbols[2]: " + symbols[2]);

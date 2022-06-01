@@ -251,7 +251,7 @@ export default function Post({ clip: propClip, innerRef }){
             else
               likesCopy.splice(index, 1);
 
-            toast.promise(updateClip({id: clip.id, likes: likesCopy }), {
+            toast.promise(updateClip({id: clip.id, likes: likesCopy }).unwrap(), {
               loading: likesCopy.length > clip.likes.length ? "Liking.." : "Unliking.." ,
               success: likesCopy.length > clip.likes.length ? "Liked" : "Unliked" ,
               error: "Couldn't like the clip!"

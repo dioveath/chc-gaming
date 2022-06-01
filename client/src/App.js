@@ -68,7 +68,7 @@ function App() {
         }
       }
     })();
-  }, [auth.accessToken, auth.userId, dispatch, data?.user]);
+  }, [auth.accessToken, auth.userId, dispatch]);
 
   return (
     <>

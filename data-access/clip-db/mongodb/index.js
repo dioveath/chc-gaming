@@ -12,8 +12,6 @@ const qs = require('qs');
 function listClips(httpQuery){
   const { pageQuery, ...query } = httpQuery;
 
-  console.log(query);
-
   let paginationParams = [
     query,
     typeof pageQuery === "string" ? JSON.parse(pageQuery ?? "{}") : pageQuery,

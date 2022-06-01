@@ -27,20 +27,7 @@ import { RiEditCircleFill } from "react-icons/ri";
 import { MdFileDownloadDone } from "react-icons/md";
 import { toast } from "react-toastify";
 
-import config from "../../../config/config";
-import {
-  storage,
-  ref,
-  uploadString,
-  getDownloadURL,
-} from "../../../lib/firebase";
-import { updateUser } from "../../../redux/UserSlice";
-
-const ProfileImageContainer = styled.div`
-  ${tw`
-relative
-`}
-`;
+import { useUpdateUserProfileMutation } from '../../../redux/UserApi';
 
 const FileInput = styled.input`
   ${tw`
@@ -49,13 +36,15 @@ hidden
 `;
 
 export default function LeftSideBar({ menuItems }) {
-  const { data, isPending, error } = useSelector((state) => state.user);
+  const { data, error } = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth);
   const { dashboard } = useSelector((state) => state.userDashboard);
   const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
   const [open, setOpen] = useState(!isMobile);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const [updateUserProfile, { error: updateProfileError }] = useUpdateUserProfileMutation();
 
   const filePickerRef = useRef();
   const [newProfileImage, setNewProfileImage] = useState(null);
@@ -77,52 +66,22 @@ export default function LeftSideBar({ menuItems }) {
   };
 
   const updateProfileImage = async (_e) => {
-    const toastId = toast.loading("Changing profile picture..!");
     if (newProfileImage) {
-      try {
-        const profileRef = ref(
-          storage,
-          `users/${data.id}/images/profile_image`
-        );
-        const uploadResult = await uploadString(
-          profileRef,
-          newProfileImage,
-          "data_url"
-        );
+      let formData = new FormData();
+      formData.append('photo', filePickerRef.current.files[0]);
+      formData.append('test', "test");
 
-        removeProfileImage();
-        const downloadUrl = await getDownloadURL(uploadResult.ref);
-
-        const options = {
-          method: "POST",
-          url: `${config.serverUrl}/api/v1/users/${auth.userId}`,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-          data: {
-            profile_link: downloadUrl,
-          },
-        };
-
-        const response = await axios.request(options);
-        dispatch(updateUser(response.data.updatedUser));
-
-        toast.update(toastId, {
-          render: "Profile changed successfully!",
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-        });
-      } catch (e) {
-        console.log(e.message);
-        toast.update(toastId, {
-          render: e.message,
-          type: "error",
-          isLoading: false,
-          autoClose: 3000,
-        });
-      }
+      toast.promise(updateUserProfile({ formData}).unwrap(), {
+        pending: "Updating profile picture",
+        success: {
+          render: ({data}) => "Profile changed successfully!"
+        },
+        error: {
+          render: ({ data }) => {
+            return "Couldn't update the profile picture!";
+          }
+        }
+      });
     }
   };
 

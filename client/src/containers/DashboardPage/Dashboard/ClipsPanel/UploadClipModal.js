@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 import styled from "styled-components";
 import tw from "twin.macro";
 
-import { storage, ref, uploadString, getDownloadURL } from '../../../../lib/firebase';
-
 import { Text, BoldText } from "../../../../components/Text";
 import { Input, Select, SelectOption } from "../../../../components/Form";
 import Button from "../../../../components/Button";
@@ -154,7 +152,6 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
         formData.append('clip', fileRef.current.files[0]);
         formData.append('title', titleRef.current.value);
         formData.append('privacy', privacyRef.current.value);
-        console.log(formData);
         let options = {
           'method': 'POST',
           'url': `${config.serverUrl}/api/v1/clips/encode`,

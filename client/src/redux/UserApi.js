@@ -45,6 +45,19 @@ export const userApi = createApi({
       },
       invalidatesTags: (_result, _error, { id }) => [{type: 'Users', id }]
     }),
+
+    updateUserProfile: builder.mutation({
+      query: (data) => {
+        const { formData } = data;
+        return {
+          url: `users/profile`,
+          method: "POST",
+          body: formData
+        };
+      },
+      invalidatesTags: (_result, _error, { id }) => [{type: 'Users', id }]
+    }),
+    
     deleteUser: builder.mutation({
       query: (id) => {
         return {
@@ -61,5 +74,6 @@ export const {
   useGetUserQuery,
   useGetUsersQuery,
   useUpdateUserMutation,
+  useUpdateUserProfileMutation,
   useDeleteUserMutation,
 } = userApi;
