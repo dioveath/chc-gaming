@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.33101750.chunk.css",
-    "main.js": "/static/js/main.9e16f216.chunk.js",
-    "main.js.map": "/static/js/main.9e16f216.chunk.js.map",
+    "main.js": "/static/js/main.ac2b8195.chunk.js",
+    "main.js.map": "/static/js/main.ac2b8195.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.7451b9a1.js",
     "runtime-main.js.map": "/static/js/runtime-main.7451b9a1.js.map",
     "static/css/2.22429dba.chunk.css": "/static/css/2.22429dba.chunk.css",
-    "static/js/2.82db2aec.chunk.js": "/static/js/2.82db2aec.chunk.js",
-    "static/js/2.82db2aec.chunk.js.map": "/static/js/2.82db2aec.chunk.js.map",
+    "static/js/2.f3d24ca8.chunk.js": "/static/js/2.f3d24ca8.chunk.js",
+    "static/js/2.f3d24ca8.chunk.js.map": "/static/js/2.f3d24ca8.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.22429dba.chunk.css.map": "/static/css/2.22429dba.chunk.css.map",
     "static/css/main.33101750.chunk.css.map": "/static/css/main.33101750.chunk.css.map",
-    "static/js/2.82db2aec.chunk.js.LICENSE.txt": "/static/js/2.82db2aec.chunk.js.LICENSE.txt",
+    "static/js/2.f3d24ca8.chunk.js.LICENSE.txt": "/static/js/2.f3d24ca8.chunk.js.LICENSE.txt",
     "static/media/chc_gaming_logo.55ce923d.png": "/static/media/chc_gaming_logo.55ce923d.png",
     "static/media/fifa_league_poster.300177ba.png": "/static/media/fifa_league_poster.300177ba.png",
     "static/media/khalti_logo.67411874.png": "/static/media/khalti_logo.67411874.png",
@@ -20,8 +20,8 @@
   "entrypoints": [
     "static/js/runtime-main.7451b9a1.js",
     "static/css/2.22429dba.chunk.css",
-    "static/js/2.82db2aec.chunk.js",
+    "static/js/2.f3d24ca8.chunk.js",
     "static/css/main.33101750.chunk.css",
-    "static/js/main.9e16f216.chunk.js"
+    "static/js/main.ac2b8195.chunk.js"
   ]
 }
