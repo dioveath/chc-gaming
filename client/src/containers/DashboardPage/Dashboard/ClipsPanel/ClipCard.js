@@ -8,7 +8,7 @@ import { BsFillPlayFill } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 
 import { Modal, ModalHeader, useModal } from "../../../../components/Modal";
-import { useDeleteClipMutation, useGetClipQuery } from "../../../../redux/ClipApi";
+import { useDeleteClipMutation } from "../../../../redux/ClipApi";
 import { toast } from "react-toastify";
 
 const ClipCardContainer = styled.div`
@@ -26,14 +26,11 @@ hover:cursor-pointer
 `}
 `;
 
-export default function ClipCard({ clip: propClip }) {
+export default function ClipCard({ clip }) {
   const videoRef = useRef(null);
   const cardRef = useRef(null);
   const { isOpen, onClose, onOpen } = useModal();
-  const [deleteClip, { isLoading: isUpdating }] = useDeleteClipMutation();
-  const { data, error } = useGetClipQuery(propClip.id);
-
-  const clip = data?.clip || propClip;
+  const [deleteClip, { isLoading: isDeleting }] = useDeleteClipMutation();
 
   useEffect(() => {
     if (!cardRef.current || !videoRef.current) return;
@@ -79,8 +76,8 @@ export default function ClipCard({ clip: propClip }) {
         onOpen={onOpen}
         onClose={onClose}
         actionHandler={() => {
-          toast.promise(deleteClip(clip.id), {
-            loading: "Deleting..",
+          toast.promise(deleteClip(clip.id).unwrap(), {
+            pending: "Deleting..",
             success: "Delete the clip!",
             error: "Couldnt delete the clip!",
           });
