@@ -128,7 +128,7 @@ function App() {
                       closeOnClick
                       pauseOnFocusLoss
                       pauseOnHover
-                      autoClose={5000}/>
+                      autoClose={1000}/>
     </>
   );
 }

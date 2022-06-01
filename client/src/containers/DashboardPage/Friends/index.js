@@ -7,7 +7,7 @@ import { Text } from '../../../components/Text';
 import { FlexContainer, WrapContainer } from '../../../components/base';
 import { Marginer } from '../../../components/Marginer';
 
-import { useGetUsersQuery } from '../../../redux/UserApi';
+import { useGetUserQuery, useGetUsersQuery } from '../../../redux/UserApi';
 
 import ProfileCard from './components/ProfileCard.js';
 
@@ -28,8 +28,9 @@ my-4
 
 
 export default function FriendsPage(){
+  const auth = useSelector(state => state.auth);
   const { data, error, isLoading, isFetching } = useGetUsersQuery();
-  const { data: user } = useSelector(state => state.user);
+  const { data: user } = useGetUserQuery(auth.userId);
 
   const [followings, setFollowings] = useState([]);
   const [notFollowings, setNotFollowings] = useState([]);

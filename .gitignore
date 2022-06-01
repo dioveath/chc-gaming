@@ -20,3 +20,10 @@ server/node_modules
 **/*.mp4
 
 /streams
+/photos
+/test/**.jpg
+/test/**.png
+/test/**.jpeg
+/test/*/**.jpg
+/test/*/**.png
+/test/*/**.jpeg

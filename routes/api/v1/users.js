@@ -21,9 +21,7 @@ router.get('/:id', makeExpressCallback(userController.getUser));
 router.post('/', makeExpressCallback(userController.createUser));
 
 router.post('/profile', [ compressUploadImage ], makeExpressCallback(userController.updateUser));
-
 router.post('/:id', makeExpressCallback(userController.updateUser));
-
 
 router.delete('/:id', makeExpressCallback(userController.deleteUser));
 

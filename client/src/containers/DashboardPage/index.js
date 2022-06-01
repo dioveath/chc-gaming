@@ -2,6 +2,8 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 import { useSelector } from "react-redux";
+import { useGetUserQuery } from '../../redux/UserApi';
+
 import LeftSideBar from "./LeftSideBar";
 import Dashboard from "./Dashboard";
 import FriendsPage from "./Friends";
@@ -9,7 +11,6 @@ import ClanPage from "./Clan";
 import ExplorePage from './Explore';
 
 import { FlexContainer } from "../../components/base";
-
 import { Text } from "../../components/Text";
 
 import BounceLoader from "react-spinners/BounceLoader";
@@ -71,14 +72,15 @@ px-2
 
 
 export default function DashboardPage() {
-  const { isPending, isError } = useSelector((state) => state.user);
+  const auth = useSelector(state => state.auth);
+  const { isLoading, error } = useGetUserQuery(auth.userId);
   const { dashboard } = useSelector((state) => state.userDashboard);
 
   const renderContent = MenuItems.find(
     (menu) => menu.name === dashboard.activeMenu
   ).content;
 
-  if (isError)
+  if (error)
     return (
       <FlexContainer
         bg={"radial-gradient(#1D0207, #0D0000)"}
@@ -94,7 +96,7 @@ export default function DashboardPage() {
       </FlexContainer>
     );
 
-  if (isPending)
+  if (isLoading)
     return (
       <FlexContainer
         bg={"radial-gradient(#1D0207, #0D0000)"}

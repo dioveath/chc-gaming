@@ -41,11 +41,10 @@ pt-4
 `}
 `;
 
-export default function ProfileCard({ user: propUser }) {
-  const { data: currentUser } = useSelector((state) => state.user);
+export default function ProfileCard({ user }) {
+  const auth = useSelector(state => state.auth);
+  const { data: currentUser } = useGetUserQuery(auth.userId);
   const [updateUser] = useUpdateUserMutation();
-  const { data } = useGetUserQuery(propUser.id);
-  const user = data?.user || propUser;
 
   const followed = !(currentUser.following.findIndex((e) => e === user.id) === -1);
 
@@ -63,14 +62,17 @@ export default function ProfileCard({ user: propUser }) {
     if (index === -1)
       userFollowers.push(currentUser.id);
     else 
-      userFollowers.splice(index, 1);  
+      userFollowers.splice(index, 1);
+
+    console.log(currentUserFollowing);
+    console.log(userFollowers);
 
 
     toast.promise(Promise.all([
-      updateUser({ id: currentUser.id, following: currentUserFollowing }),
-      updateUser({ id: user.id, followers: userFollowers })      
+      updateUser({ id: currentUser.id, following: currentUserFollowing }).unwrap(),
+      updateUser({ id: user.id, followers: userFollowers }).unwrap()
     ]), {
-      loading:
+      pending:
         currentUserFollowing.length > currentUser.following.length
           ? "Following.."
           : "Unfollowing..",
@@ -78,7 +80,7 @@ export default function ProfileCard({ user: propUser }) {
         currentUserFollowing.length > currentUser.following.length
           ? "Followed"
           : "Unfollowed",
-      error: `Couldn't follow ${user.gaming_name}!`,
+      error: `Couldn't follow ${user.gaming_name}!`
     });
   };
 

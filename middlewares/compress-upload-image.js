@@ -68,7 +68,11 @@ const compressAndUpload = async (job, done) => {
       plugins: [
         imageminMozjpeg({ quality: 10 }),
         imageminJpegtran({ progressive: true }),
-        imageminPngquant({ quality: [0.1, 0.2]}),
+        imageminPngquant({
+          speed: 1,
+          posterize: 1,
+          dithering: 0.7,
+          quality: [0, 0.04]}),        
       ],
     });
 

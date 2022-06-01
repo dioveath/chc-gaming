@@ -28,6 +28,7 @@ import { MdFileDownloadDone } from "react-icons/md";
 import { toast } from "react-toastify";
 
 import { useUpdateUserProfileMutation } from '../../../redux/UserApi';
+import { useGetUserQuery } from '../../../redux/UserApi';
 
 const FileInput = styled.input`
   ${tw`
@@ -36,8 +37,9 @@ hidden
 `;
 
 export default function LeftSideBar({ menuItems }) {
-  const { data, error } = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth);
+  const { data, isLoading, error } = useGetUserQuery(auth.userId);
+
   const { dashboard } = useSelector((state) => state.userDashboard);
   const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
   const [open, setOpen] = useState(!isMobile);
