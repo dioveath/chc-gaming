@@ -154,13 +154,13 @@ export default function Post({ clip: propClip, innerRef }){
   const { data, error } = useGetClipQuery(propClip.id);
   const clip = data?.clip || propClip;
 
+  const isLikedByCurrentUser =  clip.likes.findIndex(e => e === auth.userId) !== -1;
   const clipTime = Date.now() - new Date(clip.createdAt).getTime();
   
   let seconds = Math.floor(clipTime/1000);
   let minutes = Math.floor(clipTime/(1000*60));
   let hours = Math.floor(clipTime/(1000*60*60));
   let days = Math.floor(clipTime/(1000*60*60*24));
-
   let agoTime = (days ? days + " days" : hours ? hours + " hours" : minutes ? minutes + " minutes" : seconds + " seconds") + " ago";
 
   useEffect(() => {
@@ -252,12 +252,12 @@ export default function Post({ clip: propClip, innerRef }){
               likesCopy.splice(index, 1);
 
             toast.promise(updateClip({id: clip.id, likes: likesCopy }).unwrap(), {
-              loading: likesCopy.length > clip.likes.length ? "Liking.." : "Unliking.." ,
+              pending: likesCopy.length > clip.likes.length ? "Liking.." : "Unliking.." ,
               success: likesCopy.length > clip.likes.length ? "Liked" : "Unliked" ,
               error: "Couldn't like the clip!"
             });
           }}>
-            <AiFillHeart color='red'/>
+            <AiFillHeart color={ isLikedByCurrentUser ? 'red' : 'white'}/>
             { isMobile || <SmallText> Like </SmallText> }
           </CardButton>
           <CardButton>
