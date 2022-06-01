@@ -39,6 +39,17 @@ export const clipApi = createApi({
             ]
       : [{ type: "Clips", id: "LIST" }],
     }),
+    addClip: builder.mutation({
+      query: (data) => {
+        const { formData } = data;
+        return {
+          url: `clips/encode`,
+          method: 'POST',
+          body: formData
+        };
+      },
+      invalidatesTags: (_result, _error, _args) => [{ type: 'Clips', id: "LIST"}]
+    }),
     updateClip: builder.mutation({
       query: (data) => {
         const { id, ...body } = data;
@@ -65,6 +76,7 @@ export const clipApi = createApi({
 export const {
   useGetClipQuery,
   useGetClipsQuery,
+  useAddClipMutation,
   useUpdateClipMutation,
   useDeleteClipMutation,
 } = clipApi;

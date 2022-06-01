@@ -9,6 +9,7 @@ import { FlexContainer } from '../../../../components/base';
 import Post from '../../../../components/Post';
 
 import { useGetClipsQuery } from '../../../../redux/ClipApi';
+import { useGetUserQuery } from '../../../../redux/UserApi';
 
 import Skeleton from 'react-loading-skeleton';
 import { MdError } from 'react-icons/md';
@@ -57,7 +58,7 @@ place-items-center
 
 export default function HomePanel(){
   const auth = useSelector(state => state.auth);
-  const { data: user} = useSelector(state => state.user);
+  const { data: user} = useGetUserQuery(auth.userId);
   const [page, setPage] = useState(1);
   const [clips, setClips] = useState([]);
 

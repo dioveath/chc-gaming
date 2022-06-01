@@ -21,6 +21,7 @@ rounded-md
 shadow-2xl
 grid
 items-center
+overflow-hidden
 hover:cursor-pointer
 `}
 `;

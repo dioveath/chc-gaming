@@ -9,6 +9,9 @@ import Button from "../../../../components/Button";
 import { FlexContainer, WrapContainer } from "../../../../components/base";
 import { FiUploadCloud } from "react-icons/fi";
 
+import { useGetUserQuery } from '../../../../redux/UserApi';
+import { useAddClipMutation } from '../../../../redux/ClipApi';
+
 import axios from 'axios';
 import config from '../../../../config/config';
 import { toast } from 'react-toastify';
@@ -118,8 +121,9 @@ blur-sm
 
 
 export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
-  const { data } = useSelector(state => state.user);
   const auth = useSelector(state => state.auth);
+  const [addClip, { error, isLoading } ] = useAddClipMutation();
+
   const [previewVideo, setPreviewVideo] = useState(null);
   const [videoMeta, setVideoMeta] = useState({});
   const [isUploading, setIsUploading] = useState(false);
@@ -152,17 +156,20 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
         formData.append('clip', fileRef.current.files[0]);
         formData.append('title', titleRef.current.value);
         formData.append('privacy', privacyRef.current.value);
-        let options = {
-          'method': 'POST',
-          'url': `${config.serverUrl}/api/v1/clips/encode`,
-          headers: {
-            Authorization: "Bearer " + auth.accessToken,
-          },
-          data: formData
-        };
 
-        let response = await axios.request(options);
-        console.log(response);
+        await addClip({ formData }).unwrap();
+
+        // let options = {
+        //   'method': 'POST',
+        //   'url': `${config.serverUrl}/api/v1/clips/encode`,
+        //   headers: {
+        //     Authorization: "Bearer " + auth.accessToken,
+        //   },
+        //   data: formData
+        // };
+
+        // let response = await axios.request(options);
+        // console.log(response);
 
         toast.update(toastId, {
           render: "Clipped successfully!",
@@ -297,9 +304,9 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
             <Input type="text" ref={titleRef}/>
             <BoldText> Cover </BoldText>
             <Select ref={privacyRef}>
-              <SelectOption value='private'> Private </SelectOption>
-              <SelectOption value='followers'> Followers </SelectOption>
               <SelectOption value='public'> Public </SelectOption>
+              <SelectOption value='followers'> Followers </SelectOption>
+              <SelectOption value='private'> Private </SelectOption>
             </Select>
 
             <BoldText> Run a copyright check </BoldText>
