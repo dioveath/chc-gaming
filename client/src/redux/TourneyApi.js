@@ -40,8 +40,6 @@ export const tourneyApi = createApi({
       : [{ type: "Tourneys", id: "LIST" }],
     }),
 
-
-
     addTourney: builder.mutation({
       query: (data) => {
         const { formData } = data;
@@ -53,6 +51,7 @@ export const tourneyApi = createApi({
       },
       invalidatesTags: (_result, _error, _args) => [{ type: 'Tourneys', id: "LIST"}]
     }),
+
     updateTourney: builder.mutation({
       query: (data) => {
         const { id, ...body } = data;
@@ -65,21 +64,32 @@ export const tourneyApi = createApi({
       invalidatesTags: (_result, _error, { id }) => [{type: 'Tourneys', id }]
     }),
 
+    
     registerTourney: builder.mutation({
-      query: ({ tourneyId, userId}) => ({
-        url: `tourneys/${tourneyId}/register/${userId}`,
+      query: ({ tourneyId }) => ({
+        url: `tourneys/${tourneyId}/register`,
         method: 'POST'
       }),
       invalidatesTags: (_result, _error, { tourneyId }) => [{type: "Tourneys", id: tourneyId}]
     }),
 
+    // FIXME: this need to be changed to deregisterUserToTourney. This query is for only managers
     deregisterTourney: builder.mutation({
       query: ({tourneyId, userId}) => ({
         url: `tourneys/${tourneyId}/register/${userId}`,
         method: 'DELETE'
       }),
       invalidatesTags: (_result, _error, { tourneyId }) => [{ type: "Tourneys", id: tourneyId }]
-    }),    
+    }),
+
+    registerVerifyTourney: builder.mutation({
+      query: ({ tourneyId, payload }) => ({
+        url: `tourneys/${tourneyId}/register-verify`,
+        method: 'POST',
+        body: payload
+      }),
+      invalidatesTags: (_result, _error, { tourneyId }) => [{type: "Tourneys", id: tourneyId}]      
+    }),
 
     deleteTourney: builder.mutation({
       query: (id) => {
@@ -98,7 +108,8 @@ export const {
   useGetTourneysQuery,
   useAddTourneyMutation,
   useRegisterTourneyMutation,
-  useDeregisterTourneyMutation,  
+  useDeregisterTourneyMutation,
+  useRegisterVerifyTourneyMutation,
   useUpdateTourneyMutation,
   useDeleteTourneyMutation,
 } = tourneyApi;

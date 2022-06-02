@@ -4,10 +4,10 @@ const Joi = require('joi-oid');
 const tourneyUpdateSchema = Joi.object().keys({
   title: Joi.string().min(4).max(40),
   description: Joi.string().min(16).max(1024),
-  status: Joi.string(), // pending | published | canceled
+  status: Joi.string().valid('pending', 'published', 'canceled'), // pending | published | canceled
   medias: Joi.array().items(Joi.object().keys({
     // image | video | poster (poster is just image to be shown off)
-    media_type: Joi.string().min(3).max(12).required(),
+    media_type: Joi.string().valid('image', 'video', 'poster').required(),
     media_url: Joi.string().required(),
   })),
 
@@ -16,7 +16,8 @@ const tourneyUpdateSchema = Joi.object().keys({
     reg_id: Joi.string().min(6).required(),
 
     // status for registration, pending | accepted | rejected
-    status: Joi.string().min(4).required(),
+    status: Joi.string().valid('pending', 'accepted', 'rejected').required(),
+    fee_paid: Joi.boolean().required()
   })),
 
   managers: Joi.array().items(Joi.objectId()),

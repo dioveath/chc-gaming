@@ -14,6 +14,8 @@ module.exports = {
   TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
   TWILIO_VERIFICATION_SID: process.env.TWILIO_VERIFICATION_SID,
 
+  KHALTI_TEST_SECRET_KEY: process.env.KHALTI_TEST_SECRET_KEY,
+
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
   projectId: process.env.PROJECT_ID,

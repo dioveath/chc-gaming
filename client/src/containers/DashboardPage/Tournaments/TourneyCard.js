@@ -11,9 +11,11 @@ import { toast } from "react-toastify";
 import {
   useRegisterTourneyMutation,
   useDeregisterTourneyMutation,
+  useRegisterVerifyTourneyMutation,
 } from "../../../redux/TourneyApi";
 
-// import KhaltiCheckout from 'khalti-checkout-web';
+import config from '../../../config/config';
+import KhaltiCheckout from 'khalti-checkout-web';
 
 const TournamentCardContainer = styled.div`
   ${tw`
@@ -58,25 +60,45 @@ export default function TournamentCard({ tourney }) {
   const [registerTourney, { isLoading: isRegisterPending }] =
     useRegisterTourneyMutation();
   const [deregisterTourney, { isLoading: isDeregisterPending }] =
-    useDeregisterTourneyMutation();
+        useDeregisterTourneyMutation();
+
+  const [registerVerifyTourney ] = useRegisterVerifyTourneyMutation();
+
   const isRegistered =
         tourney.members.filter((m) => m.member_id === auth.userId).length > 0;
+
+  const khaltiConfig = {
+    "publicKey": config.khaltiPublicKey,
+    "productIdentity": tourney.id,
+    "productName": tourney.title,
+    "productUrl": "https://www.youtube.com/watch?v=hKIGnR4LKdM",
+    "eventHandler": {
+      async onSuccess(payload) {
+        toast.promise(registerVerifyTourney({ tourneyId: tourney.id, payload }).unwrap(),
+                      {
+                        pending: "Verifying payment...",
+                        success: "Payment Verified",
+                        error: "Couldn't verify the payment"
+                      });
+      },
+      onError(error) {
+        toast.error(error.message);
+      },
+      onClose(){
+        console.log("widget is closing!");
+      }
+    },
+    "paymentPreference": ["KHALTI", "EBANKING","MOBILE_BANKING", "CONNECT_IPS", "SCT"],    
+  };
+
+  let checkout = new KhaltiCheckout(khaltiConfig);
 
   const onRegisterHandler = async (e) => {
     e.preventDefault();
 
+
     if (isRegistered)
-      toast.promise(
-        deregisterTourney({
-          tourneyId: tourney.id,
-          userId: auth.userId,
-        }).unwrap(),
-        {
-          pending: `DeRegistering to ${tourney.title}`,
-          success: `DeRegistered succesfully in ${tourney.title}`,
-          error: `DeRegistration error in ${tourney.title}`,
-        }
-      );
+      checkout.show({amount: tourney.registration_fee});
     else
       toast.promise(
         registerTourney({
@@ -139,7 +161,7 @@ export default function TournamentCard({ tourney }) {
 
         <FlexContainer justify="center" w="100%">
           <Button w="100%" onClick={onRegisterHandler}>
-            {isRegistered ? "Already Registered" : "Register Now"}
+            { isRegistered ? "Pay Reg Fee" : "Register Now" }
           </Button>
         </FlexContainer>
       </FlexContainer>
