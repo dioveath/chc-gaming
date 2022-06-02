@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
-import axios from "axios";
 
 import {
   LeftBarContainer,
@@ -27,8 +26,8 @@ import { RiEditCircleFill } from "react-icons/ri";
 import { MdFileDownloadDone } from "react-icons/md";
 import { toast } from "react-toastify";
 
-import { useUpdateUserProfileMutation } from '../../../redux/UserApi';
-import { useGetUserQuery } from '../../../redux/UserApi';
+import { useUpdateUserProfileMutation, useGetUserQuery } from '../../../redux/UserApi';
+import { useGetClipsQuery } from '../../../redux/ClipApi';
 
 const FileInput = styled.input`
   ${tw`
@@ -39,6 +38,11 @@ hidden
 export default function LeftSideBar({ menuItems }) {
   const auth = useSelector((state) => state.auth);
   const { data, isLoading, error } = useGetUserQuery(auth.userId);
+  const { data: clipsData } = useGetClipsQuery({ author: auth.userId });
+
+  const clips = clipsData?.clips?.clips || [];
+  const totalLikes = clips.reduce((prevTotal, currentClip) => prevTotal + currentClip.likes.length, 0);
+
 
   const { dashboard } = useSelector((state) => state.userDashboard);
   const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
@@ -132,8 +136,7 @@ export default function LeftSideBar({ menuItems }) {
                   icon={<MdFileDownloadDone size="30" color="green" />}
                   onClick={updateProfileImage}
                 >
-                  {" "}
-                  Save{" "}
+                  Save
                 </IconButton>
               )}
 
@@ -163,8 +166,8 @@ export default function LeftSideBar({ menuItems }) {
       {open && (
         <ProfileStatsContainer>
           <FlexContainer direction="col" justify="center" align="center">
-            <BoldText> {0} </BoldText>
-            <NormalText> Clips </NormalText>
+            <BoldText> {totalLikes} </BoldText>
+            <NormalText> Likes </NormalText>
           </FlexContainer>
           <FlexContainer direction="col" justify="center" align="center">
             <BoldText> {data.followers.length}</BoldText>

@@ -232,7 +232,7 @@ export default function Post({ clip: propClip, innerRef }){
             gap='0.2rem'
             direction={isMobile && 'column'}
             align={isMobile && 'center'}>
-            <AiFillHeart color='red'/> <SmallText> {clip.likes.length} Likes </SmallText>
+            <AiFillHeart color='red' size={Math.min(clip.likes.length + 10, 24)}/> <SmallText> {clip.likes.length} Likes </SmallText>
           </FlexContainer>
           <FlexContainer gap={ isMobile ? '0.2rem' : '2rem'}
                          direction={isMobile && 'column'}

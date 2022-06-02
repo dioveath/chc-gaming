@@ -159,18 +159,6 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
 
         await addClip({ formData }).unwrap();
 
-        // let options = {
-        //   'method': 'POST',
-        //   'url': `${config.serverUrl}/api/v1/clips/encode`,
-        //   headers: {
-        //     Authorization: "Bearer " + auth.accessToken,
-        //   },
-        //   data: formData
-        // };
-
-        // let response = await axios.request(options);
-        // console.log(response);
-
         toast.update(toastId, {
           render: "Clipped successfully!",
           type: "success",

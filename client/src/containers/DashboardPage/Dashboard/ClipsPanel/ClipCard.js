@@ -4,7 +4,7 @@ import tw from "twin.macro";
 
 import { Text } from "../../../../components/Text";
 import { FlexContainer } from "../../../../components/base";
-import { BsFillPlayFill } from "react-icons/bs";
+import { AiFillHeart } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 
 import { Modal, ModalHeader, useModal } from "../../../../components/Modal";
@@ -61,7 +61,7 @@ export default function ClipCard({ clip }) {
           gap="0.2rem"
           align="center"
         >
-          <BsFillPlayFill color="white" size="24" />
+          <AiFillHeart color="white" size="17" />
           <Text className="font-bold" fontSize="0.8rem">
             {clip.likes.length}
           </Text>

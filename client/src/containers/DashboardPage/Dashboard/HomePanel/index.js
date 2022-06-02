@@ -110,9 +110,11 @@ export default function HomePanel() {
         Highlights
       </Text>
 
-      {clips && clips.length === 0 && (
+      {isFetching && (
         <>
-          <OpeningCard/>
+          <Skeleton count={10} />
+          <br />
+          <Skeleton count={10} />
         </>
       )}
 
@@ -129,13 +131,11 @@ export default function HomePanel() {
         })
       )}
 
-      {isFetching && (
+      {clips && clips.length === 0 && (
         <>
-          <Skeleton count={10} />
-          <br />
-          <Skeleton count={10} />
+          <OpeningCard/>
         </>
-      )}
+      )}      
 
       {error && (
         <CenterContainer>
