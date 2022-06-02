@@ -10,7 +10,7 @@ module.exports = function makeListTourneys(tourneyAccess){
 
     try {
 
-      const tourneys = await tourneyAccess.listTourneys();
+      const tourneys = await tourneyAccess.listTourneys(httpRequest.query);
 
       return {
         headers,

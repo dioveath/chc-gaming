@@ -5,8 +5,11 @@ const makeUpdateTourney = require('../../../models/tourney/index').makeUpdateTou
 const errorFormatter = require('./errorFormatter');
 
 
-function listTourneys(){
-  return Tourney.find({}).then(serialize).catch(errorFormatter);
+function listTourneys(httpQuery){
+  const { pageQuery, ...query} = httpQuery;
+  console.log(httpQuery);
+  console.log(query);
+  return Tourney.find(query).then(serialize).catch(errorFormatter);
 }
 
 

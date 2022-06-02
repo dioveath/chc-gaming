@@ -18,8 +18,8 @@
 ** DONE Clips delete feature
 ** DONE Followers, Following system
 ** DONE Image encode & omptimize
+** DONE Optimize States with RTK Query      
 ** IN-PROGRESS Rank System,
-** TODO Optimize States with RTK Query   
 ** TODO Needs to get Upcoming Tournaments (based on his ranks and other stats)
 ** TODO Clips share system seo optimized for facebook share
 ** TODO Twilio verification client side

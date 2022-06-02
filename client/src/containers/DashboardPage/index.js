@@ -9,6 +9,7 @@ import Dashboard from "./Dashboard";
 import FriendsPage from "./Friends";
 import ClanPage from "./Clan";
 import ExplorePage from './Explore';
+import TournamentsPage from './Tournaments';
 
 import { FlexContainer } from "../../components/base";
 import { Text } from "../../components/Text";
@@ -17,7 +18,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 import { MdOutlineError } from "react-icons/md";
 import { IoIosPeople } from 'react-icons/io';
 import { FcLandscape } from "react-icons/fc";
-import { GiCastle } from "react-icons/gi";
+import { GiCastle, GiCheckboxTree } from "react-icons/gi";
 import { MdDashboard } from "react-icons/md";
 import { RiLogoutCircleLine } from "react-icons/ri";
 
@@ -44,6 +45,11 @@ const MenuItems = [
     icon: <IoIosPeople />,
     content: <FriendsPage />,
   },
+  {
+    name: "Tourneys",
+    icon: <GiCheckboxTree/>,
+    content: <TournamentsPage/>
+  },    
   {
     name: "Your Clan",
     icon: <GiCastle />,
