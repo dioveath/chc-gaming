@@ -18,12 +18,11 @@
 ** DONE Clips delete feature
 ** DONE Followers, Following system
 ** DONE Image encode & omptimize
-** DONE Optimize States with RTK Query      
+** DONE Optimize States with RTK Query
+** DONE Twilio verification client side   
 ** IN-PROGRESS Rank System,
 ** TODO Needs to get Upcoming Tournaments (based on his ranks and other stats)
 ** TODO Clips share system seo optimized for facebook share
-** TODO Twilio verification client side
-   
 
 * Tournament Organizer
 ** Tournament Dashboard Create all UIs without states
@@ -33,8 +32,10 @@
 * TO FIX
 ** DONE running in production mode...! Where this coming from? FROM Mongoose connection
 ** DONE fix UIs components to a stable system
+** DONE Change Your Matches to Matches
+** TODO Fix routing problems in HomePage, create good Welcome User experience HomePage 
 ** TODO Fix UploadClip Delete Modal on Mobile Screens
-** TODO Change Your Matches to Matches
+
    
 
 * TO RESEARCH

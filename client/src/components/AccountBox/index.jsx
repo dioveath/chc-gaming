@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import tw from "twin.macro";
 import { Route, Switch, useRouteMatch, useLocation } from "react-router-dom";
 
 import { Logo } from "../Logo";
@@ -9,8 +10,10 @@ import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 import Logout from "./Logout";
 
-const BoxContainer = styled.div`
-  min-width: 400px;
+import { AnimatePresence, motion } from "framer-motion";
+
+const BoxContainer = styled(motion.div)`
+  min-width: 350px;
   display: flex;
   flex-direction: column;
   border-radius: 19px;
@@ -18,6 +21,14 @@ const BoxContainer = styled.div`
   box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
   position: relative;
   overflow: hidden;
+
+  @media only screen and (min-width: 460px) {
+    min-width: 400px;
+  }
+
+  ${tw`
+    transition-all
+  `}
 `;
 
 const TopContainer = styled.div`
@@ -50,6 +61,9 @@ const BackDrop = styled.div`
 const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
+  ${tw`
+animate-pulse
+`}
 `;
 
 const HeaderContainer = styled.div`
@@ -76,11 +90,15 @@ const SmallText = styled.div`
   font-size: 11px;
 `;
 
-const ContentContainer = styled.div`
+const ContentContainer = styled(motion.div)`
   width: 100%;
   display: flex;
-  padding: 0px 50px;
+  padding: 0px 30px;
   flex-direction: column;
+
+  @media only screen and (min-width: 460px) {
+    padding: 0px 50px;
+  }
 `;
 
 export function AccountBox(props) {
@@ -88,38 +106,37 @@ export function AccountBox(props) {
   const location = useLocation();
 
   return (
-    <BoxContainer>
+    <BoxContainer layout>
       <TopContainer>
         <BackDrop />
         <HeaderContainer>
           <HeaderText>
-            {location.pathname === "/auth/login"
-              ? "LOGIN"
-              : "REGISTRATION"}
+            {location.pathname === "/auth/login" ? "LOGIN" : "REGISTRATION"}
           </HeaderText>
         </HeaderContainer>
       </TopContainer>
-      <ContentContainer>
-        <Marginer vertical="2rem" />
-        <LogoContainer>
-          <Logo size="50px" />
-        </LogoContainer>
-        <Marginer vertical="2rem" />
-        <SmallText>Enter your Gaming Identity</SmallText>
+      <AnimatePresence exitBeforeEnter={true}>
+        <ContentContainer>
+          <Marginer vertical="2rem" />
+          <LogoContainer>
+            <Logo size="50px" />
+          </LogoContainer>
+          <Marginer vertical="2rem" />
+          <SmallText>Enter your Gaming Identity</SmallText>
 
-        <Switch>
-
-          <Route path={`${match.path}/login`}>
-            <LoginForm />
-          </Route>
-          <Route path={`${match.path}/register`}>
-            <RegisterForm />
-          </Route>
-          <Route path={`${match.path}/logout`}>
-            <Logout />
-          </Route>
-        </Switch>
-      </ContentContainer>
+          <Switch>
+            <Route path={`${match.path}/login`} key="login">
+              <LoginForm />
+            </Route>
+            <Route path={`${match.path}/register`} key="register">
+              <RegisterForm />
+            </Route>
+            <Route path={`${match.path}/logout`}>
+              <Logout />
+            </Route>
+          </Switch>
+        </ContentContainer>
+      </AnimatePresence>
       <Marginer vertical="4rem" />
     </BoxContainer>
   );

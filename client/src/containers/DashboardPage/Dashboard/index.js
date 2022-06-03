@@ -23,7 +23,7 @@ export default function Dashboard(){
         <TabPanel name='Clips'>
           <ClipsPanel/>
         </TabPanel>
-        <TabPanel name='Your Matches'>
+        <TabPanel name='Matches'>
           <MatchesPanel/>
         </TabPanel>
         <TabPanel name='Tournaments'>

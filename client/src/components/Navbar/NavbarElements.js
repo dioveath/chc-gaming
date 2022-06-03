@@ -138,15 +138,15 @@ export function UserItems(){
   return (
     <UserContainer>
       { isAuth ? <UserDesktopContainer>
-                        <Button type="outlined" to={ isPending ? '' : `/profile/${data.id}` } {...{disabled: isPending}}>
-                          { isPending ? <PuffLoader color='white'/> : data.gaming_name }                     
+                        <Button type="outlined" to={ isPending ? '' : `/dashboard` } {...{disabled: isPending}}>
+                          { isPending ? <PuffLoader color='white' size={14}/> : data.gaming_name }
                         </Button>
                         <Button text="Logout" onClick={handleLogoutClick}/>
                       </UserDesktopContainer>
         : <UserDesktopContainer>
-                                      <Button text="Login" type="outlined" to="/auth/login"/>
-                                      <Button text="Register" to="/auth/register"/>      
-                                    </UserDesktopContainer>
+            <Button text="Login" type="outlined" to="/auth/login"/>
+            <Button text="Register" to="/auth/register"/>      
+          </UserDesktopContainer>
       }
 
     </UserContainer>

@@ -11,6 +11,7 @@ import { pending, error, complete }  from '../../redux/RegisterSlice';
 import { login }  from '../../redux/AuthSlice';
 
 import config from '../../config/config.js';
+import { motion } from 'framer-motion';
 
 
 export function RegisterForm(props){
@@ -78,6 +79,12 @@ export function RegisterForm(props){
 
 
   return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{duration: 0.5}}
+    >    
     <FormContainer onSubmit={handleRegisterClick}>
       <Input type="text" placeholder="First Name" ref={firstName}/>
       <Input type="text" placeholder="Last Name" ref={lastName}/>
@@ -99,5 +106,6 @@ export function RegisterForm(props){
       <Marginer vertical="10px"/>        
       <MutedLink> Already have an Account? <BoldLink to="/auth/login"> Login Here! </BoldLink> </MutedLink>
     </FormContainer>
+    </motion.div>
   );
 }
