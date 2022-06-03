@@ -1,5 +1,5 @@
 * Welcome to Charicha League  
-** Current Version: 0.0.4.9
+** Current Version: 0.0.5.8
 
 * Minimum Viable Product
 ** Basic Premise
@@ -20,8 +20,8 @@
 ** DONE Image encode & omptimize
 ** DONE Optimize States with RTK Query
 ** DONE Twilio verification client side   
-** IN-PROGRESS Rank System,
-** TODO Needs to get Upcoming Tournaments (based on his ranks and other stats)
+** IN-PROGRESS Needs to get Upcoming Tournaments (based on his ranks and other stats)
+** TODO Rank System,   
 ** TODO Clips share system seo optimized for facebook share
 
 * Tournament Organizer
@@ -33,7 +33,7 @@
 ** DONE running in production mode...! Where this coming from? FROM Mongoose connection
 ** DONE fix UIs components to a stable system
 ** DONE Change Your Matches to Matches
-** TODO Fix routing problems in HomePage, create good Welcome User experience HomePage 
+** DONE Fix routing problems in HomePage, create good Welcome User experience HomePage 
 ** TODO Fix UploadClip Delete Modal on Mobile Screens
 
    
