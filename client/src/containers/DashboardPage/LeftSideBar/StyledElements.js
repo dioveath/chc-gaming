@@ -3,7 +3,7 @@ import tw from 'twin.macro';
 
 export const LeftBarContainer = styled.div`
 width: ${props => props.active ? '372px' : '60px'};
-position: fixed;
+position: absolute;
 left: 0;
 top: 0;
 ${tw`

@@ -1,8 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
-import tw from "twin.macro";
 
 import {
   LeftBarContainer,
@@ -15,86 +13,56 @@ import {
 import MenuItem from "../../../components/LeftNavbar/MenuItem.js";
 import { setActiveMenu } from "../../../redux/UserDashboardSlice.js";
 import { FlexContainer } from "../../../components/base";
-import { IconButton } from "../../../components/Button";
 import { Text } from "../../../components/Text";
 
 import { useMediaQuery } from "react-responsive";
 import { SCREENS } from "../../../components/Responsive";
 import { FaTimes } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { RiEditCircleFill } from "react-icons/ri";
-import { MdFileDownloadDone } from "react-icons/md";
-import { toast } from "react-toastify";
 
-import { useUpdateUserProfileMutation, useGetUserQuery } from '../../../redux/UserApi';
+import { useGetUserQuery } from '../../../redux/UserApi';
 import { useGetClipsQuery } from '../../../redux/ClipApi';
 
-const FileInput = styled.input`
-  ${tw`
-hidden
-`}
-`;
+
+const useClickOutside = (handler) => {
+  const domNodeRef = useRef();
+
+  useEffect(() => {
+    const mouseHandler = (event) => {
+      if(!domNodeRef.current.contains(event.target))
+        handler();
+    };
+
+    window.addEventListener('mousedown', mouseHandler);
+    return () => window.removeEventListener('mousedown', mouseHandler);
+  }, [handler]);
+
+  return domNodeRef;
+};
 
 
 export default function LeftSideBar({ menuItems }) {
   const auth = useSelector((state) => state.auth);
-  const { data, isLoading, error } = useGetUserQuery(auth.userId);
+  const { data } = useGetUserQuery(auth.userId);
   const { data: clipsData } = useGetClipsQuery({ author: auth.userId });
 
   const clips = clipsData?.clips?.clips || [];
   const totalLikes = clips.reduce((prevTotal, currentClip) => prevTotal + currentClip.likes.length, 0);
 
-
   const { dashboard } = useSelector((state) => state.userDashboard);
-  const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
-  const [open, setOpen] = useState(!isMobile);
+  const isDesktop = useMediaQuery({ maxWidth: SCREENS.xl });
+  const [open, setOpen] = useState(!isDesktop);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [updateUserProfile, { error: updateProfileError }] = useUpdateUserProfileMutation();
-
-  const filePickerRef = useRef();
-  const [newProfileImage, setNewProfileImage] = useState(null);
-
-  const onProfileImageChange = (e) => {
-    const reader = new FileReader();
-    if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
-
-    reader.onload = (readerEvent) => {
-      setNewProfileImage(readerEvent.target.result);
-    };
-
-    toast.info("New Profile Image Picked!");
-  };
-
-  const removeProfileImage = () => {
-    setNewProfileImage(null);
-    filePickerRef.current.value = "";
-  };
-
-  const updateProfileImage = async (_e) => {
-    if (newProfileImage) {
-      let formData = new FormData();
-      formData.append('photo', filePickerRef.current.files[0]);
-      formData.append('test', "test");
-
-      toast.promise(updateUserProfile({ formData}).unwrap(), {
-        pending: "Updating profile picture",
-        success: {
-          render: ({data}) => "Profile changed successfully!"
-        },
-        error: {
-          render: ({ data }) => {
-            return "Couldn't update the profile picture!";
-          }
-        }
-      });
-    }
-  };
+  const navNode = useClickOutside(() => {
+    setOpen(!isDesktop);
+  });
 
   return (
-    <LeftBarContainer active={open}>
+    <LeftBarContainer active={open} ref={navNode}>
       <FlexContainer
+        className={!isDesktop && 'invisible'}
         justify={open ? "flex-end" : "center"}
         onClick={() => {
           setOpen(!open);
@@ -111,46 +79,10 @@ export default function LeftSideBar({ menuItems }) {
       <FlexContainer align="center" justify="center" gap="1rem" pad="1rem 0rem">
         <FlexContainer direction="col" className="relative">
           <ProfileContainer
-            src={newProfileImage || data.profile_link}
+            src={data.profile_link}
             active={open}
           ></ProfileContainer>
-          {open && (
-            <FlexContainer
-              className="absolute -right-20 -top-14"
-              gap="1rem"
-              justify="center"
-              items="center"
-            >
-              <IconButton
-                className="p-1 px-2"
-                gap="0.4rem"
-                icon={<RiEditCircleFill size="30" color="white" />}
-                onClick={() => {
-                  filePickerRef.current.click();
-                }}
-              >
-                Edit
-              </IconButton>
-              {newProfileImage && (
-                <IconButton
-                  className="p-1 px-2"
-                  icon={<MdFileDownloadDone size="30" color="green" />}
-                  onClick={updateProfileImage}
-                >
-                  Save
-                </IconButton>
-              )}
-
-              <FileInput
-                type="file"
-                onChange={onProfileImageChange}
-                ref={filePickerRef}
-                accept="image/png, image/gif, image/jpeg"
-              />
-            </FlexContainer>
-          )}
         </FlexContainer>
-
         {open && (
           <FlexContainer direction="col">
             <BoldText> {data.first_name + " " + data.last_name} </BoldText>
@@ -196,6 +128,7 @@ export default function LeftSideBar({ menuItems }) {
                   return;
                 }
                 dispatch(setActiveMenu(item.name));
+                setOpen(!isDesktop);
               }}
             />
           );

@@ -35,7 +35,7 @@ const useClickOutside = (handler) => {
 
     window.addEventListener('mousedown', mouseHandler);
     return () => window.removeEventListener('mousedown', mouseHandler);
-  });
+  }, [handler]);
 
   return domNodeRef;
 };
