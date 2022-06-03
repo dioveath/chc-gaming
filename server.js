@@ -1,7 +1,6 @@
 const config = require('./config');
 
 const express = require('express');
-const axios = require('axios');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const cors = require('cors');
@@ -16,7 +15,6 @@ app.use(cors());
 
 const APIRoute = require('./routes/api/v1');
 const authRoute = require('./routes/auth/index');
-const verifyRoute = require('./routes/verify/index');
 
 require('./config/passport')(passport);
 app.use(passport.initialize());
@@ -25,12 +23,11 @@ app.use(passport.initialize());
 // API Routes
 app.use('/auth', authRoute);
 app.use('/api/v1', APIRoute);
-app.use('/verify', verifyRoute);
 
 
 app.use(express.static(path.join(__dirname, "client", "build")));
 
-app.get('*', (req, res) => {
+app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 

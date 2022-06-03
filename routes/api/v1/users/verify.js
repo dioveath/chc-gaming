@@ -1,8 +1,7 @@
 const Router = require("express").Router;
 const twilio = require("twilio");
-const config = require("../../config");
-const isAuthenticated = require('../../middlewares/is-authenticated');
-const UserAccess = require('../../data-access/user-db/index');
+const config = require("../../../../config");
+const UserAccess = require('../../../../data-access/user-db/index');
 
 const verifyRouter = new Router();
 
@@ -11,7 +10,7 @@ const twilioClient = new twilio(
   config.TWILIO_AUTH_TOKEN
 );
 
-verifyRouter.post("/request-verify", [isAuthenticated], async (req, res) => {
+verifyRouter.post("/request-verify", async (req, res) => {
   try {
     const { phone_number, phone_verified } = await UserAccess.findUserById(req.user.sub);
     if(phone_verified) throw new Error("Already verified!");
@@ -42,7 +41,7 @@ verifyRouter.post("/request-verify", [isAuthenticated], async (req, res) => {
   }
 });
 
-verifyRouter.post("/verify", [isAuthenticated], async (req, res) => {
+verifyRouter.post("/verify", async (req, res) => {
 
   try {
     const { verify_code } = req.body;
@@ -78,6 +77,7 @@ verifyRouter.post("/verify", [isAuthenticated], async (req, res) => {
     } else {
       return res.status(400).json({
         status: "fail",
+        user_id: req.user.sub,
         verification_status,
         sid,
         to,
@@ -96,4 +96,3 @@ verifyRouter.post("/verify", [isAuthenticated], async (req, res) => {
 });
 
 module.exports = verifyRouter;
-

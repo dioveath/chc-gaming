@@ -7,7 +7,8 @@ import {
   useGetUserQuery,
   useUpdateUserMutation,
   useUpdateUserProfileMutation,
-  useRequestVerifyQuery,
+  useRequestPhoneVerifyMutation,
+  useVerifyPhoneVerifyMutation,
 } from "../../../redux/UserApi";
 import BounceLoader from "react-spinners/BounceLoader";
 
@@ -68,6 +69,9 @@ export default function Settings() {
   const [newProfileImage, setNewProfileImage] = useState(null);
   const [updateUserProfile] = useUpdateUserProfileMutation();
   const [updateUser] = useUpdateUserMutation();
+  const [requestPhoneVerify] = useRequestPhoneVerifyMutation();
+  const [verifyPhoneVerify] = useVerifyPhoneVerifyMutation();
+  const [isPhoneVerifyRequested, setPhoneVerifyRequested] = useState(false);
 
   const firstName = useRef();
   const lastName = useRef();
@@ -151,10 +155,35 @@ export default function Settings() {
     );
   };
 
-  const verifyPhoneHandler = (e) => {
+  const requestVerifyHandler = (e) => {
+    if(!isPhoneVerifyRequested) {
+      toast.promise(requestPhoneVerify().unwrap(), {
+        pending: "Requesting verification",
+        success: {
+          render: (_data) => {
+            setPhoneVerifyRequested(true);
+            return `Verification code sent to: ${user.phone_number}`;
+          }
+        },
+        error: "Couldn't submit the request"
+      });
+      
+      return;
+    }
 
-    
-    
+  };
+
+  const verifyCodeHandler = (e) => {
+    if(!verificationCode.current.value) {
+      toast.error("Enter Verification code!");
+      return;
+    }
+
+    toast.promise(verifyPhoneVerify(verificationCode.current.value), {
+      pending: "Verifying phone",
+      success: "Verification Successful.",
+      error: "Verification failed!"
+    });    
   };
 
   return (
@@ -185,7 +214,7 @@ export default function Settings() {
             filePickerRef.current.click();
           }}
         >
-          {newProfileImage ? "Re-Select" : "Change Profile Picture"}
+          {newProfileImage ? "Re-Select" : "Update Profile Picture"}
         </Button>
         {newProfileImage && (
           <>
@@ -321,7 +350,9 @@ export default function Settings() {
           </Text>
           <Marginer vertical="0.5rem" />
 	  <Input type="number" placeholder="Verification Code" ref={verificationCode}></Input>
-          <Button onClick={verifyPhoneHandler}> Verify Phone </Button>
+          { !isPhoneVerifyRequested && <Button onClick={requestVerifyHandler}> Verify Phone </Button> }
+          { isPhoneVerifyRequested && <Button onClick={verifyCodeHandler}> Submit Verification Code </Button> }
+        
           <Marginer vertical="1rem" />
         </>
       )}

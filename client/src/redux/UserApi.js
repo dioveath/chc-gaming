@@ -58,6 +58,28 @@ export const userApi = createApi({
       },
       invalidatesTags: (_result, _error, { id }) => [{type: 'Users', id }]
     }),
+
+    requestPhoneVerify: builder.mutation({
+      query: () => {
+        return {
+          url: `users/verify/request-verify`,
+          method: 'POST'
+        };
+      }
+    }),
+
+    verifyPhoneVerify: builder.mutation({
+      query: (verifyCode) => {
+        return {
+          url: `users/verify/verify`,
+          method: 'POST',
+          body: {
+            verify_code: verifyCode
+          }
+        };
+      },
+      invalidatesTags: ({ user_id }, _error, _arg) => [{type: 'Users', id: user_id}]
+    }),    
     
     deleteUser: builder.mutation({
       query: (id) => {
@@ -76,5 +98,8 @@ export const {
   useGetUsersQuery,
   useUpdateUserMutation,
   useUpdateUserProfileMutation,
+  useRequestVerifyMutation,
+  useRequestPhoneVerifyMutation,
+  useVerifyPhoneVerifyMutation,
   useDeleteUserMutation,
 } = userApi;
