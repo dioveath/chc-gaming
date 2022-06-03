@@ -10,6 +10,7 @@ import FriendsPage from "./Friends";
 import ClanPage from "./Clan";
 import ExplorePage from './Explore';
 import TournamentsPage from './Tournaments';
+import SettingsPage from './Settings';
 
 import { FlexContainer } from "../../components/base";
 import { Text } from "../../components/Text";
@@ -21,6 +22,7 @@ import { FcLandscape } from "react-icons/fc";
 import { GiCastle, GiCheckboxTree } from "react-icons/gi";
 import { MdDashboard } from "react-icons/md";
 import { RiLogoutCircleLine } from "react-icons/ri";
+import { IoSettings } from 'react-icons/io5';
 
 const PageContainer = styled.div`
   background: radial-gradient(#1d0207, #0d0000);
@@ -59,6 +61,11 @@ const MenuItems = [
     name: "Explore",
     icon: <FcLandscape />,
     content: <ExplorePage />,
+  },
+  {
+    name: "Settings",
+    icon: <IoSettings/>,
+    content: <SettingsPage/>
   },
   {
     name: "Log out",

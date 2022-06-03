@@ -3,7 +3,9 @@ import tw from 'twin.macro';
 
 export const Input = styled.input`
 color: #fff;
-background-color: #220303;
+
+
+background-color: ${props => props.readOnly ? '#222222' : '#220303'};
 
 width: 100%;
 height: 38px;
@@ -26,7 +28,7 @@ font-size: 12px;
 
 &:focus { 
 outline: none;
-border-bottom: 2px solid rgb(183,27,27);
+border-bottom: ${props => props.readOnly ? '2px solid #111111' : '2px solid rgb(183,27,27)'};
 }
 `;
 

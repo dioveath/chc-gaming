@@ -54,7 +54,7 @@ export default function TourneyFullView({ tourney }) {
 
   // const getVideoThumb = (videoId) => `https://img.youtube.com/vi/${videoId}/default.jpg`;
   // const getVideoId = (url) => url.substr('https://www.youtube.com/embed/'.length, url.length);
-  console.log(tourney);
+  // console.log(tourney);
 
   const startDate = new Date(tourney.start_date);
   const prizePool = tourney.prizes.reduce(

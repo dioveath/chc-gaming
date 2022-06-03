@@ -35,6 +35,7 @@ hidden
 `}
 `;
 
+
 export default function LeftSideBar({ menuItems }) {
   const auth = useSelector((state) => state.auth);
   const { data, isLoading, error } = useGetUserQuery(auth.userId);
