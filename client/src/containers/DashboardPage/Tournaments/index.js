@@ -6,6 +6,7 @@ import { Text } from '../../../components/Text';
 import { Marginer } from '../../../components/Marginer';
 
 import TourneyCard from './TourneyCard';
+import TourneyFullView from './TourneyFullView';
 
 import { useGetTourneysQuery } from '../../../redux/TourneyApi';
 import BounceLoader from 'react-spinners/BounceLoader';
@@ -38,14 +39,13 @@ export default function Tournaments(){
         <Text fontSize='1.5rem'
               fontWeight='700'> Tournaments </Text>
       </FlexContainer>
-      <Marginer vertical='1.2rem'/>
 
       { isLoading && <LoadingContainer>
           <BounceLoader color='red'/>
         </LoadingContainer>
       }
 
-      { data && data.tourneys.map((t) => <TourneyCard key={t.id} tourney={t}/>)}
+      { data && data.tourneys.map((t) => <TourneyFullView key={t.id} tourney={t}/>)}
 
       { error && <>
                    <Text className="text-lg font-bold"> Server Error | 500 </Text>
