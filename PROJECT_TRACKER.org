@@ -33,7 +33,8 @@
 * TO FIX
 ** DONE running in production mode...! Where this coming from? FROM Mongoose connection
 ** DONE fix UIs components to a stable system
-** TODO Fix UI for mobile phones
+** TODO Fix UploadClip Delete Modal on Mobile Screens
+** TODO Change Your Matches to Matches
    
 
 * TO RESEARCH

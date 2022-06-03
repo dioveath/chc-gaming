@@ -37,10 +37,11 @@ border-bottom: 2px solid transparent;
 transition: all .2s ease;
 
 ${tw`
+w-32
 py-2
 px-4
 text-sm
-font-normal
+font-bold
 cursor-pointer
 `}
 
@@ -53,7 +54,7 @@ ${tw`
 `;
 
 export const TabPanel = (props) => {
-  return <TabPanelContainer> { props.children} </TabPanelContainer>;
+  return <TabPanelContainer { ...props}> { props.children} </TabPanelContainer>;
 };
 
 TabPanel.propTypes = {

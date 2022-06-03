@@ -7,6 +7,7 @@ import {
   useGetUserQuery,
   useUpdateUserMutation,
   useUpdateUserProfileMutation,
+  useRequestVerifyQuery,
 } from "../../../redux/UserApi";
 import BounceLoader from "react-spinners/BounceLoader";
 
@@ -15,7 +16,10 @@ import { Text, BoldText } from "../../../components/Text";
 
 import { Input } from "../../../components/Form";
 import Button, { IconButton } from "../../../components/Button";
-import { Marginer } from '../../../components/Marginer';
+import { Marginer } from "../../../components/Marginer";
+
+import { RiMailCloseFill, RiMailCheckFill } from "react-icons/ri";
+import { MdOutlineMobileOff, MdOutlineMobileFriendly } from "react-icons/md";
 
 import { toast } from "react-toastify";
 
@@ -36,9 +40,9 @@ items-center
 `;
 
 export const ProfileContainer = styled.img`
-// width: ${props => props.active ? '80px' : '50px'};
-// height: ${props => props.active ? '80px' : '50px'};
-${tw`
+  // width: ${(props) => (props.active ? "80px" : "50px")};
+  // height: ${(props) => (props.active ? "80px" : "50px")};
+  ${tw`
 w-32
 h-32
 rounded-full
@@ -48,7 +52,6 @@ shadow-md
 border-2 border-purple-800
 transition-all
 `}
-
 `;
 
 const FileInput = styled.input`
@@ -76,6 +79,7 @@ export default function Settings() {
   const currentPassword = useRef();
   const password = useRef();
   const confirmPassword = useRef();
+  const verificationCode = useRef();
 
   const updateProfileImage = async (_e) => {
     if (newProfileImage) {
@@ -108,35 +112,50 @@ export default function Settings() {
     toast.info("New Profile Image Picked!");
   };
 
-  const updateBasicProfileHandler = (e) => {
-    toast.promise(updateUser({
-      id: auth.userId,
-      first_name: firstName.current.value,
-      last_name: lastName.current.value,
-      address: address.current.value
-    }).unwrap(), {
-      pending: "Updating profile...",
-      success: "Profile updated!",
-      error: "Error, Couldn't update profile!"
-    });
+  const profileCancelHandler = (_e) => {
+    setNewProfileImage(null);
+  };
+
+  const updateBasicProfileHandler = (_e) => {
+    toast.promise(
+      updateUser({
+        id: auth.userId,
+        first_name: firstName.current.value,
+        last_name: lastName.current.value,
+        address: address.current.value,
+      }).unwrap(),
+      {
+        pending: "Updating profile...",
+        success: "Profile updated!",
+        error: "Error, Couldn't update profile!",
+      }
+    );
   };
 
   const updateAdvancedProfileHandler = (e) => {
-    if(password.current.value !== confirmPassword.current.value) {
+    if (password.current.value !== confirmPassword.current.value) {
       toast.error("Password & Confirm password don't match!");
       return;
     }
 
-    toast.promise(updateUser({
-      id: auth.userId,
-      password: password.current.value
-    }).unwrap(), {
-      pending: "Updating password...",
-      success: "Password updated!",
-      error: "Error, Couldn't update password!"
-    });    
+    toast.promise(
+      updateUser({
+        id: auth.userId,
+        password: password.current.value,
+      }).unwrap(),
+      {
+        pending: "Updating password...",
+        success: "Password updated!",
+        error: "Error, Couldn't update password!",
+      }
+    );
   };
-  
+
+  const verifyPhoneHandler = (e) => {
+
+    
+    
+  };
 
   return (
     <Container>
@@ -146,15 +165,15 @@ export default function Settings() {
         </Text>
       </FlexContainer>
 
-      <FlexContainer w="100%" justify='center'>
-      <ProfileContainer
-        src={newProfileImage || user.profile_link}
-        active={true}
-      ></ProfileContainer>              
+      <FlexContainer w="100%" justify="center">
+        <ProfileContainer
+          src={newProfileImage || user.profile_link}
+          active={true}
+        ></ProfileContainer>
       </FlexContainer>
 
       <FlexContainer
-        className='py-2'
+        className="py-2"
         gap="1rem"
         justify="center"
         items="center"
@@ -166,15 +185,21 @@ export default function Settings() {
             filePickerRef.current.click();
           }}
         >
-          Change Profile Picture
+          {newProfileImage ? "Re-Select" : "Change Profile Picture"}
         </Button>
         {newProfileImage && (
-          <Button
-            className="p-1 px-2 w-48"
-            onClick={updateProfileImage}
-          >
-            Save
-          </Button>
+          <>
+            <Button className="p-1 px-2 w-48" onClick={updateProfileImage}>
+              Save
+            </Button>
+            <Button
+              className="p-1 px-2 w-48"
+              type="outlined"
+              onClick={profileCancelHandler}
+            >
+              Cancel
+            </Button>
+          </>
         )}
 
         <FileInput
@@ -185,26 +210,101 @@ export default function Settings() {
         />
       </FlexContainer>
 
-      <BoldText> Basic Settings </BoldText>      
-      <Input type="text" placeholder="First Name" ref={firstName} defaultValue={user.first_name}/>
-      <Input type="text" placeholder="Last Name" ref={lastName} defaultValue={user.last_name}/>
-      <Input type="text" placeholder="Gaming Name" ref={gamingName} value={user.gaming_name} readOnly/>
-      <Input type="email" placeholder="Email" ref={email} value={user.email} readOnly/>
-      <Input type="number" placeholder="Phone Number" ref={phoneNumber} value={user.phone_number}readOnly/>
-      <Input type="address" placeholder="Address" ref={address} defaultValue={user.address}/>
-      <Input type="date" placeholder="Date of Birth" ref={dob} value={user.dob.split('T')[0]} readOnly/>
-      
+      <FlexContainer
+        direction="col"
+        w="100%"
+        justify="center"
+        align="center"
+        gap="0.5rem"
+      >
+        <FlexContainer w="100%" justify="center" align="center" gap="0.2rem">
+          {user.email_verified && (
+            <RiMailCheckFill className="text-lg text-white" />
+          )}
+          {!user.email_verified && (
+            <RiMailCloseFill className="text-lg text-white" />
+          )}
+          <Text className="text-sm"> {user.email} </Text>
+        </FlexContainer>
+
+        <FlexContainer w="100%" justify="center" align="center" gap="0.2rem">
+          {user.phone_verified && (
+            <MdOutlineMobileFriendly className="text-lg text-white " />
+          )}
+          {!user.phone_verified && (
+            <MdOutlineMobileOff className="text-lg text-white " />
+          )}
+
+          <Text className="text-sm"> {user.phone_number} </Text>
+        </FlexContainer>
+      </FlexContainer>
+
+      <BoldText> Basic Settings </BoldText>
+      <Input
+        type="text"
+        placeholder="First Name"
+        ref={firstName}
+        defaultValue={user.first_name}
+      />
+      <Input
+        type="text"
+        placeholder="Last Name"
+        ref={lastName}
+        defaultValue={user.last_name}
+      />
+      <Input
+        type="text"
+        placeholder="Gaming Name"
+        ref={gamingName}
+        value={user.gaming_name}
+        readOnly
+      />
+      <Input
+        type="email"
+        placeholder="Email"
+        ref={email}
+        value={user.email}
+        readOnly
+      />
+      <Input
+        type="number"
+        placeholder="Phone Number"
+        ref={phoneNumber}
+        value={user.phone_number}
+        readOnly
+      />
+      <Input
+        type="address"
+        placeholder="Address"
+        ref={address}
+        defaultValue={user.address}
+      />
+      <Input
+        type="date"
+        placeholder="Date of Birth"
+        ref={dob}
+        value={user.dob.split("T")[0]}
+        readOnly
+      />
+
       <Button onClick={updateBasicProfileHandler}> Update Profile </Button>
 
-      <Marginer vertical='4rem'/>
+      <Marginer vertical="4rem" />
 
       <BoldText> Advance Settings </BoldText>
-      <Input type="password" placeholder="Current Password" ref={currentPassword} />      
+      <Input
+        type="password"
+        placeholder="Current Password"
+        ref={currentPassword}
+      />
       <Input type="password" placeholder="Password" ref={password} />
-      <Input type="password" placeholder="Confirm Password" ref={confirmPassword}/>
+      <Input
+        type="password"
+        placeholder="Confirm Password"
+        ref={confirmPassword}
+      />
 
       <Button onClick={updateAdvancedProfileHandler}> Update Password </Button>
-
 
       {isLoading && (
         <LoadingContainer>
@@ -212,7 +312,21 @@ export default function Settings() {
         </LoadingContainer>
       )}
 
-      <Marginer vertical='8rem'/>      
+      {!user.phone_verified && (
+        <>
+          <Marginer vertical="1rem" />
+          <BoldText> Verification </BoldText>
+          <Text className="text-xs mt-2 font-semibold">
+            You haven't verified your phone yet!
+          </Text>
+          <Marginer vertical="0.5rem" />
+	  <Input type="number" placeholder="Verification Code" ref={verificationCode}></Input>
+          <Button onClick={verifyPhoneHandler}> Verify Phone </Button>
+          <Marginer vertical="1rem" />
+        </>
+      )}
+
+      <Marginer vertical="8rem" />
     </Container>
   );
 }
