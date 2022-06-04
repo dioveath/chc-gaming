@@ -1,21 +1,27 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import tw from 'twin.macro';
+import { useState } from "react";
+import styled from "styled-components";
+import tw from "twin.macro";
 
-import Button from '../Button';
-import { FlexContainer } from '../base';
+import Button from "../Button";
+import { FlexContainer } from "../base";
 
-
-
-const ModalContainer = styled.div.attrs(props => ({
-  className: props.className
+const ModalContainer = styled.div.attrs((props) => ({
+  className: props.className,
 }))`
-${tw`
-w-1/2
-h-1/4
+  width: clamp(50%, 700px, 90%);
+  height: min(30%, 200px);
+
+  ${tw`
 fixed
-top-1/4
-left-1/4
+top-0
+right-0
+bottom-0
+left-0
+m-auto
+flex
+flex-col
+justify-center
+items-center
 bg-red-700/60
 rounded-md
 shadow-2xl
@@ -24,24 +30,27 @@ z-30
 `}
 `;
 
-const ModalOverlay = styled.div.attrs(props => ({
-  className: props.className
+const ModalOverlay = styled.div.attrs((props) => ({
+  className: props.className,
 }))`
-${tw`
+  ${tw`
 fixed
+flex
+justify-center
+items-center
 top-0
 left-0
 w-full
 h-full
-bg-transparent
+bg-gray-700/80
 z-20
 `}
 `;
 
-export const ModalHeader = styled.div.attrs(props => ({
-  className: props.className
+export const ModalHeader = styled.div.attrs((props) => ({
+  className: props.className,
 }))`
-${tw`
+  ${tw`
 flex
 justify-center
 items-center
@@ -52,40 +61,45 @@ bg-black
 `;
 
 export const ModalBody = styled.div`
-${tw`
+  ${tw`
 h-full
 `}
 `;
 
-export function Modal({ isOpen, onClose, actionHandler, children }){
+export function Modal({ isOpen, onClose, actionHandler, children }) {
   return (
     <>
       <ModalContainer className={!isOpen && "hidden"}>
-        { children }
-	<FlexContainer className='w-full p-4 justify-center items-center absolute bottom-0' gap='1rem'>
-	  <Button w='100%' onClick={actionHandler}> Delete </Button>
-	  <Button w='100%' type='outlined' onClick={onClose}> Cancel </Button>                  
+        <FlexContainer w="100%" h="100%">
+          {children}
+        </FlexContainer>
+        <FlexContainer
+          className="w-full p-4 justify-center items-center bottom-0"
+          gap="1rem"
+        >
+          <Button w="100%" onClick={actionHandler}>
+            Delete
+          </Button>
+          <Button w="100%" type="outlined" onClick={onClose}>
+            Cancel
+          </Button>
         </FlexContainer>
       </ModalContainer>
-      <ModalOverlay onClick={onClose} className={!isOpen && "hidden"}/>
+      <ModalOverlay onClick={onClose} className={!isOpen && "hidden"} />
     </>
   );
-
 }
 
-
 export const useModal = () => {
-  const [ isOpen, setOpen ] = useState(false);
+  const [isOpen, setOpen] = useState(false);
 
   const onOpen = () => {
     setOpen(true);
-    console.log("fsadaefasievn");
   };
 
   const onClose = (e) => {
-    // e.preventDefault();
-    // e.stopPropagation();
-    console.log("fsafd");
+    e.preventDefault();
+    e.stopPropagation();
     setOpen(false);
   };
 
