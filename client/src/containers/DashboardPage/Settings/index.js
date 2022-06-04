@@ -14,14 +14,21 @@ import BounceLoader from "react-spinners/BounceLoader";
 
 import { FlexContainer, WrapContainer } from "../../../components/base";
 import { Text, BoldText } from "../../../components/Text";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useModal,
+} from "../../../components/Modal";
 
-import { Input } from "../../../components/Form";
+import { Input, Select } from "../../../components/Form";
 import Button from "../../../components/Button";
 import { Marginer } from "../../../components/Marginer";
 
 import { RiMailCloseFill, RiMailCheckFill } from "react-icons/ri";
 import { MdOutlineMobileOff, MdOutlineMobileFriendly } from "react-icons/md";
-import { BsYoutube, BsInstagram, BsFacebook } from 'react-icons/bs';
+import { BsYoutube, BsInstagram, BsFacebook } from "react-icons/bs";
 
 import { toast } from "react-toastify";
 
@@ -63,30 +70,42 @@ hidden
 `;
 
 const LinkText = styled.a`
-${tw`
+  ${tw`
 text-blue-500
 `}
 `;
 
 const SocialMedias = [
   {
-    social_media: 'youtube',
-    icon: <BsYoutube className='text-red-600 text-xl lg:text-3xl'/>
+    social_media: "youtube",
+    icon: <BsYoutube className="text-red-600 text-xl lg:text-3xl" />,
   },
   {
-    social_media: 'instagram',
-    icon: <BsInstagram className='text-pink-600 text-xl lg:text-3xl'/>
+    social_media: "instagram",
+    icon: <BsInstagram className="text-pink-600 text-xl lg:text-3xl" />,
   },
   {
-    social_media: 'facebook',
-    icon: <BsFacebook className='text-blue-600 text-xl lg:text-3xl'/>
-  },     
+    social_media: "facebook",
+    icon: <BsFacebook className="text-blue-600 text-xl lg:text-3xl" />,
+  },
 ];
 
+const SocialMedia = ({ icon, url, handle }) => {
+  return (
+    <FlexContainer align="flex-end" gap="0.2rem">
+      {icon}
+      <LinkText key={url} target="_blank" href={url || "#"}>
+        @{handle || "__________"}
+      </LinkText>
+    </FlexContainer>
+  );
+};
 
 export default function Settings() {
   const auth = useSelector((state) => state.auth);
   const { data: user, error, isLoading } = useGetUserQuery(auth.userId);
+
+  console.log(user);
 
   const filePickerRef = useRef();
   const [newProfileImage, setNewProfileImage] = useState(null);
@@ -107,6 +126,10 @@ export default function Settings() {
   const password = useRef();
   const confirmPassword = useRef();
   const verificationCode = useRef();
+
+  const socialMedia = useRef();
+  const socialProfileUrl = useRef();
+  const socialHandle = useRef();
 
   const updateProfileImage = async (_e) => {
     if (newProfileImage) {
@@ -179,25 +202,24 @@ export default function Settings() {
   };
 
   const requestVerifyHandler = (e) => {
-    if(!isPhoneVerifyRequested) {
+    if (!isPhoneVerifyRequested) {
       toast.promise(requestPhoneVerify().unwrap(), {
         pending: "Requesting verification",
         success: {
           render: (_data) => {
             setPhoneVerifyRequested(true);
             return `Verification code sent to: ${user.phone_number}`;
-          }
+          },
         },
-        error: "Couldn't submit the request"
+        error: "Couldn't submit the request",
       });
-      
+
       return;
     }
-
   };
 
   const verifyCodeHandler = (e) => {
-    if(!verificationCode.current.value) {
+    if (!verificationCode.current.value) {
       toast.error("Enter Verification code!");
       return;
     }
@@ -205,8 +227,48 @@ export default function Settings() {
     toast.promise(verifyPhoneVerify(verificationCode.current.value), {
       pending: "Verifying phone",
       success: "Verification Successful.",
-      error: "Verification failed!"
-    });    
+      error: "Verification failed!",
+    });
+  };
+
+  const { isOpen, onClose, onOpen } = useModal();
+
+  const addSocialProfileHandler = (e) => {
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+    if (!urlRegex.test(socialProfileUrl.current.value)) {
+      toast.error("Please enter valid url!");
+      return;
+    }
+
+    let socialLink = {
+      social_media: socialMedia.current.value,
+      profile_url: socialProfileUrl.current.value,
+      social_handle: socialHandle.current.value,
+    };
+
+
+    // check whether the social_media is already added
+    const index = user?.social_links.findIndex((link) => {
+      return link.social_media === socialLink.social_media;
+    });
+
+    let allLinks = [ ...(user?.social_links || []) ];
+
+    if (index !== -1) {
+      allLinks.splice(index, 1);
+    } 
+
+    allLinks = [...(allLinks), socialLink];
+
+    toast.promise(
+      updateUser({ id: user.id, social_links: allLinks }).unwrap(),
+      {
+        pending: "Adding Link...",
+        success: "Add Success",
+        error: "Add Error",
+      }
+    );
+    onClose();
   };
 
   return (
@@ -223,8 +285,6 @@ export default function Settings() {
           active={true}
         ></ProfileContainer>
       </FlexContainer>
-
-      
 
       <FlexContainer
         className="py-2"
@@ -264,23 +324,61 @@ export default function Settings() {
         />
       </FlexContainer>
 
-      <WrapContainer w='100%'
-                     justify="center"
-                     align="center"
-                     gap='1rem'
-      className='bg-black py-4 my-4'>
-        {
-          SocialMedias.map((s) =>
-            <FlexContainer align="flex-end" gap='0.2rem'>
-              { s.icon }
-	      <LinkText href={s.profile_url || '#'}>
-                @{ s.social_handle || '__________'}
-              </LinkText>
-            </FlexContainer>
-          )
-        }
-
+      <WrapContainer
+        w="100%"
+        justify="center"
+        align="center"
+        gap="1rem"
+        className="bg-black py-4 my-4"
+      >
+        {SocialMedias.map((s) => {
+          const socialLink = user?.social_links.find(
+            (link) => link.social_media === s.social_media
+          );
+          return (
+            <SocialMedia
+              icon={s.icon}
+              url={socialLink?.profile_url}
+              handle={socialLink?.social_handle}
+            />
+          );
+        })}
       </WrapContainer>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalHeader>
+          <Text className="font-bold"> Add Social Links </Text>
+        </ModalHeader>
+        <ModalBody>
+          <Select ref={socialMedia}>
+            <option value="youtube"> Youtube </option>
+            <option value="instagram"> Instagram </option>
+            <option value="facebook"> Facebook </option>
+          </Select>
+          <Input
+            type="text"
+            placeholder="Profile URL"
+            ref={socialProfileUrl}
+          ></Input>
+          <Input
+            type="text"
+            placeholder="Profile Handle | @charichagaming, gamingYT"
+            ref={socialHandle}
+          ></Input>
+        </ModalBody>
+        <ModalFooter>
+          <Button w="100%" onClick={addSocialProfileHandler}>
+            Add Link
+          </Button>
+          <Button w="100%" type="outlined" onClick={onClose}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+
+      <FlexContainer justify="flex-end">
+        <Button onClick={onOpen}> Add Social Link </Button>
+      </FlexContainer>
 
       <FlexContainer
         direction="col"
@@ -290,7 +388,12 @@ export default function Settings() {
         gap="0.5rem"
         className="my-4"
       >
-        <FlexContainer w="100%" justify="flex-start" align="center" gap="0.2rem">
+        <FlexContainer
+          w="100%"
+          justify="flex-start"
+          align="center"
+          gap="0.2rem"
+        >
           {user.email_verified && (
             <RiMailCheckFill className="text-lg text-green-600" />
           )}
@@ -300,7 +403,12 @@ export default function Settings() {
           <Text className="text-sm"> {user.email} </Text>
         </FlexContainer>
 
-        <FlexContainer w="100%" justify="flex-start" align="center" gap="0.2rem">
+        <FlexContainer
+          w="100%"
+          justify="flex-start"
+          align="center"
+          gap="0.2rem"
+        >
           {user.phone_verified && (
             <MdOutlineMobileFriendly className="text-lg text-green-500 " />
           )}
@@ -393,10 +501,21 @@ export default function Settings() {
             You haven't verified your phone yet!
           </Text>
           <Marginer vertical="0.5rem" />
-	  <Input type="number" placeholder="Verification Code" ref={verificationCode}></Input>
-          { !isPhoneVerifyRequested && <Button onClick={requestVerifyHandler}> Verify Phone </Button> }
-          { isPhoneVerifyRequested && <Button onClick={verifyCodeHandler}> Submit Verification Code </Button> }
-        
+          <Input
+            type="number"
+            placeholder="Verification Code"
+            ref={verificationCode}
+          ></Input>
+          {!isPhoneVerifyRequested && (
+            <Button onClick={requestVerifyHandler}> Verify Phone </Button>
+          )}
+          {isPhoneVerifyRequested && (
+            <Button onClick={verifyCodeHandler}>
+              {" "}
+              Submit Verification Code{" "}
+            </Button>
+          )}
+
           <Marginer vertical="1rem" />
         </>
       )}

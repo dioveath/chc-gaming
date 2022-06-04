@@ -7,7 +7,8 @@ import { FlexContainer } from "../../../../components/base";
 import { AiFillHeart } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 
-import { Modal, ModalHeader, useModal } from "../../../../components/Modal";
+import Button from '../../../../components/Button';
+import { Modal, ModalHeader, ModalFooter, useModal } from "../../../../components/Modal";
 import { useDeleteClipMutation } from "../../../../redux/ClipApi";
 import { toast } from "react-toastify";
 
@@ -74,19 +75,25 @@ export default function ClipCard({ clip }) {
       <Modal
         isOpen={isOpen}
         onOpen={onOpen}
-        onClose={onClose}
-        actionHandler={() => {
+        onClose={onClose}>
+        <ModalHeader>
+          <Text> Are you sure you want to delete ?</Text>
+        </ModalHeader>
+        <ModalFooter>
+          <Button w="100%" onClick={() => {
           toast.promise(deleteClip(clip.id).unwrap(), {
             pending: "Deleting..",
             success: "Delete the clip!",
             error: "Couldnt delete the clip!",
           });
           onClose();
-        }}
-      >
-        <ModalHeader>
-          <Text> Are you sure you want to delete ?</Text>
-        </ModalHeader>
+        }}>
+            Delete
+          </Button>
+          <Button w="100%" type="outlined" onClick={onClose}>
+            Cancel
+          </Button>          
+        </ModalFooter>
       </Modal>
     </>
   );

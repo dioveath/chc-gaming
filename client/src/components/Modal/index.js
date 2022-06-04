@@ -4,12 +4,13 @@ import tw from "twin.macro";
 
 import Button from "../Button";
 import { FlexContainer } from "../base";
+import { motion } from 'framer-motion';
 
-const ModalContainer = styled.div.attrs((props) => ({
+const ModalContainer = styled(motion.div).attrs((props) => ({
   className: props.className,
 }))`
   width: clamp(50%, 700px, 90%);
-  height: min(30%, 200px);
+  height: min(50%, 400px);
 
   ${tw`
 fixed
@@ -22,7 +23,7 @@ flex
 flex-col
 justify-center
 items-center
-bg-red-700/60
+bg-black/90
 rounded-md
 shadow-2xl
 overflow-hidden
@@ -30,7 +31,7 @@ z-30
 `}
 `;
 
-const ModalOverlay = styled.div.attrs((props) => ({
+const ModalOverlay = styled(motion.div).attrs((props) => ({
   className: props.className,
 }))`
   ${tw`
@@ -56,34 +57,42 @@ justify-center
 items-center
 w-full
 h-14
-bg-black
+py-3
+bg-red-800
+font-bold
 `}
 `;
 
 export const ModalBody = styled.div`
   ${tw`
 h-full
+w-full
+p-4
+overflow-scroll
 `}
 `;
 
-export function Modal({ isOpen, onClose, actionHandler, children }) {
+export const ModalFooter = styled.div`
+${tw`
+w-full
+p-4
+flex
+justify-center
+items-center
+bottom-0
+gap-1
+`}
+`;
+
+export function Modal({ isOpen, onClose, children }) {
   return (
     <>
-      <ModalContainer className={!isOpen && "hidden"}>
-        <FlexContainer w="100%" h="100%">
-          {children}
-        </FlexContainer>
-        <FlexContainer
-          className="w-full p-4 justify-center items-center bottom-0"
-          gap="1rem"
-        >
-          <Button w="100%" onClick={actionHandler}>
-            Delete
-          </Button>
-          <Button w="100%" type="outlined" onClick={onClose}>
-            Cancel
-          </Button>
-        </FlexContainer>
+      <ModalContainer className={!isOpen && "hidden"}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}>
+        {children}
       </ModalContainer>
       <ModalOverlay onClick={onClose} className={!isOpen && "hidden"} />
     </>
@@ -98,8 +107,8 @@ export const useModal = () => {
   };
 
   const onClose = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    // e.preventDefault();
+    // e.stopPropagation();
     setOpen(false);
   };
 

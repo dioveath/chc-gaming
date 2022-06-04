@@ -67,6 +67,7 @@ export const Select = styled.select`
   border-bottom: 2px solid transparent;
   transition: all 300ms ease-in-out;
   padding: 10px 10px;
+  margin: 5px 0px;
 
   ${tw`
   outline-none
