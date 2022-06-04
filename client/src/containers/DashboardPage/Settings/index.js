@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import tw from "twin.macro";
@@ -12,15 +12,16 @@ import {
 } from "../../../redux/UserApi";
 import BounceLoader from "react-spinners/BounceLoader";
 
-import { FlexContainer } from "../../../components/base";
+import { FlexContainer, WrapContainer } from "../../../components/base";
 import { Text, BoldText } from "../../../components/Text";
 
 import { Input } from "../../../components/Form";
-import Button, { IconButton } from "../../../components/Button";
+import Button from "../../../components/Button";
 import { Marginer } from "../../../components/Marginer";
 
 import { RiMailCloseFill, RiMailCheckFill } from "react-icons/ri";
 import { MdOutlineMobileOff, MdOutlineMobileFriendly } from "react-icons/md";
+import { BsYoutube, BsInstagram, BsFacebook } from 'react-icons/bs';
 
 import { toast } from "react-toastify";
 
@@ -60,6 +61,28 @@ const FileInput = styled.input`
 hidden
 `}
 `;
+
+const LinkText = styled.a`
+${tw`
+text-blue-500
+`}
+`;
+
+const SocialMedias = [
+  {
+    social_media: 'youtube',
+    icon: <BsYoutube className='text-red-600 text-xl lg:text-3xl'/>
+  },
+  {
+    social_media: 'instagram',
+    icon: <BsInstagram className='text-pink-600 text-xl lg:text-3xl'/>
+  },
+  {
+    social_media: 'facebook',
+    icon: <BsFacebook className='text-blue-600 text-xl lg:text-3xl'/>
+  },     
+];
+
 
 export default function Settings() {
   const auth = useSelector((state) => state.auth);
@@ -201,6 +224,8 @@ export default function Settings() {
         ></ProfileContainer>
       </FlexContainer>
 
+      
+
       <FlexContainer
         className="py-2"
         gap="1rem"
@@ -239,29 +264,48 @@ export default function Settings() {
         />
       </FlexContainer>
 
+      <WrapContainer w='100%'
+                     justify="center"
+                     align="center"
+                     gap='1rem'
+      className='bg-black py-4 my-4'>
+        {
+          SocialMedias.map((s) =>
+            <FlexContainer align="flex-end" gap='0.2rem'>
+              { s.icon }
+	      <LinkText href={s.profile_url || '#'}>
+                @{ s.social_handle || '__________'}
+              </LinkText>
+            </FlexContainer>
+          )
+        }
+
+      </WrapContainer>
+
       <FlexContainer
         direction="col"
         w="100%"
         justify="center"
         align="center"
         gap="0.5rem"
+        className="my-4"
       >
-        <FlexContainer w="100%" justify="center" align="center" gap="0.2rem">
+        <FlexContainer w="100%" justify="flex-start" align="center" gap="0.2rem">
           {user.email_verified && (
-            <RiMailCheckFill className="text-lg text-white" />
+            <RiMailCheckFill className="text-lg text-green-600" />
           )}
           {!user.email_verified && (
-            <RiMailCloseFill className="text-lg text-white" />
+            <RiMailCloseFill className="text-lg text-red-500" />
           )}
           <Text className="text-sm"> {user.email} </Text>
         </FlexContainer>
 
-        <FlexContainer w="100%" justify="center" align="center" gap="0.2rem">
+        <FlexContainer w="100%" justify="flex-start" align="center" gap="0.2rem">
           {user.phone_verified && (
-            <MdOutlineMobileFriendly className="text-lg text-white " />
+            <MdOutlineMobileFriendly className="text-lg text-green-500 " />
           )}
           {!user.phone_verified && (
-            <MdOutlineMobileOff className="text-lg text-white " />
+            <MdOutlineMobileOff className="text-lg text-red-500" />
           )}
 
           <Text className="text-sm"> {user.phone_number} </Text>

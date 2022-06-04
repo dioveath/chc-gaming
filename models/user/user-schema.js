@@ -13,6 +13,11 @@ const userUpdateSchema = Joi.object().keys({
   permissions: Joi.array().items(Joi.string()),
   profile_link: Joi.string().allow(''),
   cover_link: Joi.string().allow(''),
+  social_links: Joi.array().items(Joi.object().keys({
+    social_media: Joi.string().valid('youtube', 'instagram', 'facebook', 'twitch', 'twitter').required(),
+    profile_url: Joi.string().required(),
+    social_handle: Joi.string().required() // for example @dioveath0 is instagram short handler
+  })),
   exp_points: Joi.number(),
   achievements: Joi.array().items(Joi.objectId()),
   trophies: Joi.array().items(Joi.objectId()),

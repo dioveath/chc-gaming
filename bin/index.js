@@ -1,5 +1,5 @@
 const Commander = require('commander');
-const { seedUsers, listUsers, dropUsers, deleteUser } = require('./db-commands');
+const { seedUsers, listUsers, dropUsers, updateUser, deleteUser } = require('./db-commands');
 
 const currentVersion = '0.0.1';
 
@@ -14,9 +14,15 @@ program
   .action(listAction);
 
 program
-  .command('find <model> <model_id>')
-  .description('Find and prints the details of <model> with id of <model_id>')
+  .command('find <model> <model_id> <update_body>')
+  .description('Find and prints the details of <model> with id of <model_id> and <update_body> with JSON string')
   .action(findAction);
+
+program
+  .command('update <model> <model_id>')
+  .description('Updates the <model_id> with ')
+  .action(updateAction);
+
 
 program
   .command('drop <model>')
@@ -61,6 +67,28 @@ async function listAction(model){
   }
   process.exit(1);
 }
+
+
+// async function updateAction(model, model_id, update_body){
+//   if(model === 'users') {
+//     console.log("Updating user(s)..");
+
+//     console.log(model, model_id);
+
+//     if(model_id === 'all') {
+//       const allUsers = await listUsers();
+//       for(let i = 0; i < allUsers.length; i++){
+//         await updateUser(allUsers[i], JSON.parse(update_body));
+//       }
+//       console.log("Updating users successfull!");
+//     }
+
+
+//   } else {
+//     console.log("Available models, - users");    
+//   }
+//   process.exit(1);  
+// }
 
 
 async function seedAction(model){

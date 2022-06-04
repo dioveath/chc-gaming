@@ -17,6 +17,7 @@ var UserSchema = new Schema({
   email_verified: Boolean,
   profile_link: String,
   cover_link: String,
+  social_links: Array,
   exp_points: Number,
   achievements: Array,
   trophies: Array,

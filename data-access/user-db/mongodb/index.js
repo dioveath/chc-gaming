@@ -51,6 +51,7 @@ async function addUser(userInfo){
     email_verified: false,
     profile_link: user.getProfileLink(),
     cover_link: user.getCoverLink(),
+    social_links: user.getSocialLinks(),
     exp_points: user.getExpPoints(),
     achievements: user.getAchievements(),
     trophies: user.getTrophies(),

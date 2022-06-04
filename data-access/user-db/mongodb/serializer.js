@@ -19,6 +19,7 @@ const _serializeSingle = (user) => {
     "permissions": user.permissions,
     "profile_link": user.profile_link,
     "cover_link": user.cover_link,
+    "social_links": user.social_links,
     "exp_points": user.exp_points,
     "achievements": user.achievements,
     "trophies": user.trophies,
