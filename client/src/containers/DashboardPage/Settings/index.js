@@ -420,6 +420,8 @@ export default function Settings() {
         </FlexContainer>
       </FlexContainer>
 
+      <Marginer vertical='1rem'/>
+
       <BoldText> Basic Settings </BoldText>
       <Input
         type="text"

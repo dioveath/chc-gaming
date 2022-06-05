@@ -62,7 +62,7 @@ export default function ExplorePage(){
 
   const { data, error, isLoading, isFetching } = useGetClipsQuery({
     privacy: 'public',
-    pageQuery: {limit: 3, sort: '-createdAt', page: page}
+    pageQuery: {limit: 3, sort: '-updatedAt', page: page}
   });
 
   const observer = useRef();
