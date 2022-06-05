@@ -1,6 +1,6 @@
 
 * Welcome to Charicha League  
-** Current Version: 0.0.5.8
+** Current Version: 0.0.6.0
 
 * Minimum Viable Product
 ** Basic Premise
@@ -21,7 +21,7 @@
 ** DONE Image encode & omptimize
 ** DONE Optimize States with RTK Query
 ** DONE Twilio verification client side
-** TODO Social links in players profile, YT, Instagram, Facebook, Twitch, Twitter
+** DONE Social links in players profile, YT, Instagram, Facebook, Twitch, Twitter
 ** IN-PROGRESS Needs to get Upcoming Tournaments (based on his ranks and other stats)
 ** TODO Tournament Fixture creator based on number of players registered
 ** TODO Rank System,   

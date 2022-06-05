@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.b010f931.chunk.css",
-    "main.js": "/static/js/main.643634ea.chunk.js",
-    "main.js.map": "/static/js/main.643634ea.chunk.js.map",
+    "main.css": "/static/css/main.092f7565.chunk.css",
+    "main.js": "/static/js/main.1fb102de.chunk.js",
+    "main.js.map": "/static/js/main.1fb102de.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.7451b9a1.js",
     "runtime-main.js.map": "/static/js/runtime-main.7451b9a1.js.map",
     "static/css/2.22429dba.chunk.css": "/static/css/2.22429dba.chunk.css",
-    "static/js/2.d92f0304.chunk.js": "/static/js/2.d92f0304.chunk.js",
-    "static/js/2.d92f0304.chunk.js.map": "/static/js/2.d92f0304.chunk.js.map",
+    "static/js/2.45594af8.chunk.js": "/static/js/2.45594af8.chunk.js",
+    "static/js/2.45594af8.chunk.js.map": "/static/js/2.45594af8.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.22429dba.chunk.css.map": "/static/css/2.22429dba.chunk.css.map",
-    "static/css/main.b010f931.chunk.css.map": "/static/css/main.b010f931.chunk.css.map",
-    "static/js/2.d92f0304.chunk.js.LICENSE.txt": "/static/js/2.d92f0304.chunk.js.LICENSE.txt",
+    "static/css/main.092f7565.chunk.css.map": "/static/css/main.092f7565.chunk.css.map",
+    "static/js/2.45594af8.chunk.js.LICENSE.txt": "/static/js/2.45594af8.chunk.js.LICENSE.txt",
     "static/media/chc_gaming_logo.55ce923d.png": "/static/media/chc_gaming_logo.55ce923d.png",
     "static/media/fifa_league_poster.300177ba.png": "/static/media/fifa_league_poster.300177ba.png",
     "static/media/khalti_logo.67411874.png": "/static/media/khalti_logo.67411874.png",
@@ -20,8 +20,8 @@
   "entrypoints": [
     "static/js/runtime-main.7451b9a1.js",
     "static/css/2.22429dba.chunk.css",
-    "static/js/2.d92f0304.chunk.js",
-    "static/css/main.b010f931.chunk.css",
-    "static/js/main.643634ea.chunk.js"
+    "static/js/2.45594af8.chunk.js",
+    "static/css/main.092f7565.chunk.css",
+    "static/js/main.1fb102de.chunk.js"
   ]
 }
