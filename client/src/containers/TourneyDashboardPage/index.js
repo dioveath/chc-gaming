@@ -12,6 +12,11 @@ import {
   setActiveMenu,
   setSelectedTourney,
 } from "../../redux/TourneySlice";
+
+import {
+  useGetTourneyQuery
+} from '../../redux/TourneyApi';
+
 import LeftSideBar from "./LeftSideBar";
 import { MenuItems } from "./MenuItems.js";
 import { FlexContainer } from "../../components/base";
@@ -45,33 +50,13 @@ export default function TourneyDashboardPage() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-  const { dashboard, selectedTourney, isPending, isError, errorMessages } =
-    useSelector((state) => state.tourney);
-
-  useEffect(() => {
-    dispatch(pending());
-    (async () => {
-      try {
-        const options = {
-          method: "GET",
-          url: `${config.serverUrl}/api/v1/tourneys/${tourneyId}`,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-        };
-
-        const response = await axios.request(options);
-        dispatch(setSelectedTourney(response.data.tourney));
-      } catch (e) {
-        if (e.response) dispatch(error(e.response.data.errorList));
-      }
-    })();
-  }, [auth.accessToken, dispatch, tourneyId]);
+  const { data: tourney, isPending, error } = useGetTourneyQuery(tourneyId);
+  const { dashboard } = useSelector((state) => state.tourney);
 
   const renderContent = MenuItems.find(
     (menu) => menu.name === dashboard.activeMenu
   ).content;
+
 
   return (
     <Container>
@@ -81,7 +66,7 @@ export default function TourneyDashboardPage() {
         onChangeMenu={(menuName) => dispatch(setActiveMenu(menuName))}
       />
       <ContentContainer>
-        {isError && (
+        {error && (
           <FlexContainer
             justify="center"
             align="center"
@@ -91,11 +76,10 @@ export default function TourneyDashboardPage() {
           >
             <MdOutlineError size="30" color="white" />
             <Text fontSize="2rem" fontWeight="600">
-              {" "}
-              ERROR{" "}
+              SERVER ERROR | 500 
             </Text>
             <ListContainer>
-              {errorMessages.map((err) => {
+              {error?.errorList?.map((err) => {
                 return (
                   <List>
                     <Text> {err} </Text>
@@ -106,12 +90,12 @@ export default function TourneyDashboardPage() {
           </FlexContainer>
         )}
 
-        {(isPending || !selectedTourney) ? (
+        {(isPending || !tourney) ? (
           <FlexContainer justify="center" align="center" w="100%" h="100%">
             <BounceLoader color="red" />
           </FlexContainer>
         ) : (
-          !isError && renderContent
+          !error && renderContent
         )}
       </ContentContainer>
     </Container>

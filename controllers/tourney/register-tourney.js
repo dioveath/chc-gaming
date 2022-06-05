@@ -30,6 +30,7 @@ module.exports = function makeRegisterPlayerTourney(tourneyAccess) {
             {
               member_id: playerId,
               reg_id: rand.generate(),
+              registered_date: new Date(),
               status: 'pending',
               fee_paid: false
             },

@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
+import { useParams } from "react-router-dom";
+import {
+  useGetTourneyQuery
+} from '../../../redux/TourneyApi';
+
 import {
   NormalText,
   BoldText,
@@ -74,6 +79,9 @@ items-center
 
 
 export default function Placements(){
+  const { tourneyId } = useParams();
+  const { data: tourney, error } = useGetTourneyQuery(tourneyId);    
+
   return (
     <Container>
       <FlexContainer justify='space-between'>

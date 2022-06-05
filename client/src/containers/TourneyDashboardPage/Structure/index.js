@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import tw from "twin.macro";
 
+import { useParams } from "react-router-dom";
+import {
+  useGetTourneyQuery
+} from '../../../redux/TourneyApi';
+
 import { NormalText, BoldText, Text } from "../../../components/Text";
 import { FlexContainer, WrapContainer } from "../../../components/base";
 import Button, { IconButton } from "../../../components/Button";
@@ -32,6 +37,9 @@ bg-black
 `;
 
 export default function Structure() {
+  const { tourneyId } = useParams();
+  const { data: tourney, error } = useGetTourneyQuery(tourneyId);    
+
   return (
     <Container>
       <WrapContainer w="100%" justify="space-between" align="center">

@@ -12,6 +12,7 @@ import { AiOutlineShareAlt } from 'react-icons/ai';
 
 import { NotFound } from '../NotFoundPage/NotFound.js';
 import OverviewPage from './Overview';
+import SettingsPage from './Settings';
 import Participants from './Participants';
 import Registrations from './Registrations';
 import Structure from './Structure';
@@ -26,7 +27,7 @@ export const MenuItems = [
   {
     'name': 'Settings',
     'icon': <RiSettings5Fill/>,
-    'content': <NotFound/>
+    'content': <SettingsPage/>
   },
   {
     'name': 'Structure',

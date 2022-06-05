@@ -2,6 +2,11 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import tw from "twin.macro";
 
+import { useParams } from "react-router-dom";
+import {
+  useGetTourneyQuery
+} from '../../../redux/TourneyApi';
+
 
 import {
   NormalText,
@@ -88,7 +93,8 @@ const TRow = styled.tr`
 
 
 export default function Participants(){
-  const { selectedTourney } = useSelector((state) => state.tourney);
+  const { tourneyId } = useParams();
+  const { data: tourney, error } = useGetTourneyQuery(tourneyId);  
   
   return (
     <Container>
@@ -160,7 +166,7 @@ export default function Participants(){
           </TRow>
         </thead>
         <tbody>
-          {selectedTourney.members.map((m) => {
+          {!error && tourney.members.map((m) => {
             return (
               <TRow>
                 <TData> { m.status } </TData>

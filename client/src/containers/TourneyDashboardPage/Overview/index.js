@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import tw from "twin.macro";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import BounceLoader from "react-spinners/BounceLoader";
+
+
+import {
+  useGetTourneyQuery
+} from '../../../redux/TourneyApi';
 
 import StatusCard from "./components/StatusCard";
 
@@ -55,9 +62,17 @@ const StructureTile = ({ stage, matchType, players, status }) => (
 );
 
 export default function OverviewPage() {
-  const { selectedTourney } = useSelector(
-    (state) => state.tourney
-  );
+  const { tourneyId } = useParams();
+  const { data: tourney, error } = useGetTourneyQuery(tourneyId);
+
+  if(error){
+    return (
+      <Container>
+        <Text> Server ERROR | 500 </Text>
+	<Text> { console.log(error) }</Text>
+      </Container>
+    )
+  }
 
   return (
     <Container>
@@ -76,7 +91,7 @@ export default function OverviewPage() {
           </FlexContainer>
           <FlexContainer justify="space-between">
             <FlexContainer direction="col" align="center">
-              <LargeCountText> { selectedTourney.members.length } </LargeCountText>
+              <LargeCountText> { tourney.members.length } </LargeCountText>
               <NormalText> Participants </NormalText>
             </FlexContainer>
             <FlexContainer direction="col" align="center">
@@ -84,7 +99,7 @@ export default function OverviewPage() {
               <NormalText> Checked In </NormalText>
             </FlexContainer>
             <FlexContainer direction="col" align="center">
-              <LargeCountText> { selectedTourney.max_players } </LargeCountText>
+              <LargeCountText> { tourney.max_players } </LargeCountText>
               <NormalText> Tournament Size </NormalText>
             </FlexContainer>
           </FlexContainer>

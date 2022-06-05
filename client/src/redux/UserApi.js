@@ -20,7 +20,7 @@ export const userApi = createApi({
     getUser: builder.query({
       query: (id) => `users/${id}`,
       providesTags: (_result, _error, id) => [{ type: "Users", id }],
-      transformResponse: (response, meta, arg) => response.status === 'success' ? response.user : response.errorList
+      transformResponse: (response, _meta, _arg) => response.status === 'success' ? response.user : response.errorList
     }),
     getUsers: builder.query({
       query: ({ pageQuery, ...query } = {}) => ({

@@ -112,6 +112,7 @@ export default function TourneyFullView({ tourney }) {
         registerTourney({
           tourneyId: tourney.id,
           userId: auth.userId,
+          
         }).unwrap(),
         {
           pending: `Registering to ${tourney.title}`,

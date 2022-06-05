@@ -25,6 +25,7 @@ export const tourneyApi = createApi({
     getTourney: builder.query({
       query: (id) => `tourneys/${id}`,
       providesTags: (_result, _error, id) => [{ type: "Tourneys", id }],
+      transformResponse: (response, _meta, _arg) => response.status === 'success' ? response.tourney : response.errorList
     }),
     getTourneys: builder.query({
       query: ({ pageQuery = {}, ...query }) => ({

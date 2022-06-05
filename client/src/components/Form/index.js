@@ -98,3 +98,18 @@ export const SelectOption = styled.option`
   outline: none;
 `;
 
+
+export const UnorderedList = styled.ul.attrs(props => ({
+  className: props.className
+}))`
+${tw`
+`}
+`;
+
+export const ListItem = styled.li.attrs(props => ({
+  className: props.className
+}))`
+${tw`
+py-1
+`}
+`;

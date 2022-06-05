@@ -16,7 +16,9 @@ const _serializeSingle = (tourney) => {
     "live_link": tourney.live_link,
     "start_date": tourney.start_date,
     "end_date": tourney.end_date,
-    "registration_fee": tourney.registration_fee
+    "registration_fee": tourney.registration_fee,
+    "createdAt": tourney.createdAt,
+    "updatedAt": tourney.updatedAt
   };
 };
 

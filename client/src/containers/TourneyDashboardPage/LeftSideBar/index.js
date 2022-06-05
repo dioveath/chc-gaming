@@ -51,7 +51,6 @@ export default function LeftSideBar({ menuItems, onChangeMenu, activeMenu }){
   return (
     <LeftBarContainer active={open} ref={navNode}>
 
-      <Marginer vertical='4rem'/>
       <FlexContainer justify={ open ? 'flex-end' : 'center'}
                      onClick={() => { setOpen(!open); }}
                      pad={ open ? '2rem' : '1rem'}>
