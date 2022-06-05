@@ -107,7 +107,7 @@ export default function TourneyFullView({ tourney }) {
 
     if (isRegistered)
       checkout.show({amount: tourney.registration_fee});
-    else
+    else if(!isRegFeePaid)
       toast.promise(
         registerTourney({
           tourneyId: tourney.id,
@@ -193,7 +193,7 @@ export default function TourneyFullView({ tourney }) {
            </FlexContainer>}
 
           { !isRegistered && user.phone_verified && <Button w="100%" onClick={onRegisterHandler}> Register now </Button>}
-	  { !isRegFeePaid && 
+	  { isRegistered && !isRegFeePaid && 
             <>
               <img alt="" width={150}
                    className={`border-2 border-gray-600 rounded-md` }
@@ -202,7 +202,7 @@ export default function TourneyFullView({ tourney }) {
               <Button w="100%" type='outlined' onClick={onDeregisterHandler} disabled={!user.phone_verified}> Cancel Registration </Button>              
             </>
           }
-          { isRegFeePaid &&
+          { isRegistered && isRegFeePaid &&
             <>
 	      <FlexContainer className="w-full text-xl bg-green-500 justify-center px-4 py-2 rounded-md">
 		<Text className="font-bold text-xs"> Registration Successful. Start grinding! </Text>

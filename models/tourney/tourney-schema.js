@@ -43,7 +43,7 @@ const tourneyUpdateSchema = Joi.object().keys({
     match_played: Joi.boolean().required(),
   })),
 
-  hypes: Joi.array().items(Joi.objectId()),
+  hypes: Joi.array().items(Joi.objectId()), // like likes system for tournament
   game: Joi.string(),
   max_players: Joi.number(),
   location: Joi.string(),

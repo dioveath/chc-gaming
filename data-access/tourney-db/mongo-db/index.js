@@ -33,10 +33,12 @@ function addTourney(tourneyInfo){
     sponserships: tourney.getSponserships(),
     prizes: tourney.getPrizes(),
     matches: tourney.getMatches(),
+    hypes: tourney.getHypes(),
     game: tourney.getGame(),
     max_players: tourney.getMaxPlayers(),
     location: tourney.getLocation(),
     live_link: tourney.getLiveLink(),
+    registration_end_date: tourney.getRegistrationEndDate(),
     start_date: tourney.getStartDate(),
     end_date: tourney.getEndDate(),
     registration_fee: tourney.getRegistrationFee()

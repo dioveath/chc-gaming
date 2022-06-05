@@ -13,6 +13,7 @@ import { Marginer } from '../../../components/Marginer';
 import { RiRefreshLine, RiFilter3Fill } from "react-icons/ri";
 import { AiOutlineFileDone } from "react-icons/ai";
 import { MdOutlineCancel } from "react-icons/md";
+import { BsCashStack } from 'react-icons/bs';
 
 import { toast } from 'react-toastify';
 
@@ -158,6 +159,7 @@ export default function Participants() {
         <CounterCardContainer direction="col">
           <CountText> {totalPending}</CountText>
           <Text fontSize="1.2rem" fontWeight="700">
+            Pending
           </Text>
         </CounterCardContainer>
         <CounterCardContainer direction="col">
@@ -263,6 +265,37 @@ export default function Participants() {
                         pad={"0.4rem"}
                         icon={<AiOutlineFileDone size="20" color="green" />}
                       ></IconButton>
+                      <IconButton
+                        pad={"0.4rem"}
+                        icon={<BsCashStack size="20" color="yellow" />}
+                        onClick={() => {
+                          if(m.fee_paid) {
+                            toast.error("Player has already paid the registration fee!");
+                            return;
+                          }
+
+                          if(m.status === 'accepted') {
+                            toast.error("Player has already been accepted!");
+                            return;
+                          }
+
+
+                          let allMembers = [ ...(tourney.members) ];
+                          let updatedMember = { ...m };
+                          allMembers.splice(index, 1);
+
+                          updatedMember.fee_paid = true;
+                          allMembers.push(updatedMember);
+
+                          toast.promise(updateTourney({ id: tourneyId, members: allMembers }).unwrap(),
+                                        {
+                                          pending: 'Paying registration fee...',
+                                          success: 'Paid registration fee!',
+                                          error: 'Couldnt pay registration fee!'
+                                        });
+                        }}
+                      ></IconButton>                      
+
                       <IconButton
                         pad={"0.4rem"}
                        icon={<MdOutlineCancel size="20" color="red" />}

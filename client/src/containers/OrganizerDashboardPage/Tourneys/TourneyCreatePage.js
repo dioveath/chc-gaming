@@ -132,6 +132,7 @@ export default function TourneyCreatePage() {
   const venue = useRef();
   const startDate = useRef();
   const endDate = useRef();
+  const registrationEndDate = useRef();
 
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -153,6 +154,7 @@ export default function TourneyCreatePage() {
         medias: [],
         location: venue.current.value,
         registration_fee: registrationFee.current.value,
+        registration_end_date: registrationEndDate.current.value,
         start_date: startDate.current.value,
         end_date: endDate.current.value,
         members: [],
@@ -160,6 +162,7 @@ export default function TourneyCreatePage() {
         sponserships: [],
         prizes: [],
         matches: [],
+        hypes: [],
         live_link: "https://www.youtube.com/watch?v=hKIGnR4LKdM&t=54s",
       };
 
@@ -238,13 +241,22 @@ export default function TourneyCreatePage() {
           <Button text="Add Video" />
         </FlexContainer>
 
-        <Marginer vertical="1rem" />
-        <BoldText> Start Date </BoldText>
-        <Input type="date" placeholder="Start of Tournament " ref={startDate} />
 
-        <Marginer vertical="1rem" />
-        <BoldText> End Date </BoldText>
-        <Input type="date" placeholder="End of Tournament" ref={endDate} />
+        <Text className='font-semibold mt-4'> Schedules </Text>
+        <Text fontSize="0.7rem">
+          Schedule & plan your tourney
+        </Text>        
+      <FlexContainer gap='1rem' justify='space-between'>
+	<Text className='text-sm font-semibold'> Registraion End Date </Text>
+	<Text className='text-sm font-semibold'> Tournament Start Date </Text>
+	<Text className='text-sm font-semibold'> Tournament End Date </Text>                
+      </FlexContainer>      
+
+      <FlexContainer gap='1rem'>
+        <Input type="date" ref={startDate} placeholder="Registration end Date"/>      
+        <Input type="date" ref={registrationEndDate} placeholder="Tournament Start Date"/>
+        <Input type="date" ref={endDate} placeholder="Tournament End Date"/>          
+      </FlexContainer>        
 
         <Marginer vertical="1rem" />
         <BoldText> Venue </BoldText>

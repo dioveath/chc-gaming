@@ -24,6 +24,8 @@ import { RiRefreshLine, RiFilter3Fill } from "react-icons/ri";
 import { AiOutlineFileDone } from "react-icons/ai";
 import { MdOutlineCancel } from "react-icons/md";
 
+import { toast } from 'react-toastify';
+
 const Container = styled.div`
 ${tw`
 `}
@@ -94,7 +96,25 @@ const TRow = styled.tr`
 
 export default function Participants(){
   const { tourneyId } = useParams();
-  const { data: tourney, error } = useGetTourneyQuery(tourneyId);  
+  const { data: tourney, error } = useGetTourneyQuery(tourneyId);
+
+const totalRegistered = tourney.members.length;
+  const totalPending = tourney.members.filter(
+    (m) => m.status === "pending"
+  ).length;
+
+  const totalRejected = tourney.members.filter(
+    (m) => m.status === "rejected"
+  ).length;
+  const totalCancelled = tourney.members.filter(
+    (m) => m.status === "cancelled"
+  ).length;
+
+  const allAccepted = tourney.members.filter(
+    (m) => m.status === "accepted"
+  );
+  const totalAccepted = allAccepted.length;
+  
   
   return (
     <Container>
@@ -105,31 +125,31 @@ export default function Participants(){
 
       <RegStatsContainer>
         <CounterCardContainer direction="col">
-          <CountText>1</CountText>
+          <CountText> { totalRegistered }</CountText>
           <Text fontSize="1.2rem" fontWeight="700">
             Total
           </Text>
         </CounterCardContainer>
         <CounterCardContainer direction="col">
-          <CountText>1</CountText>
+          <CountText> { totalPending }</CountText>
           <Text fontSize="1.2rem" fontWeight="700">
             Pending
           </Text>
         </CounterCardContainer>
         <CounterCardContainer direction="col">
-          <CountText>1</CountText>
+          <CountText> { totalRejected }</CountText>
           <Text fontSize="1.2rem" fontWeight="700">
-            Refused
+            Rejected
           </Text>
         </CounterCardContainer>
         <CounterCardContainer direction="col">
-          <CountText>1</CountText>
+          <CountText>{ totalAccepted }</CountText>
           <Text fontSize="1.2rem" fontWeight="700">
             Accepted
           </Text>
         </CounterCardContainer>
         <CounterCardContainer direction="col">
-          <CountText>1</CountText>
+          <CountText> { totalCancelled } </CountText>
           <Text fontSize="1.2rem" fontWeight="700">
             Cancelled
           </Text>
@@ -166,13 +186,13 @@ export default function Participants(){
           </TRow>
         </thead>
         <tbody>
-          {!error && tourney.members.map((m) => {
+          {!error && allAccepted.map((m) => {
             return (
               <TRow>
                 <TData> { m.status } </TData>
                 <TData> { m.member_id } </TData>
                 <TData> { m.reg_id} </TData>
-                <TData> N/A </TData>
+                <TData> { m.registered_date.substring(0, 10) } </TData>
                 <TData>
                   <FlexContainer gap="0.4rem">
                     <IconButton
@@ -180,6 +200,9 @@ export default function Participants(){
                       icon={<AiOutlineFileDone size="20" color="green" />}
                     ></IconButton>
                     <IconButton
+                      onClick={() => {
+                        toast.info("Will disqualify");
+                      }}
                       pad={"0.4rem"}
                       icon={<MdOutlineCancel size="20" color="red" />}
                     ></IconButton>
