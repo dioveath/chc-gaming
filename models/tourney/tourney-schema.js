@@ -34,6 +34,7 @@ const tourneyUpdateSchema = Joi.object().keys({
     prize_description: Joi.string().required(),
     prize_value: Joi.number().required()
   })),
+
   matches: Joi.array().items(Joi.object().keys({
     // match id is ref to match  
     match_id: Joi.objectId().required(),

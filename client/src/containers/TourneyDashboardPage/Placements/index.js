@@ -1,28 +1,31 @@
-import styled from 'styled-components';
-import tw from 'twin.macro';
+import { useEffect } from "react";
+import styled from "styled-components";
+import tw from "twin.macro";
 
 import { useParams } from "react-router-dom";
-import {
-  useGetTourneyQuery
-} from '../../../redux/TourneyApi';
 
-import {
-  NormalText,
-  BoldText,
-  Text
-} from '../../../components/Text';
+import { BracketsManager } from "brackets-manager";
+import { InMemoryDatabase } from "brackets-memory-db";
 
-import {
-  FlexContainer,
-  WrapContainer
-} from '../../../components/base';
+import { useGetTourneyQuery } from "../../../redux/TourneyApi";
 
-import Button, { IconButton } from '../../../components/Button';
-import { MdAdd } from 'react-icons/md';
-import { BiShuffle, BiDotsVerticalRounded } from 'react-icons/bi';
+import { useGetUsersQuery } from "../../../redux/UserApi";
+
+import { NormalText, BoldText, Text } from "../../../components/Text";
+
+import { Input } from "../../../components/Form";
+
+import { FlexContainer, WrapContainer } from "../../../components/base";
+
+import Button, { IconButton } from "../../../components/Button";
+import { MdAdd } from "react-icons/md";
+import { BiShuffle, BiDotsVerticalRounded } from "react-icons/bi";
+
+import useScript from "../../../hooks/useScript";
+import useLink from "../../../hooks/useLink";
 
 const Container = styled.div`
-${tw``}
+  ${tw``}
 `;
 
 const Table = styled.table`
@@ -56,9 +59,8 @@ const TRow = styled.tr`
   }
 `;
 
-
 const MatchContainer = styled(FlexContainer)`
-${tw`
+  ${tw`
 max-w-sm
 w-full
 p-2
@@ -71,126 +73,137 @@ border-red-800
 `;
 
 const RoundContainer = styled(FlexContainer)`
-${tw`
+  ${tw`
 flex-col
 items-center
 `}
 `;
 
+const storage = new InMemoryDatabase();
+let manager = new BracketsManager(storage);
 
-export default function Placements(){
+export default function Placements() {
   const { tourneyId } = useParams();
-  const { data: tourney, error } = useGetTourneyQuery(tourneyId);    
+  const { data: tourney, error } = useGetTourneyQuery(tourneyId);
+
+  const tourneyPlayers = tourney.members.filter((t) => t.status === "accepted");
+
+  useScript(
+    "https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.js"
+  );
+  useLink(
+    "https:cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.css",
+    "stylesheet"
+  );
+  useLink("/brackets/themes/dark-blue.css", "stylesheet");
+
+  const playerIds = Array.from(tourneyPlayers, (p) => p.member_id);
+
+  const { data: users } = useGetUsersQuery({ $or: playerIds });
+
+  const render = async () => {
+    const b = document.getElementById("bracketsViewer");
+    b.innerHTML = "";
+
+    const data = await manager.get.tournamentData(1234);
+    console.log(data);
+
+    window.bracketsViewer.render({
+      stages: data.stage,
+      matches: data.match,
+      matchGames: data.match_game,
+      participants: data.participant,
+    });
+  };
+
+  const generateBrackets = async () => {
+    const tourneyData = await manager.get.tournamentData(1234);
+
+    if (tourneyData && tourneyData.stage.length) {
+      await manager.delete.stage(tourneyData.stage[0].id);
+    }
+
+    await manager.create({
+      name: "Knockout Stage",
+      tournamentId: 1234,
+      type: "single_elimination",
+      settings: {
+        size: tourney.max_players,
+        balanceByes: true,
+        grandFinal: "simple",
+      },
+      seeding: playerIds,
+    });
+
+    render();
+  };
+
+  useEffect(() => {
+    generateBrackets();
+  }, []);
 
   return (
     <Container>
-      <FlexContainer justify='space-between'>
-	<Text fontSize='2rem'
-              fontWeight='700'> Placements </Text>
+      <FlexContainer justify="space-between">
+        <Text fontSize="2rem" fontWeight="700">
+          Placements
+        </Text>
       </FlexContainer>
-      
-      <FlexContainer direction='col' w='100%'>
-	<FlexContainer justify='space-between'
-                       align='center'
-                       w='100%'>
-	  <Text fontSize='1.5rem' fontWeight='700'> Seeding </Text>
-	  <FlexContainer align='center' gap='1rem'>
-	    <IconButton icon={<MdAdd size={20} color='green'/>} pad='0.5rem'> Add </IconButton>
-	    <IconButton icon={<BiShuffle size={20} color='royalblue'/>} pad='0.5rem'/> 
-	    <IconButton icon={<BiDotsVerticalRounded size={20} color='royalblue'/>} pad='0.5rem'/>
+
+      <FlexContainer direction="col" w="100%">
+        <FlexContainer justify="space-between" align="center" w="100%">
+          <Text fontSize="1.5rem" fontWeight="700">
+            {" "}
+            Seeding{" "}
+          </Text>
+          <FlexContainer align="center" gap="1rem">
+            <IconButton icon={<MdAdd size={20} color="green" />} pad="0.5rem">
+              {" "}
+              Add{" "}
+            </IconButton>
+            <IconButton
+              icon={<BiShuffle size={20} color="royalblue" />}
+              pad="0.5rem"
+            />
+            <IconButton
+              icon={<BiDotsVerticalRounded size={20} color="royalblue" />}
+              pad="0.5rem"
+            />
           </FlexContainer>
         </FlexContainer>
 
-	<Table>
-	  <thead>
-	    <TRow>
-            <THead> # </THead>
-            <THead> Name </THead>
+        <Table>
+          <thead>
+            <TRow>
+              <THead> # </THead>
+              <THead> Name </THead>
             </TRow>
           </thead>
-	  <tbody>
-	    <TRow>
-	      <TData> 1 </TData>
-	      <TData> dioveath </TData>              
-            </TRow>
-	    <TRow>
-	      <TData> 2 </TData>
-	      <TData> icerush </TData>              
-            </TRow>
-	    <TRow>
-	      <TData> 3 </TData>
-	      <TData> uJackal5 </TData>              
-            </TRow>
-	    <TRow>
-	      <TData> 4 </TData>
-	      <TData> neo </TData>              
-            </TRow>
-	    <TRow>
-	      <TData> 5 </TData>
-	      <TData> nungkha </TData>              
-            </TRow>
-	    <TRow>
-	      <TData> 5 </TData>
-	      <TData> prison </TData>              
-            </TRow>                                             
+          <tbody>
+            {tourneyPlayers.map((p, i) => (
+              <TRow key={p.id}>
+                <TData> {i + 1} </TData>
+                <TData> {p.member_id} </TData>
+              </TRow>
+            ))}
           </tbody>
         </Table>
-        
       </FlexContainer>
 
-      <FlexContainer direction='col'>
-	<Text fontSize="1.2rem" fontWeight="700"> Single Elimination Tree </Text>
-	<FlexContainer>
-	  <RoundContainer>
-	    <Button disabled={true}> Round 1 </Button>
-	    <MatchContainer>
-	      <IconButton icon={MdAdd}>#1</IconButton>
-	      <IconButton icon={MdAdd}>#2</IconButton>              
-            </MatchContainer>
-	    <MatchContainer>
-	      <IconButton icon={MdAdd}>#1</IconButton>
-	      <IconButton icon={MdAdd}>#2</IconButton>              
-            </MatchContainer>
-	    <MatchContainer>
-	      <IconButton icon={MdAdd}>#1</IconButton>
-	      <IconButton icon={MdAdd}>#2</IconButton>              
-            </MatchContainer>                        
-          </RoundContainer>
+      <FlexContainer direction="col">
+        <FlexContainer w="100%" justify="space-between">
+          <Text fontSize="1.2rem" fontWeight="700">
+            Single Elimination Tree
+          </Text>
+          <Button onClick={generateBrackets}> Generate Stage </Button>
+        </FlexContainer>
 
-	  <RoundContainer>
-	    <Button disabled={true}> Round 2 </Button>
-	    <MatchContainer>
-	      <IconButton icon={MdAdd}>#1</IconButton>
-	      <IconButton icon={MdAdd}>#2</IconButton>              
-            </MatchContainer>
-	    <MatchContainer>
-	      <IconButton icon={MdAdd}>#1</IconButton>
-	      <IconButton icon={MdAdd}>#2</IconButton>              
-            </MatchContainer>
-	    <MatchContainer>
-	      <IconButton icon={MdAdd}>#1</IconButton>
-	      <IconButton icon={MdAdd}>#2</IconButton>              
-            </MatchContainer>                        
-          </RoundContainer>
+        <div id="bracketsViewer" className="brackets-viewer"></div>
 
-	  <RoundContainer>
-	    <Button disabled={true}> Round 2 </Button>
-	    <MatchContainer>
-	      <IconButton icon={MdAdd}>#1</IconButton>
-	      <IconButton icon={MdAdd}>#2</IconButton>              
-            </MatchContainer>
-	    <MatchContainer>
-	      <IconButton icon={MdAdd}>#1</IconButton>
-	      <IconButton icon={MdAdd}>#2</IconButton>              
-            </MatchContainer>
-	    <MatchContainer>
-	      <IconButton icon={MdAdd}>#1</IconButton>
-	      <IconButton icon={MdAdd}>#2</IconButton>              
-            </MatchContainer>                        
-          </RoundContainer>                    
+        <FlexContainer w="100%" justify="flex-end">
+          <Button> Save Matches </Button>
         </FlexContainer>
       </FlexContainer>
-
     </Container>
   );
 }

@@ -8,7 +8,7 @@ const Joi = require('joi');
 
 const matchUpdateSchema = Joi.object().keys({
   summary: Joi.string().min(10).max(512),
-  status: Joi.string().min(3).required(), // status of the match, complete | running | ready
+  status: Joi.string().min(3).valid('ready', 'running', 'complete').required(), // status of the match, complete | running | ready
   is_neutral: Joi.boolean(), // for matches that weren't played either home rather on another stadium for. e.g - Final of UEFA
   home_player: Joi.string().max(255),
   away_player: Joi.string().max(255),

@@ -8,6 +8,9 @@
     "@thelevicole/youtube-to-html5-loader": "^4.0.1",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.4",
+    "brackets-manager": "^1.4.4",
+    "brackets-memory-db": "^1.0.4",
+    "brackets-viewer": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase": "^9.8.1",
@@ -62,9 +65,9 @@
       "not op_mini all"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ]
   }
 }
