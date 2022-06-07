@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-
 import { useParams } from "react-router-dom";
 
 import { BracketsManager } from "brackets-manager";
@@ -151,7 +150,6 @@ export default function Placements() {
 
   const saveStageHandler = async () => {
     const tourneyData = await manager.get.tournamentData(1234);
-    console.log(tourneyData);
 
     if (tourneyData && tourneyData.stage.length) {
       toast.promise(
@@ -167,7 +165,6 @@ export default function Placements() {
 
   const loadTourneyData = async () => {
     if(Object.keys(tourney.tourney_data).length !== 0) {
-      console.log("Setting data from online api..");
       const tourneyCopyData = JSON.parse(JSON.stringify(tourney.tourney_data));
       storage.setData(tourneyCopyData);
     }
