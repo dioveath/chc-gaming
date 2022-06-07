@@ -33,6 +33,7 @@ async function addUser(userInfo){
   userInfo.trophies = [];
   userInfo.followers = [];
   userInfo.following = [];
+  userInfo.social_links = [];
 
   var user = await makeUser(userInfo);
 
