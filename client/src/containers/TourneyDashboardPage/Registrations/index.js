@@ -3,19 +3,22 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 import { useParams } from "react-router-dom";
-import { useGetTourneyQuery, useUpdateTourneyMutation } from "../../../redux/TourneyApi";
+import {
+  useGetTourneyQuery,
+  useUpdateTourneyMutation,
+} from "../../../redux/TourneyApi";
 
 import { NormalText, BoldText, Text } from "../../../components/Text";
 import { FlexContainer, WrapContainer } from "../../../components/base";
 import Button, { IconButton } from "../../../components/Button";
-import { Marginer } from '../../../components/Marginer';
+import { Marginer } from "../../../components/Marginer";
 
 import { RiRefreshLine, RiFilter3Fill } from "react-icons/ri";
 import { AiOutlineFileDone } from "react-icons/ai";
 import { MdOutlineCancel } from "react-icons/md";
-import { BsCashStack } from 'react-icons/bs';
+import { BsCashStack } from "react-icons/bs";
 
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   ${tw`
@@ -97,25 +100,25 @@ const TRow = styled.tr`
 `;
 
 const StatusBadge = ({ status }) => {
-  let bgColor = 'bg-blue-500';
+  let bgColor = "bg-blue-500";
 
-  switch(status){
-  case 'accepted':
-    bgColor = 'bg-green-500'
-    break;
-  case 'rejected':
-    bgColor = 'bg-red-500'
-    break;
-  case 'cancelled':
-    bgColor = 'bg-yellow-500'
-    break;
+  switch (status) {
+    case "accepted":
+      bgColor = "bg-green-500";
+      break;
+    case "rejected":
+      bgColor = "bg-red-500";
+      break;
+    case "cancelled":
+      bgColor = "bg-yellow-500";
+      break;
   }
 
-  return <div className={`${bgColor} p-2 rounded-md`}>
-	   <p className='uppercase text-center'>
-             { status }
-           </p>
-         </div>;
+  return (
+    <div className={`${bgColor} p-2 rounded-md`}>
+      <p className="uppercase text-center">{status}</p>
+    </div>
+  );
 };
 
 export default function Participants() {
@@ -137,6 +140,7 @@ export default function Participants() {
     (m) => m.status === "cancelled"
   ).length;
 
+  console.log(tourney);
 
   return (
     <Container>
@@ -188,7 +192,7 @@ export default function Participants() {
             List of Registrations
           </Text>
           <NormalText> Last Update </NormalText>
-          <NormalText> { tourney.updatedAt.substring(0, 10) } </NormalText>
+          <NormalText> {tourney.updatedAt.substring(0, 10)} </NormalText>
         </FlexContainer>
 
         <FlexContainer gap="1rem">
@@ -214,18 +218,19 @@ export default function Participants() {
         </thead>
         <tbody>
           {!error &&
-           tourney.registrations.map((m, index) => {
+            tourney.registrations.map((m, index) => {
               return (
                 <TRow key={m.registrant_id}>
-                  <TData> <StatusBadge status={m.status}/> </TData>
+                  <TData>
+                    {" "}
+                    <StatusBadge status={m.status} />{" "}
+                  </TData>
                   <TData> {m.registrant_id} </TData>
                   <TData> {m.registration_id} </TData>
                   <TData> {m.registered_date.substring(0, 10)} </TData>
                   <TData>
                     {m.fee_paid ? (
-                      <Text className="text-green-500 font-semibold">
-                        PAID
-                      </Text>
+                      <Text className="text-green-500 font-semibold">PAID</Text>
                     ) : (
                       <Text className="text-yellow-500 font-semibold">
                         NOT PAID
@@ -236,31 +241,47 @@ export default function Participants() {
                     <FlexContainer gap="0.4rem">
                       <IconButton
                         onClick={() => {
-                          if(!m.fee_paid) {
-                            toast.error("Player has not paid the registration fee!");
+                          if (!m.fee_paid) {
+                            toast.error(
+                              "Player has not paid the registration fee!"
+                            );
                             return;
                           }
 
-                          if(m.status === 'accepted') {
+                          if (m.status === "accepted") {
                             toast.error("Player has already been accepted!");
                             return;
                           }
 
-
-
-                          let allMembers = [ ...(tourney.registrations) ];
+                          let allRegistrations = [...tourney.registrations];
+                          let allParticipants = [...tourney.participants];
                           let updatedMember = { ...m };
-                          allMembers.splice(index, 1);
+                          allRegistrations.splice(index, 1);
 
-                          updatedMember.status = 'accepted';
-                          allMembers.push(updatedMember);
+                          updatedMember.status = "accepted";
 
-                          toast.promise(updateTourney({ id: tourneyId, registrations: allMembers }).unwrap(),
-                                        {
-                                          pending: 'Approving player registration...',
-                                          success: 'Approved!',
-                                          error: 'Couldnt approve!'
-                                        });
+                          allRegistrations.push(updatedMember);
+                          allParticipants.push({
+                            participant_id: m.registrant_id,
+                            registration_id: m.registration_id,
+                            name: m.name,
+                            status: "ready",
+                            created_at: new Date(),
+                            type: m.type,
+                          });
+
+                          toast.promise(
+                            updateTourney({
+                              id: tourneyId,
+                              registrations: allRegistrations,
+                              participants: allParticipants,
+                            }).unwrap(),
+                            {
+                              pending: "Approving player registration...",
+                              success: "Approved!",
+                              error: "Couldnt approve!",
+                            }
+                          );
                         }}
                         pad={"0.4rem"}
                         icon={<AiOutlineFileDone size="20" color="green" />}
@@ -269,36 +290,42 @@ export default function Participants() {
                         pad={"0.4rem"}
                         icon={<BsCashStack size="20" color="yellow" />}
                         onClick={() => {
-                          if(m.fee_paid) {
-                            toast.error("Player has already paid the registration fee!");
+                          if (m.fee_paid) {
+                            toast.error(
+                              "Player has already paid the registration fee!"
+                            );
                             return;
                           }
 
-                          if(m.status === 'accepted') {
+                          if (m.status === "accepted") {
                             toast.error("Player has already been accepted!");
                             return;
                           }
 
-
-                          let allMembers = [ ...(tourney.registrations) ];
+                          let allRegistrations = [...tourney.registrations];
                           let updatedMember = { ...m };
-                          allMembers.splice(index, 1);
+                          allRegistrations.splice(index, 1);
 
                           updatedMember.fee_paid = true;
-                          allMembers.push(updatedMember);
+                          allRegistrations.push(updatedMember);
 
-                          toast.promise(updateTourney({ id: tourneyId, registrations: allMembers }).unwrap(),
-                                        {
-                                          pending: 'Paying registration fee...',
-                                          success: 'Paid registration fee!',
-                                          error: 'Couldnt pay registration fee!'
-                                        });
+                          toast.promise(
+                            updateTourney({
+                              id: tourneyId,
+                              registrations: allRegistrations,
+                            }).unwrap(),
+                            {
+                              pending: "Paying registration fee...",
+                              success: "Paid registration fee!",
+                              error: "Couldnt pay registration fee!",
+                            }
+                          );
                         }}
-                      ></IconButton>                      
+                      ></IconButton>
 
                       <IconButton
                         pad={"0.4rem"}
-                       icon={<MdOutlineCancel size="20" color="red" />}
+                        icon={<MdOutlineCancel size="20" color="red" />}
                       ></IconButton>
                     </FlexContainer>
                   </TData>
@@ -308,7 +335,7 @@ export default function Participants() {
         </tbody>
       </Table>
 
-      <Marginer vertical='10rem'/>
+      <Marginer vertical="10rem" />
     </Container>
   );
 }

@@ -7,7 +7,10 @@ import { useParams } from "react-router-dom";
 import { BracketsManager } from "brackets-manager";
 import { InMemoryDatabase } from "brackets-memory-db";
 
-import { useGetTourneyQuery } from "../../../redux/TourneyApi";
+import {
+  useGetTourneyQuery,
+  useUpdateTourneyMutation,
+} from "../../../redux/TourneyApi";
 
 import { useGetUsersQuery } from "../../../redux/UserApi";
 
@@ -16,13 +19,17 @@ import { NormalText, BoldText, Text } from "../../../components/Text";
 import { Input } from "../../../components/Form";
 
 import { FlexContainer, WrapContainer } from "../../../components/base";
+import { Marginer } from '../../../components/Marginer';
 
 import Button, { IconButton } from "../../../components/Button";
 import { MdAdd } from "react-icons/md";
 import { BiShuffle, BiDotsVerticalRounded } from "react-icons/bi";
 
+import { toast } from 'react-toastify';
+
 import useScript from "../../../hooks/useScript";
 import useLink from "../../../hooks/useLink";
+
 
 const Container = styled.div`
   ${tw``}
@@ -85,8 +92,11 @@ let manager = new BracketsManager(storage);
 export default function Placements() {
   const { tourneyId } = useParams();
   const { data: tourney, error } = useGetTourneyQuery(tourneyId);
+  const [updateTourney] = useUpdateTourneyMutation();
 
-  const tourneyPlayers = tourney.participants.filter((t) => t.status === "accepted");
+  const tourneyPlayers = tourney.participants.filter(
+    (p) => p.status === "ready"
+  );
 
   const { isLoaded } = useScript(
     "https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.js"
@@ -97,30 +107,31 @@ export default function Placements() {
   );
   useLink("/brackets/themes/dark-blue.css", "stylesheet");
 
-  const playerIds = Array.from(tourneyPlayers, (p) => p.member_id);
-
-  const { data: users } = useGetUsersQuery({ $or: playerIds });
+  const playerNames = Array.from(tourneyPlayers, (p) => p.name);
 
   const render = async () => {
     const b = document.getElementById("bracketsViewer");
     b.innerHTML = "";
-
     const data = await manager.get.tournamentData(1234);
 
-    if(isLoaded)
-    window.bracketsViewer.render({
-      stages: data.stage,
-      matches: data.match,
-      matchGames: data.match_game,
-      participants: data.participant,
-    });
+    console.log(data);
+
+    if (isLoaded)
+      window.bracketsViewer.render({
+        stages: data.stage,
+        matches: data.match,
+        matchGames: data.match_game,
+        participants: data.participant,
+      });
   };
 
   const generateBrackets = async () => {
     const tourneyData = await manager.get.tournamentData(1234);
 
     if (tourneyData && tourneyData.stage.length) {
-      await manager.delete.stage(tourneyData.stage[0].id);
+      const stageId = manager.delete.stage(tourneyData.stage[0].id);
+      if(stageId !== undefined)
+        await manager.delete.stage(stageId);
     }
 
     await manager.create({
@@ -132,14 +143,43 @@ export default function Placements() {
         balanceByes: true,
         grandFinal: "simple",
       },
-      seeding: playerIds,
+      seeding: playerNames,
     });
 
     render();
   };
 
+  const saveStageHandler = async () => {
+    const tourneyData = await manager.get.tournamentData(1234);
+    console.log(tourneyData);
+
+    if (tourneyData && tourneyData.stage.length) {
+      toast.promise(
+        updateTourney({ id: tourneyId, tourney_data: tourneyData }).unwrap(),
+        {
+          pending: "Saving the stage..",
+          success: "Stage saved successfully",
+          error: "Couldn't save the stage",
+        }
+      );
+    }
+  };
+
+  const loadTourneyData = async () => {
+    if(Object.keys(tourney.tourney_data).length !== 0) {
+      console.log("Setting data from online api..");
+      const tourneyCopyData = JSON.parse(JSON.stringify(tourney.tourney_data));
+      storage.setData(tourneyCopyData);
+    }
+    render();
+  };
+
   useEffect(() => {
-    generateBrackets();
+    if(isLoaded){
+      (async() => {
+        loadTourneyData();
+      })();      
+    }
   }, [isLoaded]);
 
   return (
@@ -149,61 +189,85 @@ export default function Placements() {
           Placements
         </Text>
       </FlexContainer>
-
-      <FlexContainer direction="col" w="100%">
-        <FlexContainer justify="space-between" align="center" w="100%">
-          <Text fontSize="1.5rem" fontWeight="700">
-            {" "}
-            Seeding{" "}
-          </Text>
-          <FlexContainer align="center" gap="1rem">
-            <IconButton icon={<MdAdd size={20} color="green" />} pad="0.5rem">
-              {" "}
-              Add{" "}
-            </IconButton>
-            <IconButton
-              icon={<BiShuffle size={20} color="royalblue" />}
-              pad="0.5rem"
-            />
-            <IconButton
-              icon={<BiDotsVerticalRounded size={20} color="royalblue" />}
-              pad="0.5rem"
-            />
+      <FlexContainer justify="space-between" w="100%" gap="2rem">
+        {" "}
+        // seedings & participants
+        <FlexContainer direction="col" w="100%">
+          <FlexContainer justify="space-between" align="center" w="100%">
+            <Text fontSize="1.5rem" fontWeight="700">
+              Seeding
+            </Text>
+            <FlexContainer align="center" gap="1rem">
+              <IconButton icon={<MdAdd size={20} color="green" />} pad="0.5rem">
+                Add
+              </IconButton>
+              <IconButton
+                icon={<BiShuffle size={20} color="royalblue" />}
+                pad="0.5rem"
+              />
+              <IconButton
+                icon={<BiDotsVerticalRounded size={20} color="royalblue" />}
+                pad="0.5rem"
+              />
+            </FlexContainer>
           </FlexContainer>
-        </FlexContainer>
 
-        <Table>
-          <thead>
-            <TRow>
-              <THead> # </THead>
-              <THead> Name </THead>
-            </TRow>
-          </thead>
-          <tbody>
-            {tourneyPlayers.map((p, i) => (
-              <TRow key={p.id}>
-                <TData> {i + 1} </TData>
-                <TData> {p.member_id} </TData>
+          <Table>
+            <thead>
+              <TRow>
+                <THead> # </THead>
+                <THead> Name </THead>
               </TRow>
-            ))}
-          </tbody>
-        </Table>
-      </FlexContainer>
-
-      <FlexContainer direction="col">
-        <FlexContainer w="100%" justify="space-between">
-          <Text fontSize="1.2rem" fontWeight="700">
+            </thead>
+            <tbody>
+              {tourneyPlayers.map((p, i) => (
+                <TRow key={p.id}>
+                  <TData> {i + 1} </TData>
+                  <TData> {p.name} </TData>
+                </TRow>
+              ))}
+            </tbody>
+          </Table>
+        </FlexContainer>
+        <FlexContainer w="100%" direction="col">
+          <Text fontSize="1.5rem" fontWeight="700">
+            Participants
+          </Text>
+          <Table>
+            <thead>
+              <TRow>
+                <THead> # </THead>
+                <THead> Name </THead>
+              </TRow>
+            </thead>
+            <tbody>
+              {tourneyPlayers.map((p, i) => (
+                <TRow key={p.id}>
+                  <TData> {i + 1} </TData>
+                  <TData> {p.name} </TData>
+                </TRow>
+              ))}
+            </tbody>
+          </Table>
+        </FlexContainer>
+      </FlexContainer>{" "}
+      // seedings & participants
+      <FlexContainer direction="col" className="mt-6">
+        <FlexContainer w="100%" justify="flex-start" className='my-4'>
+          <Text fontSize="1.4rem" fontWeight="700">
             Single Elimination Tree
           </Text>
-          <Button onClick={generateBrackets}> Generate Stage </Button>
         </FlexContainer>
 
         <div id="bracketsViewer" className="brackets-viewer"></div>
 
-        <FlexContainer w="100%" justify="flex-end">
-          <Button> Save Matches </Button>
+        <FlexContainer w="100%" justify="flex-end" gap='1rem' className='my-4'>
+          <Button onClick={generateBrackets}> Generate Stage </Button>          
+          <Button onClick={saveStageHandler}> Save Matches </Button>
         </FlexContainer>
       </FlexContainer>
+
+      <Marginer vertical='20rem'/>
     </Container>
   );
 }

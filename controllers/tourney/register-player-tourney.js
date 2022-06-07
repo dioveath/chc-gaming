@@ -22,7 +22,8 @@ module.exports = function makeRegisterPlayerTourney(tourneyAccess) {
         throw new Error("Player is already registered!");
       }
 
-      const userData = await UserAccess.findUserById(playerId);            
+      const userData = await UserAccess.findUserById(playerId);
+      const registrationId = rand.generate();
 
       const updatedTourney = await tourneyAccess.updateTourney(
         httpRequest.params.id,
@@ -31,7 +32,7 @@ module.exports = function makeRegisterPlayerTourney(tourneyAccess) {
             ...tourney.registrations,
             {
               registrant_id: playerId,
-              registration_id: rand.generate(),
+              registration_id: registrationId,
               name: userData.gaming_name,
               status: 'pending',
               registered_date: new Date(),

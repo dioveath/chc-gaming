@@ -19,7 +19,6 @@ module.exports = function makeRegisterPlayerTourney(tourneyAccess) {
 
       const { sub: playerId } = httpRequest.user;
 
-
       if (tourney.registrations.find(m => m.registrant_id === playerId)) {
         throw new Error("Player is already registered!");
       }

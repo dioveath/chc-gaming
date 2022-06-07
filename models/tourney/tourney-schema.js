@@ -40,10 +40,11 @@ const tourneyUpdateSchema = Joi.object().keys({
 
   participants: Joi.array().items(Joi.object().keys({
     participant_id: Joi.objectId().required(),
+    registration_id: Joi.string().min(6).required(),
     name: Joi.string().min(3).max(255),
-    status: Joi.string().valid('ready', 'checkedin', 'playing', 'forfeit'),
+    status: Joi.string().valid('ready', 'checkedin', 'playing', 'forfeit', 'disqualified'),
     created_at: Joi.date(),
-    type: Joi.string().valid('team', 'solo')
+    type: Joi.string().valid('team', 'solo'),
   })),
 
   managers: Joi.array().items(Joi.object().keys({

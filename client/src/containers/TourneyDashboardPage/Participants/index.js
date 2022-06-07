@@ -93,28 +93,27 @@ const TRow = styled.tr`
   }
 `;
 
-
 export default function Participants(){
   const { tourneyId } = useParams();
   const { data: tourney, error } = useGetTourneyQuery(tourneyId);
 
-const totalRegistered = tourney.participants.length;
-  const totalPending = tourney.participants.filter(
-    (m) => m.status === "pending"
+  const totalRegistered = tourney.participants.length;
+
+  const totalReady = tourney.participants.filter(
+    (m) => m.status === "ready"
   ).length;
 
-  const totalRejected = tourney.participants.filter(
-    (m) => m.status === "rejected"
+  const totalCheckedin = tourney.participants.filter(
+    (m) => m.status === "checkedin"
   ).length;
-  const totalCancelled = tourney.participants.filter(
-    (m) => m.status === "cancelled"
+  const totalPlaying = tourney.participants.filter(
+    (m) => m.status === "playing"
   ).length;
 
-  const allAccepted = tourney.participants.filter(
-    (m) => m.status === "accepted"
-  );
-  const totalAccepted = allAccepted.length;
-  
+  const totalForfeit = tourney.participants.filter(
+    (m) => m.status === "forfeit"
+  ).length;
+
   
   return (
     <Container>
@@ -131,27 +130,27 @@ const totalRegistered = tourney.participants.length;
           </Text>
         </CounterCardContainer>
         <CounterCardContainer direction="col">
-          <CountText> { totalPending }</CountText>
+          <CountText> { totalReady }</CountText>
           <Text fontSize="1.2rem" fontWeight="700">
-            Pending
+            Ready
           </Text>
         </CounterCardContainer>
         <CounterCardContainer direction="col">
-          <CountText> { totalRejected }</CountText>
+          <CountText> { totalCheckedin }</CountText>
           <Text fontSize="1.2rem" fontWeight="700">
-            Rejected
+            Checkedin
           </Text>
         </CounterCardContainer>
         <CounterCardContainer direction="col">
-          <CountText>{ totalAccepted }</CountText>
+          <CountText>{ totalForfeit }</CountText>
           <Text fontSize="1.2rem" fontWeight="700">
-            Accepted
+            Forfeit
           </Text>
         </CounterCardContainer>
         <CounterCardContainer direction="col">
-          <CountText> { totalCancelled } </CountText>
+          <CountText> { totalPlaying } </CountText>
           <Text fontSize="1.2rem" fontWeight="700">
-            Cancelled
+            Playing
           </Text>
         </CounterCardContainer>
       </RegStatsContainer>
@@ -179,20 +178,20 @@ const totalRegistered = tourney.participants.length;
         <thead>
           <TRow>
             <THead> Status </THead>
-            <THead> Player ID </THead>
+            <THead> Player Name </THead>
             <THead> Reg ID </THead>
             <THead> Registered Date </THead>
             <THead> Actions </THead>
           </TRow>
         </thead>
         <tbody>
-          {!error && allAccepted.map((m) => {
+          {!error && tourney.participants.map((m) => {
             return (
               <TRow>
                 <TData> { m.status } </TData>
-                <TData> { m.member_id } </TData>
-                <TData> { m.reg_id} </TData>
-                <TData> { m.registered_date.substring(0, 10) } </TData>
+                <TData> { m.name } </TData>
+                <TData> { m.registration_id} </TData>
+                <TData> { m.created_at.substring(0, 10) } </TData>
                 <TData>
                   <FlexContainer gap="0.4rem">
                     <IconButton
