@@ -17,6 +17,7 @@ import Participants from './Participants';
 import Registrations from './Registrations';
 import Structure from './Structure';
 import Placements from './Placements';
+import Matches from './Matches';
 
 export const MenuItems = [
   {
@@ -52,7 +53,7 @@ export const MenuItems = [
   {
     'name': 'Matches',
     'icon': <GiCheckboxTree/>,
-    'content': <NotFound/>
+    'content': <Matches/>
   },
   {
     'name': 'Final Standings',

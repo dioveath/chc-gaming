@@ -88,7 +88,7 @@ export default function Placements() {
 
   const tourneyPlayers = tourney.members.filter((t) => t.status === "accepted");
 
-  useScript(
+  const { isLoaded } = useScript(
     "https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.js"
   );
   useLink(
@@ -106,8 +106,8 @@ export default function Placements() {
     b.innerHTML = "";
 
     const data = await manager.get.tournamentData(1234);
-    console.log(data);
 
+    if(isLoaded)
     window.bracketsViewer.render({
       stages: data.stage,
       matches: data.match,
@@ -140,7 +140,7 @@ export default function Placements() {
 
   useEffect(() => {
     generateBrackets();
-  }, []);
+  }, [isLoaded]);
 
   return (
     <Container>
