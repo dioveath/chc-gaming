@@ -86,7 +86,7 @@ export default function Placements() {
   const { tourneyId } = useParams();
   const { data: tourney, error } = useGetTourneyQuery(tourneyId);
 
-  const tourneyPlayers = tourney.members.filter((t) => t.status === "accepted");
+  const tourneyPlayers = tourney.participants.filter((t) => t.status === "accepted");
 
   const { isLoaded } = useScript(
     "https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.js"

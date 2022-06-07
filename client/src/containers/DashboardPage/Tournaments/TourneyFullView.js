@@ -61,7 +61,7 @@ export default function TourneyFullView({ tourney }) {
     (prevValue, el) => (prevValue += el.value),
     0
   );
-  const totalRegisteredPlayers = tourney.members.length;
+  const totalRegisteredPlayers = tourney.registrations.length;
 
   const auth = useSelector((state) => state.auth);
   const [registerTourney, { isLoading: isRegisterPending }] =
@@ -73,8 +73,8 @@ export default function TourneyFullView({ tourney }) {
   const { data: user } = useGetUserQuery(auth.userId);
 
   const isRegistered =
-        tourney.members.filter((m) => m.member_id === auth.userId).length > 0;
-  const isRegFeePaid = tourney.members.filter((m) => m.member_id === auth.userId && m.fee_paid).length > 0;
+        tourney.registrations.filter((m) => m.registrant_id === auth.userId).length > 0;
+  const isRegFeePaid = tourney.registrations.filter((m) => m.registrant_id === auth.userId && m.fee_paid).length > 0;
 
   const khaltiConfig = {
     "publicKey": config.khaltiPublicKey,

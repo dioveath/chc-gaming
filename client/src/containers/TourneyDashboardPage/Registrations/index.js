@@ -123,17 +123,17 @@ export default function Participants() {
   const { data: tourney, error } = useGetTourneyQuery(tourneyId);
   const [updateTourney] = useUpdateTourneyMutation();
 
-  const totalRegistered = tourney.members.length;
-  const totalPending = tourney.members.filter(
+  const totalRegistered = tourney.registrations.length;
+  const totalPending = tourney.registrations.filter(
     (m) => m.status === "pending"
   ).length;
-  const totalAccepted = tourney.members.filter(
+  const totalAccepted = tourney.registrations.filter(
     (m) => m.status === "accepted"
   ).length;
-  const totalRejected = tourney.members.filter(
+  const totalRejected = tourney.registrations.filter(
     (m) => m.status === "rejected"
   ).length;
-  const totalCancelled = tourney.members.filter(
+  const totalCancelled = tourney.registrations.filter(
     (m) => m.status === "cancelled"
   ).length;
 
@@ -214,12 +214,12 @@ export default function Participants() {
         </thead>
         <tbody>
           {!error &&
-           tourney.members.map((m, index) => {
+           tourney.registrations.map((m, index) => {
               return (
-                <TRow key={m.member_id}>
+                <TRow key={m.registrant_id}>
                   <TData> <StatusBadge status={m.status}/> </TData>
-                  <TData> {m.member_id} </TData>
-                  <TData> {m.reg_id} </TData>
+                  <TData> {m.registrant_id} </TData>
+                  <TData> {m.registration_id} </TData>
                   <TData> {m.registered_date.substring(0, 10)} </TData>
                   <TData>
                     {m.fee_paid ? (
@@ -248,14 +248,14 @@ export default function Participants() {
 
 
 
-                          let allMembers = [ ...(tourney.members) ];
+                          let allMembers = [ ...(tourney.registrations) ];
                           let updatedMember = { ...m };
                           allMembers.splice(index, 1);
 
                           updatedMember.status = 'accepted';
                           allMembers.push(updatedMember);
 
-                          toast.promise(updateTourney({ id: tourneyId, members: allMembers }).unwrap(),
+                          toast.promise(updateTourney({ id: tourneyId, registrations: allMembers }).unwrap(),
                                         {
                                           pending: 'Approving player registration...',
                                           success: 'Approved!',
@@ -280,14 +280,14 @@ export default function Participants() {
                           }
 
 
-                          let allMembers = [ ...(tourney.members) ];
+                          let allMembers = [ ...(tourney.registrations) ];
                           let updatedMember = { ...m };
                           allMembers.splice(index, 1);
 
                           updatedMember.fee_paid = true;
                           allMembers.push(updatedMember);
 
-                          toast.promise(updateTourney({ id: tourneyId, members: allMembers }).unwrap(),
+                          toast.promise(updateTourney({ id: tourneyId, registrations: allMembers }).unwrap(),
                                         {
                                           pending: 'Paying registration fee...',
                                           success: 'Paid registration fee!',

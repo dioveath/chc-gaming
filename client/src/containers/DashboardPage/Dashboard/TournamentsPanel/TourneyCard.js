@@ -57,7 +57,7 @@ export default function TournamentCard({ tourney }) {
   const { isPending } = useSelector(state => state.tourney);
 
   const [isRegistered, setRegistered] = useState(
-    tourney.members.filter((m) => m.member_id === auth.userId).length > 0
+    tourney.registrations.filter((m) => m.registrant_id === auth.userId).length > 0
   );
 
   const onRegisterHandler = async (e) => {
@@ -78,7 +78,7 @@ export default function TournamentCard({ tourney }) {
     try {
       const response = await axios.request(options);
       setRegistered(
-        response.data.updatedTourney.members.filter((m) => m.member_id === auth.userId).length > 0
+        response.data.updatedTourney.registrations.filter((m) => m.registrant_id === auth.userId).length > 0
       );
       dispatch(updateTourney(response.data.updatedTourney));
       toast.update(toastId, {

@@ -43,11 +43,10 @@ export const tourneyApi = createApi({
 
     addTourney: builder.mutation({
       query: (data) => {
-        const { formData } = data;
         return {
-          url: `tourneys/encode`,
+          url: `tourneys`,
           method: 'POST',
-          body: formData
+          body: data
         };
       },
       invalidatesTags: (_result, _error, _args) => [{ type: 'Tourneys', id: "LIST"}]

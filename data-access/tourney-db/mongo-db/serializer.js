@@ -1,24 +1,33 @@
 const _serializeSingle = (tourney) => {
+
   return {
     "id": tourney.id,
     "title": tourney.title,
-    "status": tourney.status,
-    "medias": tourney.medias,
     "description": tourney.description,
-    "members": tourney.members,
-    "managers": tourney.managers,
-    "sponserships": tourney.sponserships,
-    "prizes": tourney.prizes,
-    "matches": tourney.matches,
+    "rules": tourney.rules,
+    "status": tourney.status,
     "hypes": tourney.hypes,
     "game": tourney.game,
     "max_players": tourney.max_players,
     "location": tourney.location,
-    "live_link": tourney.live_link,
+    "platforms": tourney.platforms,
+
+    "registration_fee": tourney.registration_fee,
+    "registration_open_date": tourney.registration_open_date,
     "registration_end_date": tourney.registration_end_date,
     "start_date": tourney.start_date,
     "end_date": tourney.end_date,
-    "registration_fee": tourney.registration_fee,
+
+    "medias": tourney.medias,
+    "streams": tourney.streams,
+    "registrations": tourney.registrations,
+    "participants": tourney.participants,
+    "managers": tourney.managers,
+    "sponserships": tourney.sponserships,
+    "prizes": tourney.prizes,
+    "tourney_data": tourney.tourney_data,
+    "final_standings": tourney.final_standings,
+
     "createdAt": tourney.createdAt,
     "updatedAt": tourney.updatedAt
   };

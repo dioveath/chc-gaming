@@ -16,19 +16,27 @@ module.exports = function makeRegisterPlayerTourney(tourneyAccess) {
         throw new Error("No Tourney with id: " + httpRequest.params.id);
       }
 
-      if (tourney.members.find(m => m.member_id === httpRequest.params.playerId)) {
+      const playerId = httpRequest.params.playerId;
+
+      if (tourney.registrations.find(m => m.registrant_id === playerId)) {
         throw new Error("Player is already registered!");
       }
+
+      const userData = await UserAccess.findUserById(playerId);            
 
       const updatedTourney = await tourneyAccess.updateTourney(
         httpRequest.params.id,
         {
-          members: [
-            ...tourney.members,
+          registrations: [
+            ...tourney.registrations,
             {
-              member_id: httpRequest.params.playerId,
-              reg_id: rand.generate(),
-              status: 'pending'
+              registrant_id: playerId,
+              registration_id: rand.generate(),
+              name: userData.gaming_name,
+              status: 'pending',
+              registered_date: new Date(),
+              fee_paid: false,
+              type: 'solo'
             },
           ],
         }

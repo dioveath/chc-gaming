@@ -98,19 +98,19 @@ export default function Participants(){
   const { tourneyId } = useParams();
   const { data: tourney, error } = useGetTourneyQuery(tourneyId);
 
-const totalRegistered = tourney.members.length;
-  const totalPending = tourney.members.filter(
+const totalRegistered = tourney.participants.length;
+  const totalPending = tourney.participants.filter(
     (m) => m.status === "pending"
   ).length;
 
-  const totalRejected = tourney.members.filter(
+  const totalRejected = tourney.participants.filter(
     (m) => m.status === "rejected"
   ).length;
-  const totalCancelled = tourney.members.filter(
+  const totalCancelled = tourney.participants.filter(
     (m) => m.status === "cancelled"
   ).length;
 
-  const allAccepted = tourney.members.filter(
+  const allAccepted = tourney.participants.filter(
     (m) => m.status === "accepted"
   );
   const totalAccepted = allAccepted.length;

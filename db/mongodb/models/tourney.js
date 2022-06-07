@@ -5,20 +5,30 @@ var Schema = mongoose.Schema;
 var TourneySchema = new Schema({
   title: { type: String, unique: true },
   description: String,
+  rules: String,
   status: String,
-  medias: Array,
-  members: Array,
-  managers: Array,
-  sponserships: Array,
-  prizes: Array,
-  matches: Array,
+  hypes: Array,
   game: String,
   max_players: Number,
   location: String,
-  live_link: String,
+  platforms: Array,
+
+  registration_fee: Number,
+  registration_open_date: Date,
+  registration_end_date: Date,
   start_date: Date,
   end_date: Date,
-  registration_fee: Number
+
+  medias: Array,
+  streams: Array,
+  registrations: Array,
+  participants: Array,
+  managers: Array,
+  sponserships: Array,
+  prizes: Array,
+  tourney_data: Object,
+  final_standings: Array
+
 }, { timestamps: true });
 
 

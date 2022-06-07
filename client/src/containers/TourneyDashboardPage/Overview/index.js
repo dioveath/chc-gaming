@@ -63,16 +63,7 @@ const StructureTile = ({ stage, matchType, players, status }) => (
 
 export default function OverviewPage() {
   const { tourneyId } = useParams();
-  const { data: tourney, error } = useGetTourneyQuery(tourneyId);
-
-  if(error){
-    return (
-      <Container>
-        <Text> Server ERROR | 500 </Text>
-	<Text> { console.log(error) }</Text>
-      </Container>
-    )
-  }
+  const { data: tourney } = useGetTourneyQuery(tourneyId);
 
   return (
     <Container>
@@ -91,7 +82,7 @@ export default function OverviewPage() {
           </FlexContainer>
           <FlexContainer justify="space-between">
             <FlexContainer direction="col" align="center">
-              <LargeCountText> { tourney.members.length } </LargeCountText>
+              <LargeCountText> { tourney.participants.length } </LargeCountText>
               <NormalText> Participants </NormalText>
             </FlexContainer>
             <FlexContainer direction="col" align="center">

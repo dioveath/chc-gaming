@@ -65,7 +65,7 @@ export default function TournamentCard({ tourney }) {
   const [registerVerifyTourney ] = useRegisterVerifyTourneyMutation();
 
   const isRegistered =
-        tourney.members.filter((m) => m.member_id === auth.userId).length > 0;
+        tourney.registrations.filter((m) => m.member_id === auth.userId).length > 0;
 
   const khaltiConfig = {
     "publicKey": config.khaltiPublicKey,

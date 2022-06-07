@@ -14,15 +14,15 @@ module.exports = function makeDeletePlayerTourney(tourneyAccess) {
         throw new Error("No Tourney with id: " + httpRequest.params.id);
       }
 
-      if (!(tourney.members.find(m => m.member_id === httpRequest.params.playerId))) {
+      if (!(tourney.registrations.find(m => m.registrant_id === httpRequest.params.playerId))) {
         throw new Error("Player is not registered!");
       }
 
       const updatedTourney = await tourneyAccess.updateTourney(
         httpRequest.params.id,
         {
-          members: [
-            ...(tourney.members.filter((m) => m.member_id !== httpRequest.params.playerId))
+          registrations: [
+            ...(tourney.registrations.filter((m) => m.registrant_id !== httpRequest.params.playerId))
           ],
         }
       );

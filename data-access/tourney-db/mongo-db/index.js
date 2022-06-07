@@ -22,26 +22,50 @@ function findTourneyById(id){
 }
 
 function addTourney(tourneyInfo){
-  var tourney = makeTourney(tourneyInfo);
-  var newTourney = {
+  tourneyInfo.description = tourneyInfo?.description || 'Your description goes here.';
+  tourneyInfo.rules = tourneyInfo?.rules || 'Your rules goes here!';  
+  tourneyInfo.status = 'pending';
+  tourneyInfo.hypes = [];
+
+  tourneyInfo.medias = tourneyInfo?.medias || [];
+  tourneyInfo.streams = tourneyInfo?.streams || [];
+  tourneyInfo.registrations = [];
+  tourneyInfo.participants = [];
+
+  tourneyInfo.sponserships = tourneyInfo?.sponserships || [];
+  tourneyInfo.prizes = tourneyInfo?.prizes || [];
+  tourneyInfo.tourney_data = {};
+  tourneyInfo.final_standings = [];
+
+
+  let tourney = makeTourney(tourneyInfo);
+  let newTourney = {
     title: tourney.getTitle(),
     description: tourney.getDescription(),
+    rules: tourney.getRules(),
     status: tourney.getStatus(),
-    medias: tourney.getMedias(),
-    members: tourney.getMembers(),
-    managers: tourney.getManagers(),
-    sponserships: tourney.getSponserships(),
-    prizes: tourney.getPrizes(),
-    matches: tourney.getMatches(),
     hypes: tourney.getHypes(),
     game: tourney.getGame(),
     max_players: tourney.getMaxPlayers(),
     location: tourney.getLocation(),
-    live_link: tourney.getLiveLink(),
+    platforms: tourney.getPlatforms(),
+
+    registration_fee: tourney.getRegistrationFee(),
+    registration_open_date: tourney.getRegistrationOpenDate(),
     registration_end_date: tourney.getRegistrationEndDate(),
     start_date: tourney.getStartDate(),
     end_date: tourney.getEndDate(),
-    registration_fee: tourney.getRegistrationFee()
+
+    medias: tourney.getMedias(),
+    streams: tourney.getStreams(),
+    registrations: tourney.getRegistrations(),
+    participants: tourney.getParticipants(),
+    managers: tourney.getManagers(),
+    sponserships: tourney.getSponserships(),
+    prizes: tourney.getPrizes(),
+    tourney_data: tourney.getTourneyData(),
+    final_standings: tourney.getFinalStandings()
+
   };
   return Tourney.create(newTourney).then(serialize).catch(errorFormatter);
 }

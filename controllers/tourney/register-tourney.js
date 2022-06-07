@@ -1,4 +1,5 @@
 const rand = require("random-key");
+const UserAccess = require('../../data-access/user-db/index');
 
 module.exports = function makeRegisterPlayerTourney(tourneyAccess) {
   return async function registerPlayerTourney(httpRequest) {
@@ -18,21 +19,26 @@ module.exports = function makeRegisterPlayerTourney(tourneyAccess) {
 
       const { sub: playerId } = httpRequest.user;
 
-      if (tourney.members.find(m => m.member_id === playerId)) {
+
+      if (tourney.registrations.find(m => m.registrant_id === playerId)) {
         throw new Error("Player is already registered!");
       }
+
+      const userData = await UserAccess.findUserById(playerId);      
 
       const updatedTourney = await tourneyAccess.updateTourney(
         httpRequest.params.id,
         {
-          members: [
-            ...tourney.members,
+          registrations: [
+            ...tourney.registrations,
             {
-              member_id: playerId,
-              reg_id: rand.generate(),
-              registered_date: new Date(),
+              registrant_id: playerId,
+              registration_id: rand.generate(),
+              name: userData.gaming_name,
               status: 'pending',
-              fee_paid: false
+              registered_date: new Date(),
+              fee_paid: false,
+              type: 'solo'
             },
           ],
         }

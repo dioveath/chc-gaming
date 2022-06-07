@@ -13,7 +13,7 @@ import { Marginer } from "../../../components/Marginer";
 
 import Button, { SubmitButton } from "../../../components/Button";
 import ListTileImage from "./MediaListTile.js";
-import ClipLoader from 'react-spinners/ClipLoader';
+import ClipLoader from "react-spinners/ClipLoader";
 
 import config from "../../../config/config.js";
 import axios from "axios";
@@ -22,7 +22,7 @@ import { pending, error, addTourney } from "../../../redux/TourneySlice.js";
 
 const Container = styled.div`
   ${tw`
-max-w-lg
+max-w-4xl
 w-full
 my-4
 `}
@@ -125,45 +125,39 @@ h-96
 
 export default function TourneyCreatePage() {
   const title = useRef();
-  const description = useRef();
   const game = useRef();
   const maxPlayers = useRef();
+  const location = useRef();
+  const platform = useRef();
   const registrationFee = useRef();
-  const venue = useRef();
+  const registrationStartDate = useRef();
+  const registrationEndDate = useRef();
   const startDate = useRef();
   const endDate = useRef();
-  const registrationEndDate = useRef();
 
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const { isPending, isError, errorMessages } = useSelector((state) => state.tourney);
 
   const history = useHistory();
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch(pending());
-
     try {
       const tourney = {
         title: title.current.value,
-        description: description.current.value,
-        status: "pending",
         game: game.current.value,
+        platforms: [platform.current.value],
         max_players: maxPlayers.current.value,
-        medias: [],
-        location: venue.current.value,
+        location: location.current.value,
         registration_fee: registrationFee.current.value,
+        registration_open_date: registrationStartDate.current.value,
         registration_end_date: registrationEndDate.current.value,
         start_date: startDate.current.value,
         end_date: endDate.current.value,
-        members: [],
-        managers: [auth.userId],
-        sponserships: [],
-        prizes: [],
-        matches: [],
-        hypes: [],
-        live_link: "https://www.youtube.com/watch?v=hKIGnR4LKdM&t=54s",
+        managers: [{
+          user_id: auth.userId,
+          role: 'admin'
+        }],
       };
 
       const options = {
@@ -179,10 +173,9 @@ export default function TourneyCreatePage() {
       console.log(tourney);
 
       const response = await axios.request(options);
-      dispatch(addTourney(response.data.newTourney));
       history.push("/organizer/tourneys/" + response.data.newTourney.id);
     } catch (e) {
-      dispatch(error(e.response.data.errorList));
+      console.log(e);
     }
   };
 
@@ -197,21 +190,21 @@ export default function TourneyCreatePage() {
           ref={title}
         ></Input>
 
-        <Marginer vertical="1rem" />
-
-        <BoldText> Description </BoldText>
-        <Marginer vertical="0.5rem" />
-        <TextArea
-          ref={description}
-          placeholder="Charicha FIFA 22 Tournament is the best tournament to win grand prizes of up to Rs. 50.000. We are sponsored by Charicha itself."
-        />
-
         <BoldText> Game </BoldText>
         <Marginer vertical="0.5rem" />
         <Select id="" name="" ref={game}>
           <SelectOption> FIFA 22 </SelectOption>
           <SelectOption> PUBG Mobile </SelectOption>
+          <SelectOption> DOTA 2 </SelectOption>
         </Select>
+
+        <BoldText> Platforms </BoldText>
+        <Marginer vertical="0.5rem" />
+        <Select id="" name="" ref={platform}>
+          <SelectOption value='ps4'> PS4 </SelectOption>
+          <SelectOption value='pc'> PC </SelectOption>
+          <SelectOption value='mobile'> Mobile </SelectOption>
+        </Select>        
 
         <Marginer vertical="1rem" />
 
@@ -222,45 +215,42 @@ export default function TourneyCreatePage() {
           <SelectOption> 16 </SelectOption>
           <SelectOption> 32 </SelectOption>
           <SelectOption> 64 </SelectOption>
-          <SelectOption> 128 </SelectOption>
         </Select>
 
-        <Marginer vertical="1rem" />
-
-        <BoldText> Media </BoldText>
-        <Text fontSize="0.7rem">
-          Share photos or a video. Medias can't exceed 10 photos & 1 video
-        </Text>
-
-        <FlexContainer direction="col" align="space-between">
-          <ListTileImage />
+        <Text className="font-semibold mt-4"> Schedules </Text>
+        <Text fontSize="0.7rem">Schedule & plan your tourney</Text>
+        <FlexContainer gap="1rem" justify="space-between" className="mt-2">
+          <Text className="text-sm font-semibold">
+            {" "}
+            Registraion Start Date{" "}
+          </Text>
+          <Text className="text-sm font-semibold"> Registration End Date </Text>
+          <Text className="text-sm font-semibold"> Tournament Start Date </Text>
+          <Text className="text-sm font-semibold"> Tournament End Date </Text>
         </FlexContainer>
 
         <FlexContainer gap="1rem">
-          <Button text="Add Photo" />
-          <Button text="Add Video" />
+          <Input
+            type="date"
+            ref={registrationStartDate}
+            placeholder="Registration Start Date"
+          />
+          <Input
+            type="date"
+            ref={registrationEndDate}
+            placeholder="Registration End Date"
+          />
+          <Input
+            type="date"
+            ref={startDate}
+            placeholder="Tournament Start Date"
+          />
+          <Input type="date" ref={endDate} placeholder="Tournament End Date" />
         </FlexContainer>
 
-
-        <Text className='font-semibold mt-4'> Schedules </Text>
-        <Text fontSize="0.7rem">
-          Schedule & plan your tourney
-        </Text>        
-      <FlexContainer gap='1rem' justify='space-between'>
-	<Text className='text-sm font-semibold'> Registraion End Date </Text>
-	<Text className='text-sm font-semibold'> Tournament Start Date </Text>
-	<Text className='text-sm font-semibold'> Tournament End Date </Text>                
-      </FlexContainer>      
-
-      <FlexContainer gap='1rem'>
-        <Input type="date" ref={startDate} placeholder="Registration end Date"/>      
-        <Input type="date" ref={registrationEndDate} placeholder="Tournament Start Date"/>
-        <Input type="date" ref={endDate} placeholder="Tournament End Date"/>          
-      </FlexContainer>        
-
         <Marginer vertical="1rem" />
-        <BoldText> Venue </BoldText>
-        <Input type="Venue" placeholder="Location" ref={venue}></Input>
+        <BoldText> Location </BoldText>
+        <Input type="text" placeholder="Location" ref={location}></Input>
 
         <Marginer vertical="1rem" />
         <BoldText> Registration Fee </BoldText>
@@ -270,14 +260,6 @@ export default function TourneyCreatePage() {
           min={0}
           ref={registrationFee}
         ></Input>
-
-        <ErrorListBox>
-          {isError &&
-            errorMessages.map((e) => (
-              <ErrorContainer key={e}>{e}</ErrorContainer>
-            ))}
-          { isPending && <ClipLoader color='red' size={10}/>}
-        </ErrorListBox>
 
         <SubmitButton type="submit"> Create Tourney </SubmitButton>
       </FormContainer>
