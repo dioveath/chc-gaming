@@ -45,11 +45,16 @@ export default function Tournaments(){
         </LoadingContainer>
       }
 
-      { data && data.tourneys.map((t) => <TourneyFullView key={t.id} tourney={t}/>)}
+      <FlexContainer direction='col' w='100%'>
+        { data && data.tourneys.map((t) => <TourneyFullView key={t.id} tourney={t}/>)}
+      </FlexContainer>
 
-      { error && <>
-                   <Text className="text-lg font-bold"> Server Error | 500 </Text>
-                 </>}
+      { error &&
+        <>
+          <Text className="text-lg font-bold"> Server Error | 500 </Text>
+        </> }
+
+      <Marginer vertical='20rem'/>
 
     </Container>
   );

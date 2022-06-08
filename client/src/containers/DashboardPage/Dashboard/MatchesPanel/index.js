@@ -30,7 +30,7 @@ export default function MatchesPanel() {
         Your Upcoming Matches
       </Text>
 
-      <FlexContainer direction='col'>
+      <FlexContainer direction='col' className='my-4'>
         {pTourneys?.map((t) => (
           <FlexContainer direction='col'>
             <FlexContainer direction='col' className='my-2'>
@@ -39,6 +39,7 @@ export default function MatchesPanel() {
             <Matches tourney={t} userId={auth.userId}/>
           </FlexContainer>
         ))}
+        {pTourneys && !pTourneys.length && <Text> You havent' registered for any tournaments. So, No matches for you! </Text>}
       </FlexContainer>
     </Container>
   );
@@ -60,6 +61,7 @@ const Matches = ({ tourney, userId }) => {
   return (
     <WrapContainer>
       { matches.map((m) => <MatchCard match={m} userId={userId} tourney={tourney}/>)}
+      { !matches.length && <Text> You don't have any match this round! </Text> }
     </WrapContainer>          
   );
 };

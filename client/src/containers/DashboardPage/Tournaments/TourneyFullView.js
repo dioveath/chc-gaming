@@ -32,6 +32,7 @@ import {
 
 const Container = styled.div`
   ${tw`
+relative
 `}
 `;
 
@@ -112,7 +113,6 @@ export default function TourneyFullView({ tourney }) {
         registerTourney({
           tourneyId: tourney.id,
           userId: auth.userId,
-          
         }).unwrap(),
         {
           pending: `Registering to ${tourney.title}`,
@@ -140,11 +140,11 @@ export default function TourneyFullView({ tourney }) {
 
   return (
     <Container>
-      <Carousel renderItem={customRenderItem} showThumbs={false}>
+      <Carousel renderItem={customRenderItem} showThumbs={false} className=''>
         <img alt="" src="assets/images/celebration.jpg" />
       </Carousel>
 
-      <FlexContainer direction="col" gap="0.4rem">
+      <FlexContainer direction="col" gap="0.4rem" className='relative bottom-40'>
         <Text className="text-2xl font-bold">{tourney.title}</Text>
         <Text className="text-sm bg-yellow-600 px-2 py-1 rounded-md">
           {tourney.status}

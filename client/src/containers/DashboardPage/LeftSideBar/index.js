@@ -19,27 +19,25 @@ import { useMediaQuery } from "react-responsive";
 import { SCREENS } from "../../../components/Responsive";
 import { FaTimes } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
+import Logo from "../../../assets/images/chc_gaming_logo.png";
 
-import { useGetUserQuery } from '../../../redux/UserApi';
-import { useGetClipsQuery } from '../../../redux/ClipApi';
-
+import { useGetUserQuery } from "../../../redux/UserApi";
+import { useGetClipsQuery } from "../../../redux/ClipApi";
 
 const useClickOutside = (handler) => {
   const domNodeRef = useRef();
 
   useEffect(() => {
     const mouseHandler = (event) => {
-      if(!domNodeRef.current.contains(event.target))
-        handler();
+      if (!domNodeRef.current.contains(event.target)) handler();
     };
 
-    window.addEventListener('mousedown', mouseHandler);
-    return () => window.removeEventListener('mousedown', mouseHandler);
+    window.addEventListener("mousedown", mouseHandler);
+    return () => window.removeEventListener("mousedown", mouseHandler);
   }, [handler]);
 
   return domNodeRef;
 };
-
 
 export default function LeftSideBar({ menuItems }) {
   const auth = useSelector((state) => state.auth);
@@ -47,32 +45,40 @@ export default function LeftSideBar({ menuItems }) {
   const { data: clipsData } = useGetClipsQuery({ author: auth.userId });
 
   const clips = clipsData?.clips?.clips || [];
-  const totalLikes = clips.reduce((prevTotal, currentClip) => prevTotal + currentClip.likes.length, 0);
+  const totalLikes = clips.reduce(
+    (prevTotal, currentClip) => prevTotal + currentClip.likes.length,
+    0
+  );
 
   const { dashboard } = useSelector((state) => state.userDashboard);
-  const isDesktop = useMediaQuery({ maxWidth: SCREENS.xl });
+  const isDesktop = useMediaQuery({ minWidth: SCREENS.xl });
   const [open, setOpen] = useState(!isDesktop);
   const dispatch = useDispatch();
   const history = useHistory();
 
   const navNode = useClickOutside(() => {
-    setOpen(!isDesktop);
+    setOpen(isDesktop);
   });
 
   return (
     <LeftBarContainer active={open} ref={navNode}>
       <FlexContainer
-        className={!isDesktop && 'invisible'}
         justify={open ? "flex-end" : "center"}
         onClick={() => {
+          if(isDesktop) return;
           setOpen(!open);
         }}
         pad={open ? "2rem" : "1rem"}
       >
         {open ? (
-          <FaTimes size="2rem" color="white" />
+          <>
+            <FlexContainer justify="center" w="100%">
+              <img alt="" src={Logo} className="w-20 h-20" />
+            </FlexContainer>
+            <FaTimes size="2rem" color="white" className={isDesktop && "invisible"}/>
+          </>
         ) : (
-          <GiHamburgerMenu size="2rem" color="white" />
+          <img alt="" src={Logo} />
         )}
       </FlexContainer>
 
@@ -128,7 +134,7 @@ export default function LeftSideBar({ menuItems }) {
                   return;
                 }
                 dispatch(setActiveMenu(item.name));
-                setOpen(!isDesktop);
+                setOpen(isDesktop);
               }}
             />
           );

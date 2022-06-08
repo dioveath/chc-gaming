@@ -121,7 +121,7 @@ export default function TournamentCard({ tourney }) {
 
           <FlexContainer direction="col">
             <NormalText> Status </NormalText>
-            <StatusBadge status={registerData.status}/>
+            <StatusBadge status={registerData?.status}/>
           </FlexContainer>
         </FlexContainer>
 

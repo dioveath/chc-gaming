@@ -1,4 +1,5 @@
 import { Tab, TabPanel } from '../../../components/Tab';
+import { Text } from '../../../components/Text';
 import HomePanel from './HomePanel';
 import ClipsPanel from './ClipsPanel';
 import TournamentsPanel from './TournamentsPanel';
@@ -29,7 +30,11 @@ export default function Dashboard(){
         <TabPanel name='Tournaments'>
           <TournamentsPanel/>
         </TabPanel>
-        <TabPanel name='Leagues'></TabPanel>
+        <TabPanel name='Leagues'>
+	  <div className='grid place-items-center mt-10'>
+            <Text className='text-xl'> Coming soon! </Text>
+          </div>
+        </TabPanel>
       </Tab>
     </MainSectionContainer>
   );
