@@ -7,11 +7,7 @@ import { FlexContainer } from "../../../../components/base";
 import { NormalText, BoldText, Text } from "../../../../components/Text";
 import Button from "../../../../components/Button";
 
-import axios from "axios";
-import { toast } from 'react-toastify';
-
-import { updateTourney, pending, error } from "../../../../redux/TourneySlice";
-import config from "../../../../config/config";
+import { toast } from "react-toastify";
 
 const TournamentCardContainer = styled.div`
   ${tw`
@@ -51,52 +47,38 @@ rounded-md
 `}
 `;
 
+const StatusBadge = ({ status }) => {
+  let bgColor = "bg-blue-500";
+
+  switch (status) {
+    case "accepted":
+      bgColor = "bg-green-500";
+      break;
+    case "rejected":
+      bgColor = "bg-red-500";
+      break;
+    case "cancelled":
+      bgColor = "bg-yellow-500";
+      break;
+  }
+
+  return (
+    <div className={`${bgColor} p-1 px-2 rounded-md`}>
+      <BoldText className="uppercase text-center">{status}</BoldText>
+    </div>
+  );
+};
+
 export default function TournamentCard({ tourney }) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const { isPending } = useSelector(state => state.tourney);
 
   const [isRegistered, setRegistered] = useState(
-    tourney.registrations.filter((m) => m.registrant_id === auth.userId).length > 0
+    tourney.registrations.filter((m) => m.registrant_id === auth.userId)
+      .length > 0
   );
 
-  const onRegisterHandler = async (e) => {
-    e.preventDefault();
-    dispatch(pending());
-    
-    const toastId = toast.loading("Registering");
-
-    const options = {
-      method: "POST",
-      url: `${config.serverUrl}/api/v1/tourneys/${tourney.id}/register`,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + auth.accessToken,
-      },
-    };
-
-    try {
-      const response = await axios.request(options);
-      setRegistered(
-        response.data.updatedTourney.registrations.filter((m) => m.registrant_id === auth.userId).length > 0
-      );
-      dispatch(updateTourney(response.data.updatedTourney));
-      toast.update(toastId, {
-        render: "Registered Successfully",
-        type: "Success",
-        isLoading: false,
-        autoClose: 3000
-      });
-    } catch (e) {
-      console.log(e);
-      toast.update(toastId, {
-        render: e.response ? e.response.data.errorList[0] : e.message,
-        type: 'error',
-        isLoading: false,
-        autoclose: 3000
-      });
-    }
-  };
+  const registerData = tourney.registrations.find((m) => m.registrant_id === auth.userId);
 
   return (
     <TournamentCardContainer>
@@ -126,27 +108,32 @@ export default function TournamentCard({ tourney }) {
           </FlexContainer>
 
           <FlexContainer direction="col">
-            <NormalText> Regions </NormalText>
-            <BoldText> Nepal </BoldText>
+            <NormalText> Location </NormalText>
+            <BoldText>  { tourney.location} </BoldText>
           </FlexContainer>
         </FlexContainer>
 
-        <FlexContainer direction="col">
-          <NormalText> Modes </NormalText>
-          <BoldText> Solo </BoldText>
+        <FlexContainer justify="space-between">
+          <FlexContainer direction="col">
+            <NormalText> Modes </NormalText>
+            <BoldText> Solo </BoldText>
+          </FlexContainer>
+
+          <FlexContainer direction="col">
+            <NormalText> Status </NormalText>
+            <StatusBadge status={registerData.status}/>
+          </FlexContainer>
         </FlexContainer>
 
         <FlexContainer justify="center" w="100%">
           <Button
             w="100%"
-            disabled={isRegistered}
-            onClick={onRegisterHandler}
+            onClick={() => {
+              console.log("fsafdisanvaosievnasei");
+              toast.info("Feature not available yet!");
+            }}
           >
-            {isPending
-              ? "Registering... "
-              : isRegistered
-              ? "Already Registered"
-              : "Register Now"}
+            View Tourney
           </Button>
         </FlexContainer>
       </FlexContainer>

@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import tw from "twin.macro";
+import { useSelector } from "react-redux";
+
+import { useGetTourneysQuery } from "../../../../redux/TourneyApi";
 
 import { Text, NormalText, BoldText } from "../../../../components/Text";
 import { FlexContainer, WrapContainer } from "../../../../components/base";
 import Button from "../../../../components/Button";
+
+import MatchCard from "./MatchCard";
 
 const Container = styled.div`
   ${tw`
@@ -11,88 +16,50 @@ w-full
 `}
 `;
 
-const MatchCardContainer = styled.div`
-  ${tw`
-rounded-md
-shadow-2xl
-w-64
-h-64
-bg-black
-justify-between
-overflow-hidden
-cursor-pointer
-`}
-`;
-
-const TournamentCardImage = styled.img`
-  ${tw`
-object-cover
-w-full
-h-full
-opacity-60
-`}
-`;
-
-const MatchDetailsContainer = styled.div`
-  ${tw`
-relative
-flex
-flex-col
-gap-4
-p-4
-`}
-transform: translate(0, -100%);
-`;
-
-
 export default function MatchesPanel() {
+  const { data } = useGetTourneysQuery();
+  const auth = useSelector((state) => state.auth);
+
+  const pTourneys = data?.tourneys.filter((t) =>
+    t.participants.find((p) => p.participant_id === auth.userId)
+  );
+
   return (
     <Container>
       <Text fontSize="2rem" fontWeight="700">
         Your Upcoming Matches
       </Text>
 
-      <WrapContainer>
-        <MatchCardContainer>
-      <TournamentCardImage
-        alt="Tournament Cover Image"
-        src="/assets/images/celebration.jpg"
-      />
-      <MatchDetailsContainer>
-        <FlexContainer direction="col">
-          <NormalText> FIFA 22 </NormalText>
-          <BoldText> Tournament </BoldText>
-        </FlexContainer>
-
-        <FlexContainer justify="space-between">
-          <FlexContainer direction="col">
-            <NormalText> Modes </NormalText>
-            <BoldText> Solo </BoldText>
+      <FlexContainer direction='col'>
+        {pTourneys?.map((t) => (
+          <FlexContainer direction='col'>
+            <FlexContainer direction='col' className='my-2'>
+              <Text className="font-bold text-lg"> {t.title}</Text>
+            </FlexContainer>
+            <Matches tourney={t} userId={auth.userId}/>
           </FlexContainer>
-
-          <FlexContainer direction="col">
-            <NormalText> Location </NormalText>
-            <BoldText> Charicha Gaming </BoldText>
-          </FlexContainer>
-        </FlexContainer>
-
-        <FlexContainer direction="col">
-          <NormalText> Opponent </NormalText>
-          <BoldText> icerush </BoldText>
-        </FlexContainer>
-
-        <FlexContainer justify="center" w="100%">
-          <Button
-            w="100%"
-            disabled={true}
-            onClick={() => { }}
-          >
-            Start Now
-          </Button>
-        </FlexContainer>
-      </MatchDetailsContainer>
-        </MatchCardContainer>
-      </WrapContainer>
+        ))}
+      </FlexContainer>
     </Container>
   );
 }
+
+
+const Matches = ({ tourney, userId }) => {
+  const participant = tourney.participants.find((p) => p.participant_id === userId);
+  const tourneyPlayer = tourney.tourney_data.participant.find((p) => p.name === participant.name);
+
+  const matches = tourney.tourney_data.match.filter((m) => {
+    if(m.status !== 2 && m.status !== 1) return false;
+    if(m?.opponent1 === null || m?.opponent2 === null) return false;
+    if(m?.opponent1?.id === null || m?.opponent2?.id === null) return false;
+    if(m.opponent1.id === tourneyPlayer.id || m.opponent2.id === tourneyPlayer.id) return true;
+    return false;
+  });
+
+  return (
+    <WrapContainer>
+      { matches.map((m) => <MatchCard match={m} userId={userId} tourney={tourney}/>)}
+    </WrapContainer>          
+  );
+};

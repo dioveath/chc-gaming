@@ -28,7 +28,7 @@ export const tourneyApi = createApi({
       transformResponse: (response, _meta, _arg) => response.status === 'success' ? response.tourney : response.errorList
     }),
     getTourneys: builder.query({
-      query: ({ pageQuery = {}, ...query }) => ({
+      query: ({ pageQuery = {}, ...query } = {}) => ({
         url: `tourneys`,
         params: { pageQuery: pageQuery, ...query }
       }),

@@ -77,7 +77,8 @@ function App() {
         <Switch>
 
           <Route path="/" exact>
-              <HomePage />
+            <Redirect to='/auth/login'/>            
+            {/* <HomePage /> */}
           </Route>
 
           <Route path="/auth">

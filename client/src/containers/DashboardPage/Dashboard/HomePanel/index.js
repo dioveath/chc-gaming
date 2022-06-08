@@ -63,7 +63,9 @@ export default function HomePanel() {
   const followings = user?.following.map((f) => ({ author: f }));
 
   // NOTE: Don't make query empty. It would fetch all clips.
-  followings.push({ author: auth.userId });
+  if(followings && followings.length ==  0)
+    followings.push({ author: auth.userId });
+
 
   const { data, error, isLoading, isFetching } = useGetClipsQuery({
     $or: followings || [],
@@ -98,10 +100,12 @@ export default function HomePanel() {
     const filteredClips = data?.clips?.clips?.filter(
       (c) => c.author !== auth.userId
     );
+
     const allClips = [
       ...new Set(clips.concat(filteredClips ? filteredClips : [])),
     ];
     setClips(allClips);
+
   }, [data?.clips?.pagination?.page]);
 
   return (
