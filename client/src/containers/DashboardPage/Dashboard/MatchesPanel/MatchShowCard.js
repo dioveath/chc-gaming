@@ -15,8 +15,8 @@ ${tw`
 relative
 w-full
 h-48
-overflow-hidden
 rounded-md
+overflow-hidden
 shadow-2xl
 `}
 `;
@@ -25,11 +25,14 @@ shadow-2xl
 const AvatarImage = styled.img`
 ${tw`
 object-cover
-h-20
-w-20
+w-16
+h-16
+md:w-20
+md:h-20
 rounded-full
 border-2
 border-red-700
+shadow-2xl
 `}
 `;
 
@@ -42,9 +45,15 @@ relative
 export default function MatchShowCard({ match, userId, tourney }){
   const participant = tourney.participants.find((p) => p.participant_id === userId);
   const userTourneyParticipant = tourney.tourney_data.participant.find((p) => p.name === participant.name);
+
   const opponent1Player = tourney.tourney_data.participant.find((p) => p.id === match.opponent1.id);
   const opponent2Player = tourney.tourney_data.participant.find((p) => p.id === match.opponent2.id);
   let userOpponent = opponent1Player.name === userTourneyParticipant.name ? opponent2Player : opponent1Player;
+  let userMatchPlayer = opponent1Player.name === userTourneyParticipant.name ? opponent1Player : opponent2Player;
+
+  let userScore = match.status === 4 && match.opponent1.id === userOpponent.id && match.opponent2.score;
+  let opponentScore = match.status === 4 && match.opponent1.id === userOpponent.id && match.opponent1.score;
+
   const opponentUserId = tourney.participants.find((p) => p.name === userOpponent.name).participant_id;
 
   const { data: meUserData } = useGetUserQuery(userId);
@@ -53,35 +62,35 @@ export default function MatchShowCard({ match, userId, tourney }){
   return (
     <Container>
       <BackgroundCover>
-	<div className='absolute inset-0 bg-gray-900 bg-opacity-75'></div>
-	<img alt="" src="/assets/images/celebration.jpg" />
+	<div className='absolute inset-0 bg-gray-900 bg-opacity-75 h-full'></div>
+	<img alt="" src="/assets/images/celebration.jpg" className='object-cover h-80'/>
       </BackgroundCover>
 
       <FlexContainer className="absolute bottom-0 top-0 left-0 right-0" w='100%' h='100%' direction='col' justify='center' align='center' gap='0.4rem'>
-        <FlexContainer w='100%' gap='0.4rem' justify='center' align='center' gap='2rem'>
-	  <FlexContainer direction='col' justify='center' align='center' gap='0.2rem' className='w-32'>
+        <FlexContainer w='100%' justify='center' align='center' className='gap-1 md:gap-8'>
+	  <FlexContainer direction='col' justify='center' align='center' className='w-24 md:w-32 gap-1'>
             <AvatarImage src={meUserData?.profile_link}/>
-	    <Text className='text-lg font-semibold'> { meUserData?.gaming_name }</Text>
+	    <Text className='text-xs md:text-lg font-semibold'> { meUserData?.gaming_name }</Text>
           </FlexContainer>
 
-	  <FlexContainer direction='col' gap='0.2rem' justify='center' align='center'>
-	    <Text className='text-3xl font-bold'> Round { match?.round_id + 1} </Text>
-	    <FlexContainer align='center' gap='1rem'>
-	      <Text className='text-2xl font-bold'> 0 </Text>
-	      <Text className='text-xl font-bold'> - VS - </Text>
-	      <Text className='text-2xl font-bold'> 0 </Text>          
+	  <FlexContainer direction='col' justify='center' align='center' className='gap-1'>
+	    <Text className='text-base md:text-3xl font-bold'> Round { match?.round_id + 1} </Text>
+	    <FlexContainer align='center' className='gap-2 md:gap-16'>
+	      <Text className='text-4xl font-bold'> { userScore || 0 } </Text>
+	      <Text className='text-base md:text-xl font-bold'> - VS - </Text>
+	      <Text className='text-4xl font-bold'> { opponentScore || 0 } </Text>
             </FlexContainer>
             <MatchStatus status={match.status}/>
           </FlexContainer>
 
-	  <FlexContainer direction='col' justify='center' align='center' gap='0.2rem' className='w-32'>
+	  <FlexContainer direction='col' justify='center' align='center' className='w-24 md:w-32 gap-1'>
             <AvatarImage src={opponentUserData?.profile_link}/>
-            <Text className='text-lg font-semibold'> { opponentUserData?.gaming_name }</Text>
+            <Text className='text-xs md:text-lg font-semibold'> { opponentUserData?.gaming_name }</Text>
           </FlexContainer>
         </FlexContainer>        
         <Button onClick={() => {
           toast.info("Match will start soon!");
-        }}> Start Match </Button>
+        }}> { match?.status !== 4 ? "Start Match" : "Report"} </Button>
       </FlexContainer>
     </Container>
   );

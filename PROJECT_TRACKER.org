@@ -32,6 +32,8 @@
 ** TODO Great Incoming user experience   
 ** TODO Create a Profile Page showing achievements & all    
 ** TODO Create a TourneyView for users
+   
+** TODO Use redux to manage tourney_data from tourney ???
 
 
 

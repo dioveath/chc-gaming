@@ -52,7 +52,7 @@ const Matches = ({ tourney, userId }) => {
   const tourneyPlayer = tourney.tourney_data.participant.find((p) => p.name === participant.name);
 
   const matches = tourney.tourney_data.match.filter((m) => {
-    if(m.status !== 2 && m.status !== 1) return false;
+    if(m.status == 0) return false;
     if(m?.opponent1 === null || m?.opponent2 === null) return false;
     if(m?.opponent1?.id === null || m?.opponent2?.id === null) return false;
     if(m.opponent1.id === tourneyPlayer.id || m.opponent2.id === tourneyPlayer.id) return true;
