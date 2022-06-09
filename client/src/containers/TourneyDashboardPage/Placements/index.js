@@ -113,8 +113,6 @@ export default function Placements() {
     b.innerHTML = "";
     const data = await manager.get.tournamentData(1234);
 
-    console.log(data);
-
     if (isLoaded)
       window.bracketsViewer.render({
         stages: data.stage,
@@ -164,7 +162,7 @@ export default function Placements() {
   };
 
   const loadTourneyData = async () => {
-    if(Object.keys(tourney.tourney_data).length !== 0) {
+    if(Object.keys(tourney?.tourney_data || {}).length !== 0) {
       const tourneyCopyData = JSON.parse(JSON.stringify(tourney.tourney_data));
       storage.setData(tourneyCopyData);
     }

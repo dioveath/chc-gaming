@@ -9,6 +9,7 @@ import { FlexContainer, WrapContainer } from "../../../../components/base";
 import Button from "../../../../components/Button";
 
 import MatchCard from "./MatchCard";
+import MatchShowCard from './MatchShowCard';
 
 const Container = styled.div`
   ${tw`
@@ -39,7 +40,7 @@ export default function MatchesPanel() {
             <Matches tourney={t} userId={auth.userId}/>
           </FlexContainer>
         ))}
-        {pTourneys && !pTourneys.length && <Text> You havent' registered for any tournaments. So, No matches for you! </Text>}
+        {pTourneys && !pTourneys.length && <Text> No matches for you! </Text>}
       </FlexContainer>
     </Container>
   );
@@ -60,7 +61,7 @@ const Matches = ({ tourney, userId }) => {
 
   return (
     <WrapContainer>
-      { matches.map((m) => <MatchCard match={m} userId={userId} tourney={tourney}/>)}
+      { matches.map((m) => <MatchShowCard match={m} userId={userId} tourney={tourney}/>)}
       { !matches.length && <Text> You don't have any match this round! </Text> }
     </WrapContainer>          
   );

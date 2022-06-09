@@ -22,10 +22,18 @@
 ** DONE Optimize States with RTK Query
 ** DONE Twilio verification client side
 ** DONE Social links in players profile, YT, Instagram, Facebook, Twitch, Twitter
-** IN-PROGRESS Needs to get Upcoming Tournaments (based on his ranks and other stats)
-** TODO Tournament Fixture creator based on number of players registered
+** DONE Needs to get Upcoming Tournaments (based on his ranks and other stats)
+** DONE Tournament Fixture creator based on number of players registered
+** DONE Create a Match Card with 2 players details   
+
 ** TODO Rank System,   
 ** TODO Clips share system seo optimized for facebook share
+
+** TODO Great Incoming user experience   
+** TODO Create a Profile Page showing achievements & all    
+** TODO Create a TourneyView for users
+
+
 
 * Tournament Organizer
 ** Tournament Dashboard Create all UIs without states
@@ -37,8 +45,7 @@
 ** DONE fix UIs components to a stable system
 ** DONE Change Your Matches to Matches
 ** DONE Fix routing problems in HomePage, create good Welcome User experience HomePage 
-** TODO Fix UploadClip Delete Modal on Mobile Screens
-
+** DONE Fix UploadClip Delete Modal on Mobile Screens
    
 
 * TO RESEARCH

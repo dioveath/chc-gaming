@@ -187,7 +187,7 @@ export default function Participants(){
         <tbody>
           {!error && tourney.participants.map((m) => {
             return (
-              <TRow>
+              <TRow key={m.registration_id}>
                 <TData> { m.status } </TData>
                 <TData> { m.name } </TData>
                 <TData> { m.registration_id} </TData>
