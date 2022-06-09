@@ -148,13 +148,14 @@ export default function Placements() {
 
   const saveStageHandler = async () => {
     const tourneyData = await manager.get.tournamentData(1234);
+    console.log("Saving the matches, will start the tournament!");
 
     if (tourneyData && tourneyData.stage.length) {
       toast.promise(
-        updateTourney({ id: tourneyId, tourney_data: tourneyData }).unwrap(),
+        updateTourney({ id: tourneyId, status: "running", tourney_data: tourneyData }).unwrap(),
         {
-          pending: "Saving the stage..",
-          success: "Stage saved successfully",
+          pending: "Starting the stage.. ",
+          success: "Tournament has officially started!",
           error: "Couldn't save the stage",
         }
       );
@@ -258,7 +259,7 @@ export default function Placements() {
 
         <FlexContainer w="100%" justify="flex-end" gap='1rem' className='my-4'>
           <Button onClick={generateBrackets}> Generate Stage </Button>          
-          <Button onClick={saveStageHandler}> Save Matches </Button>
+          <Button onClick={saveStageHandler}> Start Tournament </Button>
         </FlexContainer>
       </FlexContainer>
 

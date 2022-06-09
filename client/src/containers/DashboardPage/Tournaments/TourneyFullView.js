@@ -146,9 +146,7 @@ export default function TourneyFullView({ tourney }) {
 
       <FlexContainer direction="col" gap="0.4rem" className='relative bottom-40'>
         <Text className="text-2xl font-bold">{tourney.title}</Text>
-        <Text className="text-sm bg-yellow-600 px-2 py-1 rounded-md">
-          {tourney.status}
-        </Text>
+        <TourneyStatusBadge status={tourney.status}/>
 
         <FlexContainer className="w-full flex-col gap-2  p-4 bg-black rounded-md shadow:2xl">
           <FlexContainer w="100%" justify="space-between">
@@ -214,3 +212,29 @@ export default function TourneyFullView({ tourney }) {
     </Container>
   );
 }
+
+
+const TourneyStatusBadge = ({ status }) => {
+  const bgColor = "bg-blue-500";
+
+  switch(status){
+  case 'published':
+    bgColor = "bg-indigo-500"
+    break;
+  case 'running':
+    bgColor = 'bg-green-500'
+    break;
+  case 'canceled':
+    bgColor = 'bg-red-500';
+    break;
+  case 'completed':
+    bgColor = 'bg-yellow-500'
+    break;
+  }
+
+  return (
+    <div className={`text-sm uppercase px-2 py-1 rounded-md ${bgColor}`}>
+      <Text> { status } </Text>
+    </div>
+  );
+};

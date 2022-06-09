@@ -4,7 +4,7 @@ const tourneyUpdateSchema = Joi.object().keys({
   title: Joi.string().min(4).max(40),
   description: Joi.string().min(16).max(2048),
   rules: Joi.string().min(16).max(2048),
-  status: Joi.string().valid('pending', 'published', 'canceled'),
+  status: Joi.string().valid('pending', 'published', 'running', 'canceled', 'completed'),
   hypes: Joi.array().items(Joi.objectId()), // like likes system for tournament
   game: Joi.string(),
   max_players: Joi.number(),
