@@ -34,8 +34,8 @@ module.exports = async (req, res, next) => {
         errorList: ["No such tournament!"]
       });
 
-    const { members } = tourney;
-    const index = members.findIndex((el) => el.member_id === req.user.sub);
+    const { registrations } = tourney;
+    const index = registrations.findIndex((el) => el.registrant_id === req.user.sub);
 
     if(index === -1)
       return res.status(400).json({
@@ -44,10 +44,10 @@ module.exports = async (req, res, next) => {
                     "Contact to nearest Charicha Gaming Center"]
       });
 
-    members[index].fee_paid = true;
+    registrations[index].fee_paid = true;
 
     req.body = {
-      members
+      registrations
     };
 
     return next();
