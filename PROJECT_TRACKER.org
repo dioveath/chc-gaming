@@ -1,6 +1,6 @@
 
 * Welcome to Charicha League  
-** Current Version: 0.0.7.0
+** Current Version: 0.0.8.0
 
 * Minimum Viable Product
 ** Basic Premise

@@ -66,7 +66,7 @@ const compressAndUpload = async (job, done) => {
     const files = await imagemin([tempPath], {
       destination: dir,
       plugins: [
-        imageminMozjpeg({ quality: 10 }),
+        imageminMozjpeg({ quality: 20 }),
         imageminJpegtran({ progressive: true }),
         imageminPngquant({
           speed: 1,
