@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 import { useGetTourneysQuery } from "../../../../redux/TourneyApi";
 
+import { Marginer } from '../../../../components/Marginer';
 import { Text, NormalText, BoldText } from "../../../../components/Text";
 import { FlexContainer, WrapContainer } from "../../../../components/base";
 import Button from "../../../../components/Button";
@@ -42,6 +43,7 @@ export default function MatchesPanel() {
         ))}
         {pTourneys && !pTourneys.length && <Text> No matches for you! </Text>}
       </FlexContainer>
+      <Marginer vertical='20rem'/>      
     </Container>
   );
 }

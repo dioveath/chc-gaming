@@ -15,6 +15,7 @@ import MenuItem from "../../../components/LeftNavbar/MenuItem.js";
 import { setActiveMenu } from "../../../redux/UserDashboardSlice.js";
 import { FlexContainer } from "../../../components/base";
 import { Text, NormalText, BoldText } from "../../../components/Text";
+import { Marginer } from '../../../components/Marginer';
 
 import { useMediaQuery } from "react-responsive";
 import { SCREENS } from "../../../components/Responsive";
@@ -45,12 +46,11 @@ absolute
 z-40
 top-2
 left-0
-px-4
-py-2
 rounded-tl-none
 rounded-bl-none
 rounded-tr
 rounded-br
+border-gray-200 border-r-2 border-b-2
 shadow-2xl
 cursor-pointer
 transition-all
@@ -59,20 +59,22 @@ transition-all
 
 const NavSwitcher = ({ state, children, ...props }) => {
   let bgColor = "bg-red-800";
+  let width = "w-16 px-4 py-2";
   switch (state) {
     case SidebarState.DESKTOP:
-      bgColor = "bg-gray-800";
+    bgColor = "bg-gray-700";
       break;
     case SidebarState.TABLET:
-      bgColor = "bg-blue-800";
+    bgColor = "bg-blue-700";
       break;
     case SidebarState.MOBILE:
-      bgColor = "bg-red-800";
+    bgColor = "bg-red-700";
+    width="w-4 px-0 py-2"
       break;
   }
   return (
-    <NavSwitchContainer className={`${bgColor}`} {...props}>
-      {children}
+    <NavSwitchContainer className={`${bgColor} ${width}`} {...props}>
+      { children }
     </NavSwitchContainer>
   );
 };
@@ -227,6 +229,7 @@ export default function LeftSideBar({ menuItems }) {
             );
           })}
         </FlexContainer>
+        <Marginer vertical='10rem'/>
       </LeftBarContainer>
     </>
   );

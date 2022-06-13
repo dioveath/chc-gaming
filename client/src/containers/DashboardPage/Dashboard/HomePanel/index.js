@@ -8,6 +8,8 @@ import { FlexContainer } from "../../../../components/base";
 import Post from "../../../../components/Post";
 import OpeningCard from './OpeningCard';
 
+import { Marginer } from '../../../../components/Marginer';
+
 import { useGetClipsQuery } from "../../../../redux/ClipApi";
 import { useGetUserQuery } from "../../../../redux/UserApi";
 
@@ -151,6 +153,7 @@ export default function HomePanel() {
           </FlexContainer>
         </CenterContainer>
       )}
+      <Marginer vertical='20rem'/>      
     </Container>
   );
 }

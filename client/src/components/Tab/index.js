@@ -7,6 +7,8 @@ const TabContainer = styled.div`
 ${tw`
 w-full
 h-full
+shadow-2xl
+
 `}
 `;
 const TabPanelContainer = styled.div`
@@ -16,17 +18,26 @@ h-full
 `}
 `;
 
-const TabHeaderContainer = styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-// background-color: #141414;
+const TabHeaderContainer = styled.div.attrs(props => ({
+  className: props.className
+}))`
 ${tw`
-rounded-md
+flex
+justify-center
+items-center
+fixed
+z-30
 bg-black
 gap-2
-px-4
+px-2
+py-3
+
+border-green-600
+border-t-2
+bottom-0
+left-0
+right-0
+overflow-x-scroll
 `}
 `;
 
@@ -37,7 +48,11 @@ border-bottom: 2px solid transparent;
 transition: all .2s ease;
 
 ${tw`
-w-32
+flex
+justify-center
+items-center
+
+w-16
 py-2
 px-4
 text-sm
@@ -54,7 +69,7 @@ ${tw`
 `;
 
 export const TabPanel = (props) => {
-  return <TabPanelContainer { ...props}> { props.children} </TabPanelContainer>;
+  return <TabPanelContainer { ...props}> { props.children } </TabPanelContainer>;
 };
 
 TabPanel.propTypes = {
@@ -68,8 +83,8 @@ export function Tab(props){
   
   React.Children.forEach(children, element => {
     if(!React.isValidElement(element)) return;
-    const { name } = element.props;
-    headers.push(name);
+    const { name, headerIcon } = element.props;
+    headers.push({ name, headerIcon });
   });
 
   const [ activeTab, setActiveTab ] = useState(headers[0]);
@@ -77,10 +92,10 @@ export function Tab(props){
   return <TabContainer>
            <TabHeaderContainer>
              { headers.map((h) => {
-               return <TabHeader key={h}
-                                 onClick={() => setActiveTab(h)}
-                                 {...(h === activeTab ? { active: true } : {})}>
-                        {h}
+               return <TabHeader key={h.name}
+                                 onClick={() => setActiveTab(h.name)}
+                                 {...(h.name === activeTab ? { active: true } : {})}>
+                        { h.headerIcon }
                       </TabHeader>;
              })}
            </TabHeaderContainer>

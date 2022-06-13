@@ -6,6 +6,7 @@ import tw from "twin.macro";
 import UploadClipModal from "./UploadClipModal";
 import ClipCard from "./ClipCard";
 
+import { Marginer } from '../../../../components/Marginer';
 import { FlexContainer, WrapContainer } from "../../../../components/base";
 import Button from "../../../../components/Button";
 import { Text } from "../../../../components/Text";
@@ -19,6 +20,8 @@ const Container = styled.div`
   ${tw`
 w-full
 h-full
+flex
+flex-col
 `}
 `;
 
@@ -50,7 +53,7 @@ export default function ClipsPanel() {
         <Text className="text-2xl font-semibold"> Your Clips </Text>
         <Button onClick={() => setIsModalOpen(true)}> Upload Clip </Button>
       </FlexContainer>
-
+      
       {isLoading ? (
         <LoadingContainer>
           <BounceLoader color="red" />
@@ -64,7 +67,7 @@ export default function ClipsPanel() {
           })}
         </WrapContainer>
       )}
-
+      
       {error && <LoadingContainer>
 		     <FlexContainer direction='col'
                                     align='center'
@@ -72,7 +75,10 @@ export default function ClipsPanel() {
                        <MdError size={40} color='white'/>
 		       <Text className="text-xl fomt-semibold"> Something went wrong!</Text>                       
                      </FlexContainer>
-                  </LoadingContainer>}
+                </LoadingContainer>}
+
+      {/* Why the fu** this isn't working' */}
+      <Marginer vertical='200px' horizontal='200px'/> 
     </Container>
   );
 }

@@ -4,6 +4,7 @@ import tw from "twin.macro";
 
 import { useGetTourneysQuery } from "../../../../redux/TourneyApi";
 
+import { Marginer } from '../../../../components/Marginer';
 import { Text } from "../../../../components/Text";
 import TournamentCard from "./TourneyCard";
 
@@ -44,6 +45,7 @@ export default function TournamentsPanel() {
           </Text>
         )}
       </TournamentListContainer>
+      <Marginer vertical='20rem'/>
     </Container>
   );
 }
