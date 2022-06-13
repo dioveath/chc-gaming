@@ -1,24 +1,24 @@
 import { useState, useRef, useEffect } from "react";
+import styled from "styled-components";
+import tw from "twin.macro";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import {
   LeftBarContainer,
   ProfileContainer,
-  NormalText,
-  BoldText,
   ProfileStatsContainer,
+  SidebarState,
 } from "./StyledElements.js";
 
 import MenuItem from "../../../components/LeftNavbar/MenuItem.js";
 import { setActiveMenu } from "../../../redux/UserDashboardSlice.js";
 import { FlexContainer } from "../../../components/base";
-import { Text } from "../../../components/Text";
+import { Text, NormalText, BoldText } from "../../../components/Text";
 
 import { useMediaQuery } from "react-responsive";
 import { SCREENS } from "../../../components/Responsive";
 import { FaTimes } from "react-icons/fa";
-import { GiHamburgerMenu } from "react-icons/gi";
 import Logo from "../../../assets/images/chc_gaming_logo.png";
 
 import { useGetUserQuery } from "../../../redux/UserApi";
@@ -39,6 +39,44 @@ const useClickOutside = (handler) => {
   return domNodeRef;
 };
 
+const NavSwitchContainer = styled(FlexContainer)`
+  ${tw`
+absolute
+z-40
+top-2
+left-0
+px-4
+py-2
+rounded-tl-none
+rounded-bl-none
+rounded-tr
+rounded-br
+shadow-2xl
+cursor-pointer
+transition-all
+`}
+`;
+
+const NavSwitcher = ({ state, children, ...props }) => {
+  let bgColor = "bg-red-800";
+  switch (state) {
+    case SidebarState.DESKTOP:
+      bgColor = "bg-gray-800";
+      break;
+    case SidebarState.TABLET:
+      bgColor = "bg-blue-800";
+      break;
+    case SidebarState.MOBILE:
+      bgColor = "bg-red-800";
+      break;
+  }
+  return (
+    <NavSwitchContainer className={`${bgColor}`} {...props}>
+      {children}
+    </NavSwitchContainer>
+  );
+};
+
 export default function LeftSideBar({ menuItems }) {
   const auth = useSelector((state) => state.auth);
   const { data } = useGetUserQuery(auth.userId);
@@ -52,94 +90,144 @@ export default function LeftSideBar({ menuItems }) {
 
   const { dashboard } = useSelector((state) => state.userDashboard);
   const isDesktop = useMediaQuery({ minWidth: SCREENS.xl });
-  const [open, setOpen] = useState(!isDesktop);
+  const isMobile = useMediaQuery({ minWidth: SCREENS.sm });
+  const [sidebarState, setSidebarState] = useState(
+    isMobile
+      ? SidebarState.MOBILE
+      : isDesktop
+      ? SidebarState.DESKTOP
+      : SidebarState.TABLET
+  );
+  const [revNavCycle, setRevNavCycle] = useState(false); //back & forth cycling of sidebarState
   const dispatch = useDispatch();
   const history = useHistory();
 
   const navNode = useClickOutside(() => {
-    setOpen(isDesktop);
+    // toggleSidebarState();
   });
 
+  const toggleSidebarState = () => {
+    if (sidebarState >= 2) {
+      setRevNavCycle(
+        true,
+        setSidebarState(Math.max(0, Math.min(2, sidebarState - 1)))
+      );
+    } else if (sidebarState <= 0) {
+      setRevNavCycle(
+        false,
+        setSidebarState(Math.max(0, Math.min(2, sidebarState + 1)))
+      );
+    } else {
+      setSidebarState(
+        Math.max(0, Math.min(2, sidebarState + (revNavCycle ? -1 : 1)))
+      );
+    }
+  };
+
   return (
-    <LeftBarContainer active={open} ref={navNode}>
-      <FlexContainer
-        justify={open ? "flex-end" : "center"}
+    <>
+      <NavSwitcher
+        state={sidebarState}
+        justify="center"
         onClick={() => {
-          if(isDesktop) return;
-          setOpen(!open);
+          toggleSidebarState();
         }}
-        pad={open ? "2rem" : "1rem"}
       >
-        {open ? (
-          <>
-            <FlexContainer justify="center" w="100%">
-              <img alt="" src={Logo} className="w-20 h-20" />
-            </FlexContainer>
-            <FaTimes size="2rem" color="white" className={isDesktop && "invisible"}/>
-          </>
-        ) : (
-          <img alt="" src={Logo} />
-        )}
-      </FlexContainer>
+        <img alt="" src={Logo} className="w-8 h-8" />
+      </NavSwitcher>
 
-      <FlexContainer align="center" justify="center" gap="1rem" pad="1rem 0rem">
-        <FlexContainer direction="col" className="relative">
-          <ProfileContainer
-            src={data.profile_link}
-            active={open}
-          ></ProfileContainer>
+      <LeftBarContainer state={sidebarState} ref={navNode}>
+        <FlexContainer
+          justify={
+            sidebarState === SidebarState.DESKTOP ? "flex-end" : "center"
+          }
+          onClick={() => {
+            if (isDesktop) return;
+            toggleSidebarState();
+          }}
+          pad={sidebarState === SidebarState.DESKTOP ? "2rem" : "1rem"}
+        >
+          {sidebarState === SidebarState.DESKTOP && (
+            <>
+              <FlexContainer justify="center" w="100%">
+                <img alt="" src={Logo} className="w-20 h-20" />
+              </FlexContainer>
+              <FaTimes
+                size="2rem"
+                color="white"
+                className={isDesktop && "invisible"}
+              />
+            </>
+          )}
         </FlexContainer>
-        {open && (
-          <FlexContainer direction="col">
-            <BoldText> {data.first_name + " " + data.last_name} </BoldText>
-            <Text fontSize="0.7rem" fontWeight="400">
-              @{data.gaming_name}
-            </Text>
-            <Text fontSize="0.8rem" fontWeight="500">
-              {"Immortal"}
-            </Text>
+
+        <FlexContainer
+          align="center"
+          justify="center"
+          gap="1rem"
+          pad="1rem 0rem"
+          className="mt-4"
+        >
+          <FlexContainer direction="col" className="relative">
+            <ProfileContainer
+              src={data.profile_link}
+              active={sidebarState === SidebarState.DESKTOP}
+            ></ProfileContainer>
           </FlexContainer>
+          {sidebarState === SidebarState.DESKTOP && (
+            <FlexContainer direction="col">
+              <BoldText> {data.first_name + " " + data.last_name} </BoldText>
+              <Text fontSize="0.7rem" fontWeight="400">
+                @{data.gaming_name}
+              </Text>
+              <Text fontSize="0.8rem" fontWeight="500">
+                {"Immortal"}
+              </Text>
+            </FlexContainer>
+          )}
+        </FlexContainer>
+
+        {sidebarState === SidebarState.DESKTOP && (
+          <ProfileStatsContainer>
+            <FlexContainer direction="col" justify="center" align="center">
+              <BoldText> {totalLikes} </BoldText>
+              <NormalText> Likes </NormalText>
+            </FlexContainer>
+            <FlexContainer direction="col" justify="center" align="center">
+              <BoldText> {data.followers.length}</BoldText>
+              <NormalText> Followers </NormalText>
+            </FlexContainer>
+            <FlexContainer direction="col" justify="center" align="center">
+              <BoldText> {data.following.length} </BoldText>
+              <NormalText> Following </NormalText>
+            </FlexContainer>
+          </ProfileStatsContainer>
         )}
-      </FlexContainer>
 
-      {open && (
-        <ProfileStatsContainer>
-          <FlexContainer direction="col" justify="center" align="center">
-            <BoldText> {totalLikes} </BoldText>
-            <NormalText> Likes </NormalText>
-          </FlexContainer>
-          <FlexContainer direction="col" justify="center" align="center">
-            <BoldText> {data.followers.length}</BoldText>
-            <NormalText> Followers </NormalText>
-          </FlexContainer>
-          <FlexContainer direction="col" justify="center" align="center">
-            <BoldText> {data.following.length} </BoldText>
-            <NormalText> Following </NormalText>
-          </FlexContainer>
-        </ProfileStatsContainer>
-      )}
+        <FlexContainer direction="col" pad="1rem 0.4rem" gap="0.5rem">
+          {menuItems.map((item) => {
+            return (
+              <MenuItem
+                key={item.name}
+                open={sidebarState === SidebarState.DESKTOP}
+                active={dashboard.activeMenu === item.name}
+                icon={item.icon}
+                name={item.name}
+                onClick={() => {
+                  if (item.name === "Log out") {
+                    history.push("/auth/logout");
+                    return;
+                  }
+                  dispatch(setActiveMenu(item.name));
 
-      <FlexContainer direction="col" pad="1rem 0.4rem" gap="0.5rem">
-        {menuItems.map((item) => {
-          return (
-            <MenuItem
-              key={item.name}
-              open={open}
-              active={dashboard.activeMenu === item.name}
-              icon={item.icon}
-              name={item.name}
-              onClick={() => {
-                if (item.name === "Log out") {
-                  history.push("/auth/logout");
-                  return;
-                }
-                dispatch(setActiveMenu(item.name));
-                setOpen(isDesktop);
-              }}
-            />
-          );
-        })}
-      </FlexContainer>
-    </LeftBarContainer>
+                  let currentState = sidebarState;
+                  setSidebarState(++currentState % 3);
+                }}
+              />
+            );
+          })}
+        </FlexContainer>
+      </LeftBarContainer>
+    </>
   );
 }

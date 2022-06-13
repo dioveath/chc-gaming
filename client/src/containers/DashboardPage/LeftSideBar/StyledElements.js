@@ -1,12 +1,26 @@
-import styled from 'styled-components';
-import tw from 'twin.macro';
+import styled from "styled-components";
+import tw from "twin.macro";
+
+const SidebarState = {
+  DESKTOP: 0,
+  TABLET: 1,
+  MOBILE: 2,
+};
+Object.freeze(SidebarState);
+
+export { SidebarState };
 
 export const LeftBarContainer = styled.div`
-width: ${props => props.active ? '372px' : '60px'};
-position: fixed;
-left: 0;
-top: 0;
-${tw`
+  width: ${(props) =>
+    props.state === SidebarState.DESKTOP
+      ? "372px"
+      : props.state === SidebarState.TABLET
+      ? "60px"
+      : "0px"};
+  position: fixed;
+  left: 0;
+  top: 0;
+  ${tw`
 z-20
 bg-black
 shadow-md
@@ -14,13 +28,13 @@ transition-all
 h-screen
 overflow-x-hidden
 overflow-y-scroll
-`
-	}`;
+`}
+`;
 
 export const ProfileContainer = styled.img`
-width: ${props => props.active ? '80px' : '50px'};
-height: ${props => props.active ? '80px' : '50px'};
-${tw`
+  width: ${(props) => (props.active ? "80px" : "50px")};
+  height: ${(props) => (props.active ? "80px" : "50px")};
+  ${tw`
 rounded-full
 overflow-hidden
 object-cover
@@ -28,25 +42,10 @@ shadow-md
 border-2 border-purple-800
 transition-all
 `}
-
-`;
-
-export const FlexContainer = styled.div`
-${tw`
-flex
-`}
-${props => (props.direction === 'col'
-		|| props.direction === 'column') && tw`flex-col`}
-
-justify-content: ${props => props.justify || 'flex-start'};
-align-items: ${props => props.align || 'flex-start'};
-gap: ${props => props.gap || '0'};
-padding: ${props => props.pad || '0'};
-
 `;
 
 export const ProfileStatsContainer = styled.div`
-${tw`
+  ${tw`
 flex
 bg-[#BE2222]
 py-4
@@ -56,24 +55,8 @@ transition-all
 `}
 `;
 
-export const NormalText = styled.p`
-${tw`
-text-sm
-text-white
-`}
-`;
-
-export const BoldText = styled.p`
-${tw`
-text-sm
-text-white
-font-bold
-`}
-`;
-
-
 export const MenuContainer = styled.div`
-${tw`
+  ${tw`
 px-2
 py-4
 flex
@@ -82,7 +65,7 @@ flex-col
 `;
 
 export const MenuButtonContainer = styled.div`
-${tw`
+  ${tw`
 w-full
 px-6
 py-4

@@ -3,8 +3,6 @@ import { useState, useEffect, useRef } from 'react';
 import {
   LeftBarContainer,
   ProfileContainer,
-  NormalText,
-  BoldText,
   ProfileStatsContainer,
 } from './../../DashboardPage/LeftSideBar/StyledElements.js';
 
@@ -15,7 +13,9 @@ import {
 } from '../../../components/base';
 
 import {
-  Text
+  Text,
+  NormalText,
+  BoldText
 } from '../../../components/Text';
 
 import { Marginer } from '../../../components/Marginer';
@@ -50,7 +50,6 @@ export default function LeftSideBar({ menuItems, onChangeMenu, activeMenu }){
 
   return (
     <LeftBarContainer active={open} ref={navNode}>
-
       <FlexContainer justify={ open ? 'flex-end' : 'center'}
                      onClick={() => { setOpen(!open); }}
                      pad={ open ? '2rem' : '1rem'}>
@@ -63,8 +62,6 @@ export default function LeftSideBar({ menuItems, onChangeMenu, activeMenu }){
         <ProfileContainer src='assets/images/altair.jpg'
                           active={open}>
         </ProfileContainer>
-        
-
         { open && <FlexContainer direction='col'>
                     <BoldText> { "Tournament "} </BoldText>
                     <Text fontSize='0.7rem'

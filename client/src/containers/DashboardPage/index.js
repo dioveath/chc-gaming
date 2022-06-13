@@ -26,7 +26,6 @@ import { IoSettings } from 'react-icons/io5';
 
 const PageContainer = styled.div`
   background: radial-gradient(#1d0207, #0d0000);
-  padding-left: 60px;
   ${tw`
 flex
 w-screen
