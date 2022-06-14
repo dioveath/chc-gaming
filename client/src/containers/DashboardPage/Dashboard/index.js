@@ -26,23 +26,23 @@ h-full
 
 const PanelItems = [
   {
-    name: "Lobby",
-    headerIcon: <GiSofa/>,
-    panel: <HomePanel/>
-  },
-  {
     name: "Clips",
-    headerIcon: <BiMoviePlay/>,
+    headerIcon: <BiMoviePlay color='white' className='w-6 h-6 p-0 m-0'/>,
     panel: <ClipsPanel/>
   },
   {
     name: "Matches",
-    headerIcon: <IoFootballOutline/>,
+    headerIcon: <IoFootballOutline color='white' className='w-6 h-6 p-0 m-0'/>,
     panel: <MatchesPanel/>
   },
   {
+    name: "Lobby",
+    headerIcon: <GiSofa color='white' className='w-6 h-6 p-0 m-0'/>,
+    panel: <HomePanel/>
+  },  
+  {
     name: "Tournaments",
-    headerIcon: <GiCheckboxTree/>,
+    headerIcon: <GiCheckboxTree color='white' className='w-6 h-6 p-0 m-0'/>,
     panel: <TournamentsPanel/>
   },
   {
@@ -52,20 +52,17 @@ const PanelItems = [
             <Text className='text-xl'> Coming soon! </Text>
           </div>
   },     
-
 ];
 
 export default function Dashboard(){
   return (
     <MainSectionContainer>
-      <IconContext.Provider value={{ color: 'white', className: 'w-6 h-6 p-0 m-0'}}>
       <Tab>
         { PanelItems.map((p) => <TabPanel key={p.name} name={p.name} headerIcon={p.headerIcon}>
                                   {p.panel}
                                   <Marginer vertical='20rem'/>
                                 </TabPanel>)}
       </Tab>
-    </IconContext.Provider>
     </MainSectionContainer>
   );
 }

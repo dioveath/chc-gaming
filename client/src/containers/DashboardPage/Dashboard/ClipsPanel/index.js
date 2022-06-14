@@ -78,7 +78,6 @@ export default function ClipsPanel() {
                 </LoadingContainer>}
 
       {/* Why the fu** this isn't working' */}
-      <Marginer vertical='200px' horizontal='200px'/> 
     </Container>
   );
 }

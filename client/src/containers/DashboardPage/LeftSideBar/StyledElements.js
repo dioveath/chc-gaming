@@ -80,3 +80,18 @@ hover:bg-gray-600
 transition-all
 `}
 `;
+
+
+export const Navbar = styled.nav`
+background-color: rgba(148, 27, 0, 0.6);
+${tw`
+sticky
+top-0
+left-0
+right-0
+z-20
+w-full
+h-14
+shadow-2xl
+`}
+`;

@@ -9,6 +9,7 @@ import {
   ProfileContainer,
   ProfileStatsContainer,
   SidebarState,
+  Navbar,
 } from "./StyledElements.js";
 
 import MenuItem from "../../../components/LeftNavbar/MenuItem.js";
@@ -19,8 +20,9 @@ import { Marginer } from '../../../components/Marginer';
 
 import { useMediaQuery } from "react-responsive";
 import { SCREENS } from "../../../components/Responsive";
-import { FaTimes } from "react-icons/fa";
+import { FaHamburger, FaTimes } from "react-icons/fa";
 import Logo from "../../../assets/images/chc_gaming_logo.png";
+import { GiHamburgerMenu } from 'react-icons/gi';
 
 import { useGetUserQuery } from "../../../redux/UserApi";
 import { useGetClipsQuery } from "../../../redux/ClipApi";
@@ -40,6 +42,15 @@ const useClickOutside = (handler) => {
   return domNodeRef;
 };
 
+const Container = styled.div`
+${tw`
+fixed
+left-0
+top-0
+z-20
+`}
+`;
+
 const NavSwitchContainer = styled(FlexContainer)`
   ${tw`
 absolute
@@ -50,7 +61,6 @@ rounded-tl-none
 rounded-bl-none
 rounded-tr
 rounded-br
-border-gray-200 border-r-2 border-b-2
 shadow-2xl
 cursor-pointer
 transition-all
@@ -58,26 +68,24 @@ transition-all
 `;
 
 const NavSwitcher = ({ state, children, ...props }) => {
-  let bgColor = "bg-red-800";
+  let bgColor = "";
   let width = "w-16 px-4 py-2";
   switch (state) {
     case SidebarState.DESKTOP:
-    bgColor = "bg-gray-700";
       break;
     case SidebarState.TABLET:
-    bgColor = "bg-blue-700";
       break;
     case SidebarState.MOBILE:
-    bgColor = "bg-red-700";
-    width="w-4 px-0 py-2"
       break;
   }
   return (
     <NavSwitchContainer className={`${bgColor} ${width}`} {...props}>
-      { children }
+      { state === SidebarState.MOBILE && <GiHamburgerMenu color='white' className='w-6 h-6'/> }
+      { state === SidebarState.TABLET && <img alt="" src={Logo} className={`w-8 h-8`}/> }
     </NavSwitchContainer>
   );
 };
+
 
 export default function LeftSideBar({ menuItems }) {
   const auth = useSelector((state) => state.auth);
@@ -128,6 +136,9 @@ export default function LeftSideBar({ menuItems }) {
 
   return (
     <>
+    <Navbar/>
+    <Container>
+      
       <NavSwitcher
         state={sidebarState}
         justify="center"
@@ -135,7 +146,6 @@ export default function LeftSideBar({ menuItems }) {
           toggleSidebarState();
         }}
       >
-        <img alt="" src={Logo} className="w-8 h-8" />
       </NavSwitcher>
 
       <LeftBarContainer state={sidebarState} ref={navNode}>
@@ -231,6 +241,7 @@ export default function LeftSideBar({ menuItems }) {
         </FlexContainer>
         <Marginer vertical='10rem'/>
       </LeftBarContainer>
+    </Container>
     </>
   );
 }

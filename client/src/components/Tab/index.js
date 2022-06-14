@@ -87,7 +87,7 @@ export function Tab(props){
     headers.push({ name, headerIcon });
   });
 
-  const [ activeTab, setActiveTab ] = useState(headers[0]);
+  const [ activeTab, setActiveTab ] = useState(headers[0].name);
 
   return <TabContainer>
            <TabHeaderContainer>

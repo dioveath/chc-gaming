@@ -123,8 +123,8 @@ export default function DashboardPage() {
 
   return (
     <>
+      <LeftSideBar menuItems={MenuItems} />      
       <PageContainer>
-        <LeftSideBar menuItems={MenuItems} />
 	<ContentContainer>
           {renderContent}
         </ContentContainer>

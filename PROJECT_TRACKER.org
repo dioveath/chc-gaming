@@ -1,6 +1,5 @@
-
 * Welcome to Charicha League  
-** Current Version: 0.0.8.4
+** Current Version: 0.0.8.6
 
 * Minimum Viable Product
 ** Basic Premise
@@ -26,11 +25,12 @@
 ** DONE Tournament Fixture creator based on number of players registered
 ** DONE Create a Match Card with 2 players details   
 
+** TODO Create a Profile Page showing achievements & all       
+
 ** TODO Rank System,   
 ** TODO Clips share system seo optimized for facebook share
 
 ** TODO Great Incoming user experience   
-** TODO Create a Profile Page showing achievements & all    
 ** TODO Create a TourneyView for users
    
 ** TODO Use redux to manage tourney_data from tourney ???
