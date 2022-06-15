@@ -17,7 +17,8 @@ import {
   useGetTourneyQuery
 } from '../../redux/TourneyApi';
 
-import LeftSideBar from "./LeftSideBar";
+
+import LeftSideBar from './LeftSideBar';
 import { MenuItems } from "./MenuItems.js";
 import { FlexContainer } from "../../components/base";
 import { Text } from "../../components/Text";
@@ -60,6 +61,7 @@ export default function TourneyDashboardPage() {
 
   return (
     <Container>
+      
       <LeftSideBar
         menuItems={MenuItems}
         activeMenu={dashboard.activeMenu}

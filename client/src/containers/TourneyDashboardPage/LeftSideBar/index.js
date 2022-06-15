@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import tw from 'twin.macro';
 
 import {
-  LeftBarContainer,
   ProfileContainer,
   ProfileStatsContainer,
 } from './../../DashboardPage/LeftSideBar/StyledElements.js';
@@ -23,6 +24,23 @@ import { useMediaQuery } from 'react-responsive';
 import { SCREENS } from '../../../components/Responsive';
 import { FaTimes } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
+
+
+export const LeftBarContainer = styled.div`
+  width: ${(props) => props.active ? "372px" : "60px" };
+  ${tw`
+absolute
+top-0
+left-0
+z-20
+bg-black
+shadow-md
+transition-all
+h-screen
+overflow-x-hidden
+overflow-y-scroll
+`}
+`;
 
 const useClickOutside = (handler) => {
   const domNodeRef = useRef();

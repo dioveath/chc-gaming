@@ -87,7 +87,7 @@ const NavSwitcher = ({ state, children, ...props }) => {
 };
 
 
-export default function LeftSideBar({ menuItems }) {
+export default function LeftSideBar({ menuItems, onChangeMenu }) {
   const auth = useSelector((state) => state.auth);
   const { data } = useGetUserQuery(auth.userId);
   const { data: clipsData } = useGetClipsQuery({ author: auth.userId });

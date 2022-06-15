@@ -7,7 +7,6 @@ import { MenuItems } from './MenuItems.js';
 
 const PageContainer = styled.div`
   background: radial-gradient(#1D0207, #0D0000);
-padding-left: 60px;
 ${tw`
 flex
 w-screen
