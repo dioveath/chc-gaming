@@ -232,7 +232,7 @@ export default function Post({ clip: propClip, innerRef }){
             gap='0.2rem'
             direction={isMobile && 'column'}
             align={isMobile && 'center'}>
-            <AiFillHeart color='red' size={Math.min(clip.likes.length + 10, 24)}/> <SmallText> {clip.likes.length} Likes </SmallText>
+            <AiFillHeart color='red' size={Math.min(clip.likes.length + 10, 25)}/> <SmallText> {clip.likes.length} Likes </SmallText>
           </FlexContainer>
           <FlexContainer gap={ isMobile ? '0.2rem' : '2rem'}
                          direction={isMobile && 'column'}
@@ -257,19 +257,25 @@ export default function Post({ clip: propClip, innerRef }){
               error: "Couldn't like the clip!"
             });
           }}>
-            <AiFillHeart color={ isLikedByCurrentUser ? 'red' : 'white'}/>
+            <AiFillHeart color={ isLikedByCurrentUser ? 'red' : 'white'} size={20}/>
             { isMobile || <SmallText> Like </SmallText> }
           </CardButton>
-          <CardButton>
-            <AiOutlineComment color='royalblue'/>
+          <CardButton onClick={() => {
+            toast.info("Feature not available yet!");
+          }}>
+            <AiOutlineComment color='royalblue' size={20}/>
             { isMobile || <SmallText> Comment </SmallText> }
           </CardButton>
-          <CardButton>
-            <IoMdShareAlt color='orange'/>
+          <CardButton onClick={() => {
+            toast.info("Feature not available yet!");
+          }}>
+            <IoMdShareAlt color='orange' size={20}/>
             { isMobile || <SmallText> Share </SmallText> }
           </CardButton>
-          <CardButton>
-            <BsFillBookmarkHeartFill color='pink'/>
+          <CardButton onClick={() => {
+            toast.info("Feature not available yet!");
+          }}>
+            <BsFillBookmarkHeartFill color='pink' size={18}/>
             { isMobile || <SmallText> Save </SmallText> }
           </CardButton>                              
         </InteractableContainer>

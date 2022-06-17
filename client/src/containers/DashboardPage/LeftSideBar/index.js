@@ -113,7 +113,8 @@ export default function LeftSideBar({ menuItems, onChangeMenu }) {
   const history = useHistory();
 
   const navNode = useClickOutside(() => {
-    // toggleSidebarState();
+    setSidebarState(SidebarState.MOBILE);
+    setRevNavCycle(false);
   });
 
   const toggleSidebarState = () => {
@@ -135,10 +136,10 @@ export default function LeftSideBar({ menuItems, onChangeMenu }) {
   };
 
   return (
-    <>
+    <div ref={navNode}>
       <Navbar className='flex items-center'>
 	<div className='flex items-center ml-14'>
-	<img alt="" src={Logo} className='w-8 h-8 mr-2'/>
+	<img alt="" src={Logo} className='w-8 h-8 animate-pulse mr-2'/>
 	<Text className='font-semibold'> Charicha Gaming </Text>
         </div>
       </Navbar>
@@ -153,7 +154,7 @@ export default function LeftSideBar({ menuItems, onChangeMenu }) {
       >
       </NavSwitcher>
 
-      <LeftBarContainer state={sidebarState} ref={navNode}>
+      <LeftBarContainer state={sidebarState}>
         <FlexContainer
           justify={
             sidebarState === SidebarState.DESKTOP ? "flex-end" : "center"
@@ -247,6 +248,6 @@ export default function LeftSideBar({ menuItems, onChangeMenu }) {
         <Marginer vertical='10rem'/>
       </LeftBarContainer>
     </Container>
-    </>
+    </div>
   );
 }

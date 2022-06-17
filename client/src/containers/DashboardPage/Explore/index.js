@@ -82,9 +82,18 @@ export default function ExplorePage(){
 
   useEffect(() => {
     const filteredClips = data?.clips?.clips?.filter(c => c.author !== auth.userId);
+
+    // if the first three belongs to self then query again if there is next page  
+    if(filteredClips?.length === 0 && data?.clips?.pagination?.hasNextPage) {
+      setPage(data?.clips?.pagination?.nextPage);
+      return;
+    }
+      
     const allClips = [...new Set(clips.concat(filteredClips ? filteredClips : []))];
     setClips(allClips);
   }, [data?.clips?.pagination?.page]);
+
+
 
   return (
     <Container>

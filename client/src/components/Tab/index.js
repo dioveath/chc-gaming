@@ -86,7 +86,7 @@ export function Tab(props){
     headers.push({ name, headerIcon });
   });
 
-  const [ activeTab, setActiveTab ] = useState(headers[0].name);
+  const [ activeTab, setActiveTab ] = useState('Lobby');
 
   return <TabContainer>
            <TabHeaderContainer>
@@ -94,9 +94,11 @@ export function Tab(props){
                return <TabHeader key={h.name}
                                  onClick={() => setActiveTab(h.name)}
                                  {...(h.name === activeTab ? { active: true } : {})}>
-			<div className={`rounded-full bg-transparent w-10 h-10 flex justify-center items-center ${h.name === activeTab && 'bg-red-800'}`}>
+			<div className={`absolute translate-x-full translate-y-full rounded-full bg-transparent w-10 h-10 flex justify-center items-center ${h.name === activeTab && 'bg-red-600 animate-pulse'}`}></div>                        
+			<div className={`rounded-full bg-transparent w-10 h-10 flex justify-center items-center ${h.name === activeTab && 'bg-red-800 animate-pulse'}`}>
                           { h.headerIcon }
                         </div>
+
                       </TabHeader>;
              })}
            </TabHeaderContainer>
