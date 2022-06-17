@@ -82,7 +82,9 @@ transition-all
 `;
 
 
-export const Navbar = styled.nav`
+export const Navbar = styled.nav.attrs((props) => ({
+  className: props.className
+}))`
 background-color: rgba(148, 27, 0, 0.6);
 ${tw`
 sticky

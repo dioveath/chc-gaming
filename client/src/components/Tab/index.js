@@ -53,8 +53,7 @@ justify-center
 items-center
 
 w-16
-py-2
-px-4
+py-1
 text-sm
 font-bold
 cursor-pointer
@@ -95,7 +94,9 @@ export function Tab(props){
                return <TabHeader key={h.name}
                                  onClick={() => setActiveTab(h.name)}
                                  {...(h.name === activeTab ? { active: true } : {})}>
-                        { h.headerIcon }
+			<div className={`rounded-full bg-transparent w-10 h-10 flex justify-center items-center ${h.name === activeTab && 'bg-red-800'}`}>
+                          { h.headerIcon }
+                        </div>
                       </TabHeader>;
              })}
            </TabHeaderContainer>

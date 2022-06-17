@@ -82,7 +82,7 @@ const NavSwitcher = ({ state, children, ...props }) => {
     <NavSwitchContainer className={`${bgColor} ${width}`} {...props}>
       { state === SidebarState.MOBILE && <GiHamburgerMenu color='white' className='w-6 h-6'/> }
       { state === SidebarState.TABLET && <img alt="" src={Logo} className={`w-8 h-8`}/> }
-    </NavSwitchContainer>
+     </NavSwitchContainer>
   );
 };
 
@@ -136,7 +136,12 @@ export default function LeftSideBar({ menuItems, onChangeMenu }) {
 
   return (
     <>
-    <Navbar/>
+      <Navbar className='flex items-center'>
+	<div className='flex items-center ml-14'>
+	<img alt="" src={Logo} className='w-8 h-8 mr-2'/>
+	<Text className='font-semibold'> Charicha Gaming </Text>
+        </div>
+      </Navbar>
     <Container>
       
       <NavSwitcher
