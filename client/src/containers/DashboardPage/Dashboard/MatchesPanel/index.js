@@ -34,7 +34,7 @@ export default function MatchesPanel() {
 
       <FlexContainer direction='col' className='my-4'>
         {pTourneys?.map((t) => (
-          <FlexContainer direction='col'>
+          <FlexContainer key={t.id} direction='col'>
             <FlexContainer direction='col' className='my-2'>
               <Text className="font-bold text-lg"> {t.title}</Text>
             </FlexContainer>
@@ -51,9 +51,9 @@ export default function MatchesPanel() {
 
 const Matches = ({ tourney, userId }) => {
   const participant = tourney.participants.find((p) => p.participant_id === userId);
-  const tourneyPlayer = tourney.tourney_data.participant.find((p) => p.name === participant.name);
+  const tourneyPlayer = tourney.tourney_data?.participant.find((p) => p.name === participant.name);
 
-  const matches = tourney.tourney_data.match.filter((m) => {
+  const matches = tourney.tourney_data?.match.filter((m) => {
     if(m.status == 0) return false;
     if(m?.opponent1 === null || m?.opponent2 === null) return false;
     if(m?.opponent1?.id === null || m?.opponent2?.id === null) return false;
@@ -63,8 +63,9 @@ const Matches = ({ tourney, userId }) => {
 
   return (
     <WrapContainer>
-      { matches.map((m) => <MatchShowCard match={m} userId={userId} tourney={tourney}/>)}
-      { !matches.length && <Text> You don't have any match this round! </Text> }
+      { matches && matches.map((m) => <MatchShowCard key={m?.id} match={m} userId={userId} tourney={tourney}/>)}
+      { matches && !matches.length && <Text> You don't have any match this round! </Text> }
+      { !matches && <Text> You don't have a match this round! </Text>}
     </WrapContainer>          
   );
 };
