@@ -4,7 +4,8 @@ import tw from "twin.macro";
 
 import { useParams } from "react-router-dom";
 import {
-  useGetTourneyQuery
+  useGetTourneyQuery,
+  useUpdateTourneyMutation,  
 } from '../../../redux/TourneyApi';
 
 
@@ -96,6 +97,7 @@ const TRow = styled.tr`
 export default function Participants(){
   const { tourneyId } = useParams();
   const { data: tourney, error } = useGetTourneyQuery(tourneyId);
+  const [updateTourney] = useUpdateTourneyMutation();  
 
   const totalRegistered = tourney.participants.length;
 
@@ -113,6 +115,10 @@ export default function Participants(){
   const totalForfeit = tourney.participants.filter(
     (m) => m.status === "forfeit"
   ).length;
+
+  const onDisqualify = () => {
+    
+  };
 
   
   return (
@@ -185,22 +191,64 @@ export default function Participants(){
           </TRow>
         </thead>
         <tbody>
-          {!error && tourney.participants.map((m) => {
+          {!error && tourney.participants.map((p, index) => {
             return (
-              <TRow key={m.registration_id}>
-                <TData> { m.status } </TData>
-                <TData> { m.name } </TData>
-                <TData> { m.registration_id} </TData>
-                <TData> { m.created_at.substring(0, 10) } </TData>
+              <TRow key={p.registration_id}>
+                <TData> { p.status } </TData>
+                <TData> { p.name } </TData>
+                <TData> { p.registration_id} </TData>
+                <TData> { p.created_at.substring(0, 10) } </TData>
                 <TData>
                   <FlexContainer gap="0.4rem">
                     <IconButton
+                      onClick={() => {
+                        let allParticipants = [...tourney.participants];
+                        let updateParticipant = { ...p }
+
+                        allParticipants.splice(index, 1);
+                        updateParticipant.status = 'ready';
+
+                        allParticipants.push(updateParticipant);
+
+                        toast.promise(
+                          updateTourney({
+                            id: tourneyId,
+                            participants: allParticipants
+                          }).unwrap(),
+                          {
+                            pending: "Accepting....",
+                            success: "Accepted Successfully",
+                            erorr: "Couldn't accept.."
+                          }
+                        );                        
+                      }}
                       pad={"0.4rem"}
+                      
+                      
                       icon={<AiOutlineFileDone size="20" color="green" />}
                     ></IconButton>
                     <IconButton
                       onClick={() => {
-                        toast.info("Will disqualify");
+                        let allParticipants = [...tourney.participants];
+                        let updateParticipant = { ...p }
+
+                        allParticipants.splice(index, 1);
+                        updateParticipant.status = 'disqualified';
+
+                        allParticipants.push(updateParticipant);
+
+                        toast.promise(
+                          updateTourney({
+                            id: tourneyId,
+                            participants: allParticipants
+                          }).unwrap(),
+                          {
+                            pending: "Disqualifying....",
+                            success: "Disqualified Successfully",
+                            erorr: "Couldn't disqualify.."
+                          }
+                        );
+
                       }}
                       pad={"0.4rem"}
                       icon={<MdOutlineCancel size="20" color="red" />}

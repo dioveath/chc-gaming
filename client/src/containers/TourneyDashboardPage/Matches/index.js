@@ -31,10 +31,10 @@ export default function Matches() {
   const { data: tourney, isLoading, error } = useGetTourneyQuery(tourneyId);
   const [updateTourney] = useUpdateTourneyMutation();
   
-  const matchesToBePlayed = tourney.tourney_data.match.filter(
+  const matchesToBePlayed = tourney.tourney_data?.match.filter(
     (m) => m?.opponent1?.id != null && m?.opponent2?.id != null
   );
-  const matchParticipants = tourney.tourney_data.participant;
+  const matchParticipants = tourney.tourney_data?.participant;
 
   console.log(matchesToBePlayed);
 
@@ -45,12 +45,12 @@ export default function Matches() {
   );
   const opponent2Field = useMemo(
     () =>
-      Array.from({ length: matchesToBePlayed.length }).map(() => createRef()),
+      Array.from({ length: matchesToBePlayed.length || 0 }).map(() => createRef()),
     [matchesToBePlayed.length]
   );
 
   const loadTourneyData = async () => {
-    if (Object.keys(tourney.tourney_data).length !== 0) {
+    if (Object.keys(tourney.tourney_data)?.length !== 0) {
       const tourneyCopyData = JSON.parse(JSON.stringify(tourney.tourney_data));
       storage.setData(tourneyCopyData);
     }
