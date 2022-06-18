@@ -1,5 +1,5 @@
 * Welcome to Charicha League  
-** Current Version: 0.0.8.8
+** Current Version: 0.0.8.9
 
 * Minimum Viable Product
 ** Basic Premise
@@ -48,6 +48,8 @@
 ** DONE Change Your Matches to Matches
 ** DONE Fix routing problems in HomePage, create good Welcome User experience HomePage 
 ** DONE Fix UploadClip Delete Modal on Mobile Screens
+** TODO Fix tourney matches crash
+** TODO Update Registrations to have list of names instead of User IDs   
    
 
 * TO RESEARCH

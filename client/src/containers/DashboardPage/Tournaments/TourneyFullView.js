@@ -215,7 +215,7 @@ export default function TourneyFullView({ tourney }) {
 
 
 const TourneyStatusBadge = ({ status }) => {
-  const bgColor = "bg-blue-500";
+  let bgColor = "bg-blue-500";
 
   switch(status){
   case 'published':
