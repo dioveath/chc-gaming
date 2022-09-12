@@ -8,6 +8,9 @@ Charicha gaming is introducing it's league and opening it's registration for Fif
 - Mobile responsive site, where you can easily register using mobile
 - Khalti Online Payment integration, so easy payment of the registration fee.
 
+# VISIT CHARICHA GAMING
+<a href="https://chc-gaming.herokuapp.com"> Charicha Gaming </a>
+
 # Backend Architecture (Microservices API Gateway) 
 We would like to create microservices for many business modules working independently.
 All Business models will be created in Clean Architecture Pattern.
