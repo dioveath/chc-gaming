@@ -1,12 +1,16 @@
-
-# Charicha League - Fifa League Season 3 - Online Registration System
+# Charicha Gaming - Social Gaming Site
 Charicha gaming is introducing it's league and opening it's registration for Fifa S3 League online.
+<p align="center">
+	<img alt="Charicha Gaming Landing Page" src="assets/chc_gaming_landing.png" width="80%"/>
+</p>
 
-![Charicha Gaming Landing Page](assets/chc_gaming_landing.png)
-
+## Minimal Viable Product 
 - Website to register for the Charicha League, Fifa League Season 3
 - Mobile responsive site, where you can easily register using mobile
 - Khalti Online Payment integration, so easy payment of the registration fee.
+
+[![Charicha Gaming Live](https://img.shields.io/github/v/tag/dioveath/chc-gaming?color=red&include_prereleases&label=live&style=for-the-badge)](https://chc-gaming.herokuapp.com)
+
 
 # Backend Architecture (Microservices API Gateway) 
 We would like to create microservices for many business modules working independently.
