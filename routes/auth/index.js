@@ -6,8 +6,10 @@ const bcrypt = require("bcrypt");
 const config = require("../../config");
 const UserAccess = require("../../data-access/user-db");
 
+const resetRouter = require('./reset');
 const authRouter = new Router();
 
+authRouter.use('/reset', resetRouter);
 
 authRouter.post("/login", async (req, res) => {
   if (!req.body.email || !req.body.password)

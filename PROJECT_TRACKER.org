@@ -25,17 +25,19 @@
 ** DONE Tournament Fixture creator based on number of players registered
 ** DONE Create a Match Card with 2 players details   
 
-** TODO Create a Profile Page showing achievements & all       
+** TODO Integrate Forgot password in backend
+** TODO Create Forgot password flow in frontend
+
+** TODO Improvise for mobile responsive UI - Simplify & Animate
+** TODO Great Incoming user experience      
+** TODO Create a Profile Page showing achievements & all
+
+** TODO Create a TourneyView for users
 
 ** TODO Rank System,   
 ** TODO Clips share system seo optimized for facebook share
-
-** TODO Great Incoming user experience   
-** TODO Create a TourneyView for users
    
 ** TODO Use redux to manage tourney_data from tourney ???
-
-
 
 * Tournament Organizer
 ** Tournament Dashboard Create all UIs without states
