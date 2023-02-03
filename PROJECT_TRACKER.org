@@ -25,7 +25,7 @@
 ** DONE Tournament Fixture creator based on number of players registered
 ** DONE Create a Match Card with 2 players details   
 
-** TODO Integrate Forgot password in backend
+** DONE Integrate Forgot password in backend
 ** TODO Create Forgot password flow in frontend
 
 ** TODO Improvise for mobile responsive UI - Simplify & Animate

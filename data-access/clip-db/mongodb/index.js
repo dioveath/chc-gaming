@@ -7,13 +7,13 @@ const serialize = require('./serializer');
 const makeClip = require('../../../models/clip/index').makeClip;
 const makeUpdateClip = require('../../../models/clip/index').makeUpdateClip;
 const errorFormatter = require('./errorFormatter');
-const qs = require('qs');
 
 function listClips(httpQuery){
-  const { pageQuery, ...query } = httpQuery;
-
+  const { pageQuery, query } = httpQuery;
+  const queryObj = JSON.parse(query);
+  
   let paginationParams = [
-    query,
+    queryObj,
     typeof pageQuery === "string" ? JSON.parse(pageQuery ?? "{}") : pageQuery,
   ];
 

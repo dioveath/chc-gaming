@@ -9,6 +9,7 @@ const path = require('path');
 
 const app = express();
 
+app.set('query parser', 'extended');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors());

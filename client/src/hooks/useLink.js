@@ -1,5 +1,4 @@
-import { useEffect} from 'react';
-
+import { useEffect } from 'react';
 
 const useScript = (url, rel) => {
   useEffect(() => {
@@ -12,7 +11,7 @@ const useScript = (url, rel) => {
 
     return () => document.body.removeChild(script);
 
-  }, [url, rel])
+  }, [url, rel]);
 
 };
 

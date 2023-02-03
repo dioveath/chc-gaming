@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import config from "../config/config";
-import qs from 'qs';
+import qs from "qs";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${config.serverUrl}/api/v1`,
@@ -20,7 +20,7 @@ const baseQuery = fetchBaseQuery({
 export const clipApi = createApi({
   reducerPath: "clipApi",
   baseQuery: baseQuery,
-  tagTypes: ['Clips'],
+  tagTypes: ["Clips"],
   endpoints: (builder) => ({
     getClip: builder.query({
       query: (id) => `clips/${id}`,
@@ -29,26 +29,28 @@ export const clipApi = createApi({
     getClips: builder.query({
       query: ({ pageQuery = {}, ...query }) => ({
         url: `clips`,
-        params: { pageQuery: pageQuery, ...query }
+        params: { pageQuery: pageQuery, query: JSON.stringify({...query})},
       }),
       providesTags: (result, _error, _query) =>
       result?.clips?.clips
-          ? [
-            ...result.clips.clips.map(({ id }) => ({ type: "Clips", id })),
+        ? [
+              ...result.clips.clips.map(({ id }) => ({ type: "Clips", id })),
               { type: "Clips", id: "LIST" },
             ]
-      : [{ type: "Clips", id: "LIST" }],
+          : [{ type: "Clips", id: "LIST" }],
     }),
     addClip: builder.mutation({
       query: (data) => {
         const { formData } = data;
         return {
           url: `clips/encode`,
-          method: 'POST',
-          body: formData
+          method: "POST",
+          body: formData,
         };
       },
-      invalidatesTags: (_result, _error, _args) => [{ type: 'Clips', id: "LIST"}]
+      invalidatesTags: (_result, _error, _args) => [
+        { type: "Clips", id: "LIST" },
+      ],
     }),
     updateClip: builder.mutation({
       query: (data) => {
@@ -59,7 +61,7 @@ export const clipApi = createApi({
           body,
         };
       },
-      invalidatesTags: (_result, _error, { id }) => [{type: 'Clips', id }]
+      invalidatesTags: (_result, _error, { id }) => [{ type: "Clips", id }],
     }),
     deleteClip: builder.mutation({
       query: (id) => {
@@ -68,7 +70,7 @@ export const clipApi = createApi({
           method: "DELETE",
         };
       },
-      invalidatesTags: (_result, _error, id) => [{type: 'Clips', id }]
+      invalidatesTags: (_result, _error, id) => [{ type: "Clips", id }],
     }),
   }),
 });

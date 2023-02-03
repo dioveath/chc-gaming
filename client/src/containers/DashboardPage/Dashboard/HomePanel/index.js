@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import tw from "twin.macro";
@@ -62,12 +62,13 @@ export default function HomePanel() {
   const [page, setPage] = useState(1);
   const [clips, setClips] = useState([]);
 
-  const followings = user?.following.map((f) => ({ author: f }));
+  const followings = useMemo(() => {
+    return user?.following.map((f) => ({ author: f }));
+  }, [user?.following]);
 
   // NOTE: Don't make query empty. It would fetch all clips.
-  if(followings && followings.length ==  0)
+  if(followings && followings.length ===  0)
     followings.push({ author: auth.userId });
-
 
   const { data, error, isLoading, isFetching } = useGetClipsQuery({
     $or: followings || [],

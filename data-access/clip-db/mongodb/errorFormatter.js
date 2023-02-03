@@ -3,7 +3,7 @@
 module.exports = (error) => {
   if (error.name == "ValidationError") {
     // from mongoose-unique-validator
-
+    
     let props = Object.keys(error.errors);
     let messages = [];
     console.log(props);
