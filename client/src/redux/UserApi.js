@@ -31,9 +31,9 @@ export const userApi = createApi({
       result?.users?.users
           ? [
             ...result.users.users.map(({ id }) => ({ type: "Users", id })),
-              { type: "Users", id: "LIST" },
-            ]
-          : [{ type: "Users", id: "LIST" }],
+            { type: "Users", id: "LIST" },
+          ]
+      : [{ type: "Users", id: "LIST" }],
     }),
     updateUser: builder.mutation({
       query: (data) => {

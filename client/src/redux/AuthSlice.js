@@ -27,7 +27,7 @@ const authSlice = createSlice({
       state.isError = false;
     },
 
-    pending: (state, action) => {
+    pending: (state, _action) => {
       state.isError = false;
       state.isPending = true;
     },
@@ -40,13 +40,12 @@ const authSlice = createSlice({
     },
 
     // checks for expiry
-    updateToken: (state, action) => { 
-
+    updateToken: (state, _action) => { 
       var token = localStorage.getItem('accessToken');
       if(token == null) return;
 
       var decodedToken = jwt_decode(token);
-
+      
       if(decodedToken.exp * 1000 < Date.now()) {
         state.accessToken = null;
         state.userId = null;
@@ -56,7 +55,7 @@ const authSlice = createSlice({
       state.isError = false;
     },
 
-    logout: (state, action) => {
+    logout: (state, _action) => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('userId');
       state.accessToken = null;

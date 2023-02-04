@@ -35,7 +35,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 function App() {
   const dispatch = useDispatch();
-  var auth = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
 
   const { data } = useGetUserQuery(auth.userId);
 
