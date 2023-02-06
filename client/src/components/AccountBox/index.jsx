@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { Route, Switch, useRouteMatch, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import { Logo } from "../Logo";
 import { Marginer } from "../Marginer";
@@ -102,7 +102,6 @@ const ContentContainer = styled(motion.div)`
 `;
 
 export function AccountBox(props) {
-  var match = useRouteMatch();
   const location = useLocation();
 
   return (
@@ -111,7 +110,7 @@ export function AccountBox(props) {
         <BackDrop />
         <HeaderContainer>
           <HeaderText>
-            {location.pathname === "/auth/login" ? "LOGIN" : "REGISTRATION"}
+            {location.pathname === "/auth/register" ? "REGISTRATION" : "LOGIN"}
           </HeaderText>
         </HeaderContainer>
       </TopContainer>
@@ -124,17 +123,12 @@ export function AccountBox(props) {
           <Marginer vertical="2rem" />
           <SmallText>Enter your Gaming Identity</SmallText>
 
-          <Switch>
-            <Route path={`${match.path}/login`} key="login">
-              <LoginForm />
-            </Route>
-            <Route path={`${match.path}/register`} key="register">
-              <RegisterForm />
-            </Route>
-            <Route path={`${match.path}/logout`}>
-              <Logout />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path={`/`} element={<Navigate to='login'/>}/>
+            <Route path={`/login`} element={<LoginForm/>}/>
+            <Route path={`/register`} element={<RegisterForm/>}/>
+            <Route path={`/logout`} elemtn={<Logout/>}/>
+          </Routes>
         </ContentContainer>
       </AnimatePresence>
       <Marginer vertical="4rem" />

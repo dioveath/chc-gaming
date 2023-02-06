@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
   LeftBarContainer,
@@ -110,7 +110,7 @@ export default function LeftSideBar({ menuItems, onChangeMenu }) {
   );
   const [revNavCycle, setRevNavCycle] = useState(false); //back & forth cycling of sidebarState
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const navNode = useClickOutside(() => {
     setSidebarState(SidebarState.MOBILE);
@@ -233,7 +233,7 @@ export default function LeftSideBar({ menuItems, onChangeMenu }) {
                 name={item.name}
                 onClick={() => {
                   if (item.name === "Log out") {
-                    history.push("/auth/logout");
+                    navigate("/auth/logout");
                     return;
                   }
                   dispatch(setActiveMenu(item.name));

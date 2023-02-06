@@ -9,12 +9,7 @@ import ProfilePage from "./containers/ProfilePage";
 import FifaLeagueRegister from "./containers/FifaLeagueRegister";
 import TourneysPage from "./containers/TourneysPage";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 
 import axios from "axios";
 import { useEffect } from "react";
@@ -22,16 +17,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateToken, logout } from "./redux/AuthSlice";
 import { updateUser, pending, deleteUser } from "./redux/UserSlice";
 
-import { useGetUserQuery } from './redux/UserApi';
+import { useGetUserQuery } from "./redux/UserApi";
 
 import config from "./config/config.js";
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
-import { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
-
+import { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -73,63 +67,26 @@ function App() {
   return (
     <>
       <SkeletonTheme baseColor="#202020" highlightColor="#444">
-      <Router>
-        <Switch>
-
-          <Route path="/" exact>
-            <Redirect to='/auth/login'/>            
-            {/* <HomePage /> */}
-          </Route>
-
-          <Route path="/auth">
-            { auth.accessToken !== null && <Redirect to='/dashboard'/>}
-            <LoginPage />
-          </Route>
-
-          <Route path="/profile/:profileId">
-            <ProfilePage />
-          </Route>          
-
-          {auth.accessToken === null &&
-           <Redirect to='/' />}
-
-          {/* Below will be protected routes  */}
-
-          <Route path="/dashboard">
-            <DashboardPage />
-          </Route>
-
-          <Route path="/organizer/tourneys/:tourneyId">
-            <TourneyDashboardPage />
-          </Route>
-
-          <Route path="/organizer">
-            <OrganizerDashboardPage />
-          </Route>
-
-          <Route path="/organizer/tourney/:tourneyId">
-            <TourneyDashboardPage />
-          </Route>
-
-          <Route path="/tourneys/:tourneyId">
-            <FifaLeagueRegister />
-          </Route>
-
-          <Route path="/tourneys">
-            <TourneysPage />
-          </Route>
-
-
-        </Switch>
-      </Router>
-
-      </SkeletonTheme>    
-      <ToastContainer theme="dark"
-                      position="bottom-center"
-                      closeOnClick
-                      pauseOnFocusLoss
-                      pauseOnHover
-                      autoClose={1000}/>
+        <Routes>
+          <Route path="/" element={<Navigate to='/auth'/>}/>
+          <Route path="/auth/*" element={auth.accessToken ? <Navigate to='/dashboard'/> : <LoginPage/>}/>
+          <Route path="/profile/:profileId" element={<ProfilePage/>}/>
+          <Route path="/dashboard" element={<DashboardPage/>}/>
+          <Route path="/organizer" element={<OrganizerDashboardPage/>}/>
+          <Route path="/organizer/tourneys/:tourneyId" element={<TourneyDashboardPage/>}/>
+          <Route path="/organizer/tourney/:tourneyId" element={<TourneyDashboardPage/>}/>
+          <Route path="/tourneys/:tourneyId" element={<FifaLeagueRegister/>}/>
+          <Route path="/tourneys" element={<TourneysPage/>}/>
+        </Routes>
+      </SkeletonTheme>
+      <ToastContainer
+        theme="dark"
+        position="bottom-center"
+        closeOnClick
+        pauseOnFocusLoss
+        pauseOnHover
+        autoClose={1000}
+      />
     </>
   );
 }

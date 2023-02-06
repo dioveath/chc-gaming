@@ -1,4 +1,4 @@
-import { Redirect }  from 'react-router-dom';
+import { Navigate }  from 'react-router-dom';
 import { FcLandscape } from 'react-icons/fc';
 import { RiSettings5Fill } from 'react-icons/ri';
 import { IoGameController } from 'react-icons/io5';
@@ -69,6 +69,6 @@ export const MenuItems = [
   {
     'name': 'Organizer Dashboard',
     'icon': <MdDashboard/>,
-    'content': <Redirect to='/organizer'/>
+    'content': <Navigate to='/organizer' replace/>
   }
 ];

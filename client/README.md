@@ -1,70 +1,25 @@
-# Getting Started with Create React App
+## Charicha Gaming Web App Client
+Charicha Gaming is a platform for e-Sports players and organizers to participate in organized tournaments and leagues. Our platform is backed by Microsoft for Startups and supports all popular e-Sports titles.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
+This is the Charicha Gaming Web App Client, built with React, a user-friendly interface for accessing the Charicha Gaming platform from your web browser. Our app provides an immersive and engaging experience for e-Sports enthusiasts, with endless opportunities to compete and show off your skills.
 
-## Available Scripts
+## Features
+- Secure and exciting platform for the e-Sports community to grow
+- Intricately organized tournaments and leagues
+- User-friendly interface built with React for optimal performance and ease of use
+- Support for popular e-Sports titles like PUBG Mobile, & FIFA
 
-In the project directory, you can run:
+## Getting Started
+To start using the Charicha Gaming Web App Client, you need to have a Charicha Gaming account. If you don't have an account yet, you can sign up on our website.
 
-### `npm start`
+Once you have an account, simply log in to the Charicha Gaming Web App Client using your Charicha Gaming credentials. From there, you can participate in organized tournaments and leagues, as well as browse and join new ones.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Technology Stack
+The Charicha Gaming Web App Client is built with React, a popular JavaScript library for building user interfaces. React provides a fast and efficient way to build complex and dynamic web applications, making it the ideal choice for our platform.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Support
+If you have any questions or issues while using the Charicha Gaming Web App Client, please reach out to our support team. We are always here to help and ensure that your e-Sports experience is a success.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Conclusion
+We hope that the Charicha Gaming Web App Client, built with React, provides you with a thrilling and engaging e-Sports experience. Whether you're a seasoned pro or just starting out, there's always something new and exciting to discover on our platform. Join the Charicha Gaming community and let's raise the stakes together!

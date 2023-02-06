@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import tw from 'twin.macro';
 
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/AuthSlice';
 
@@ -126,12 +126,12 @@ export function UserItems(){
   const isAuth = useSelector((state) => state.auth).accessToken != null;
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleLogoutClick = (e) => {
     e.preventDefault();
     dispatch(logout());
-    history.push('/');
+    navigate('/');
   };
 
 
@@ -158,7 +158,7 @@ export function NavItems(){
   const isAuth = useSelector((state) => state.auth).accessToken != null;
   const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useNavigate();
 
   const handleLogoutClick = (e) => {
     e.preventDefault();

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Text, BoldText } from "../../../components/Text";
 
@@ -138,7 +138,7 @@ export default function TourneyCreatePage() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -173,7 +173,7 @@ export default function TourneyCreatePage() {
       console.log(tourney);
 
       const response = await axios.request(options);
-      history.push("/organizer/tourneys/" + response.data.newTourney.id);
+      navigate("/organizer/tourneys/" + response.data.newTourney.id);
     } catch (e) {
       console.log(e);
     }
