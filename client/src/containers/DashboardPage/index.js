@@ -11,6 +11,7 @@ import ClanPage from "./Clan";
 import ExplorePage from './Explore';
 import TournamentsPage from './Tournaments';
 import SettingsPage from './Settings';
+import Logout from '../../components/AccountBox/Logout';
 
 import { FlexContainer } from "../../components/base";
 import { Text } from "../../components/Text";
@@ -69,7 +70,7 @@ const MenuItems = [
   {
     name: "Log out",
     icon: <RiLogoutCircleLine />,
-    content: <></>
+    content: <Logout/>
   },
 ];
 
@@ -84,9 +85,9 @@ px-2
 
 
 export default function DashboardPage() {
-  const auth = useSelector(state => state.auth);
-  const { isLoading, error } = useGetUserQuery(auth.userId);
   const { dashboard } = useSelector((state) => state.userDashboard);
+  const { userId } = useSelector((state) => state.auth);
+  const { isLoading, error } = useGetUserQuery(userId);
 
   const renderContent = MenuItems.find(
     (menu) => menu.name === dashboard.activeMenu

@@ -1,6 +1,5 @@
 import "./App.css";
 
-import HomePage from "./containers/HomePage";
 import DashboardPage from "./containers/DashboardPage";
 import OrganizerDashboardPage from "./containers/OrganizerDashboardPage";
 import TourneyDashboardPage from "./containers/TourneyDashboardPage";
@@ -9,17 +8,12 @@ import ProfilePage from "./containers/ProfilePage";
 import FifaLeagueRegister from "./containers/FifaLeagueRegister";
 import TourneysPage from "./containers/TourneysPage";
 
-import { Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import RequireAuth from './containers/Auth/RequireAuth';
 
-import axios from "axios";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateToken, logout } from "./redux/AuthSlice";
-import { updateUser, pending, deleteUser } from "./redux/UserSlice";
-
-import { useGetUserQuery } from "./redux/UserApi";
-
-import config from "./config/config.js";
+import { updateToken } from './redux/AuthSlice';
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -29,54 +23,28 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 function App() {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
-
-  const { data } = useGetUserQuery(auth.userId);
+  const { accessToken: loggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    (async () => {
-      dispatch(updateToken());
-      dispatch(deleteUser());
-      if (auth.accessToken != null) {
-        dispatch(pending());
-
-        const options = {
-          method: "GET",
-          url: `${config.serverUrl}/api/v1/users/${auth.userId}`,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-        };
-
-        try {
-          const response = await axios.request(options);
-          if (response.data.status !== "fail") {
-            dispatch(updateUser(response.data.user));
-          }
-        } catch (e) {
-          console.log(e.response);
-          // dispatch(error(e.response.data.errorList));
-          dispatch(logout());
-          dispatch(deleteUser());
-        }
-      }
-    })();
-  }, [auth.accessToken, auth.userId, dispatch]);
+    dispatch(updateToken());
+  }, [dispatch]);
 
   return (
     <>
       <SkeletonTheme baseColor="#202020" highlightColor="#444">
         <Routes>
           <Route path="/" element={<Navigate to='/auth'/>}/>
-          <Route path="/auth/*" element={auth.accessToken ? <Navigate to='/dashboard'/> : <LoginPage/>}/>
+          <Route path="/auth/*" element={loggedIn ? <Navigate to='/dashboard'/> : <LoginPage/>}/>
           <Route path="/profile/:profileId" element={<ProfilePage/>}/>
-          <Route path="/dashboard" element={<DashboardPage/>}/>
-          <Route path="/organizer" element={<OrganizerDashboardPage/>}/>
-          <Route path="/organizer/tourneys/:tourneyId" element={<TourneyDashboardPage/>}/>
-          <Route path="/organizer/tourney/:tourneyId" element={<TourneyDashboardPage/>}/>
-          <Route path="/tourneys/:tourneyId" element={<FifaLeagueRegister/>}/>
-          <Route path="/tourneys" element={<TourneysPage/>}/>
+          
+          <Route element={<RequireAuth/>}>
+            <Route path="/dashboard" element={<DashboardPage/>}/>
+            <Route path="/organizer" element={<OrganizerDashboardPage/>}/>
+            <Route path="/organizer/tourneys/:tourneyId" element={<TourneyDashboardPage/>}/>
+            <Route path="/organizer/tourney/:tourneyId" element={<TourneyDashboardPage/>}/>
+            <Route path="/tourneys/:tourneyId" element={<FifaLeagueRegister/>}/>
+            <Route path="/tourneys" element={<TourneysPage/>}/>
+          </Route>
         </Routes>
       </SkeletonTheme>
       <ToastContainer

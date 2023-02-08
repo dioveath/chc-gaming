@@ -1,40 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const defaultState = {
+    data: null,
+    error: null,
+    isUninitialized: true,
+    isLoading: false,
+    isFetching: false,
+    isSuccess: false,
+    isError: false
+};
+
 const userSlice = createSlice({
   name: "user",
-  initialState: {
-    data: null,
-    isPending: true,
-    isError: false,
-    errorMessages: null
-  },
-
+  initialState: defaultState,
   reducers: {
     updateUser: (state, action) => {
-      state.data = action.payload;
-      state.isError = false;
-      state.isPending = false;
+      const newState = ({ data, error, isUnitialized, isLoading, isFetching, isSuccess, isError }) =>
+            ({ data, error, isUnitialized, isLoading, isFetching, isSuccess, isError })(action.payload);
+      state = newState;
     },
-
-    pending: (state, action) => {
-      state.isError = false;
-      state.isPending = true;
-    },
-
-    error: (state, action) => {
-      state.isError = true;
-      state.isPending = false;
-      state.errorMessages = action.payload;
-    },
-
-    deleteUser: (state, action) => {
-      state.data = null;
-      state.isPending = false;
-      state.isError = false;
+    deleteUser: (state, _action) => {
+      state = defaultState;
     }
-    
   }
-  
 });
 
 export const { updateUser, pending, error, deleteUser } = userSlice.actions;

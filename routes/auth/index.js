@@ -13,24 +13,25 @@ authRouter.use('/reset', resetRouter);
 
 authRouter.post("/login", async (req, res) => {
   if (!req.body.email || !req.body.password)
-    return res.send({
+    return res.status(406).send({
       status: "fail",
       errorList: ["Please give proper credentials."],
     });
 
   const user = await UserAccess.findUserBy("email", req.body.email);
 
+
   if (user) {
     const match = await bcrypt.compare(req.body.password, user.password);
     if (!match) {
-      return res.send({
+      return res.status(401).send({
         status: "fail",
         errorList: ["User or Password don't match!"],
       });
     }
-
     const accessToken = issueJwt(user.id, user.roles);
-    return res.send({
+
+    return res.status(200).send({
       status: "success",
       userId: user.id,
       accessToken: accessToken,

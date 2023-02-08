@@ -1,9 +1,9 @@
 import React from "react";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { login, pending, error } from "../../redux/AuthSlice";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../redux/AuthSlice";
+import { useLoginMutation } from '../../containers/Auth/authApiSlice';
 
 import {
   FormContainer,
@@ -14,49 +14,42 @@ import {
   SubmitButton,
 } from "./FormElements";
 import { Marginer } from "../../components/Marginer";
-import config from "../../config/config.js";
 
 import { motion } from "framer-motion";
 
 export function LoginForm() {
+  const dispatch = useDispatch();
   const email = useRef();
   const password = useRef();
+  
+  const [ login, { isLoading } ] = useLoginMutation();
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const auth = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setErrorMsg('');
+  }, [email.current?.value, password.current?.value]);
 
   const handleLoginClick = async (e) => {
     e.preventDefault();
-
-    dispatch(pending());
+    const cred = {
+      email: email.current.value,
+      password: password.current.value
+    };
 
     try {
-      console.log(config.serverUrl);
-      var response = await axios.post(`${config.serverUrl}/auth/login`, {
-        email: email.current.value,
-        password: password.current.value,
-      });
-      if (response.data.status === "success") {
-        dispatch(
-          login({
-            accessToken: response.data.accessToken,
-            userId: response.data.userId,
-          })
-        );
+      const data = await login(cred).unwrap();
+      dispatch(setCredentials({ ...data }));
+    } catch(e) {
+      if(e?.data?.status === 'fail') {
+        setErrorMsg(e.data.errorList.join(', '));
+      } else if (e?.status) {
+        setErrorMsg("Failed to fetch!");
       } else {
-        dispatch(
-          error({
-            errorMessages: response.data.errorList,
-          })
-        );
+        setErrorMsg('Failed - Something went wrong!');
       }
-    } catch (e) {
-      dispatch(
-        error({
-          errorMessages: [e.message],
-        })
-      );
     }
+
   };
 
   return (
@@ -75,13 +68,10 @@ export function LoginForm() {
           ref={password}
         />
         <Marginer vertical="5px" />
-        {auth.isError &&
-          auth.errorMessages.map((message, i) => {
-            return <ErrorMessage errorMessage={message} key={i} />;
-          })}
+        {errorMsg && <ErrorMessage errorMessage={errorMsg} /> }
         <Marginer vertical="5px" />
         <SubmitButton type="submit">
-          {auth.isPending ? "Logging in..." : "LOGIN"}
+          {isLoading ? "Logging in..." : "LOGIN"}
         </SubmitButton>
         <Marginer vertical="10px" />
         <MutedLink>
@@ -89,7 +79,7 @@ export function LoginForm() {
           <BoldLink to="/auth/register"> Register Now! </BoldLink>{" "}
         </MutedLink>
         <Marginer vertical="10px" />
-
+        
         <BoldLink to="/"> Home </BoldLink>
       </FormContainer>
     </motion.div>

@@ -111,7 +111,7 @@ export default function LeftSideBar({ menuItems, onChangeMenu }) {
   const [revNavCycle, setRevNavCycle] = useState(false); //back & forth cycling of sidebarState
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   const navNode = useClickOutside(() => {
     setSidebarState(SidebarState.MOBILE);
     setRevNavCycle(false);
@@ -232,10 +232,10 @@ export default function LeftSideBar({ menuItems, onChangeMenu }) {
                 icon={item.icon}
                 name={item.name}
                 onClick={() => {
-                  if (item.name === "Log out") {
-                    navigate("/auth/logout");
-                    return;
-                  }
+		  /* if (item.name === "Log out") { */
+		  /*   navigate("/auth/logout"); */
+		  /*   return; */
+		  /* } */
                   dispatch(setActiveMenu(item.name));
 
                   let currentState = sidebarState;

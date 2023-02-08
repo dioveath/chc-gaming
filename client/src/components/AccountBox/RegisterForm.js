@@ -8,14 +8,13 @@ import { Marginer } from '../../components/Marginer';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { pending, error, complete }  from '../../redux/RegisterSlice';
-import { login }  from '../../redux/AuthSlice';
+import { setCredentials }  from '../../redux/AuthSlice';
 
 import config from '../../config/config.js';
 import { motion } from 'framer-motion';
 
 
 export function RegisterForm(props){
-
   const firstName = useRef();
   const lastName = useRef();
   const gamingName = useRef();
@@ -55,8 +54,8 @@ export function RegisterForm(props){
                                       }
                                      );
 
-      if(response.data.status == 'success') {
-        dispatch(login({
+      if(response.data.status === 'success') {
+        dispatch(setCredentials({
           accessToken: response.data.accessToken,
           userId: response.data.userId
         }));
@@ -65,7 +64,6 @@ export function RegisterForm(props){
           errorMessages: response.data.errorList
         }));
       }
-
 
     } catch (e) {
       
