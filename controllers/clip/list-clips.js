@@ -7,7 +7,7 @@ module.exports = function makeListClips(clipAccess){
     };
     try {
       const clips = await clipAccess.listClips(httpRequest.query);
-
+      
       return {
         headers,
         statusCode: 200,

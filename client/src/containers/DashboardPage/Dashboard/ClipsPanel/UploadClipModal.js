@@ -170,7 +170,6 @@ export default function UploadClipModal({ isModalOpen, setIsModalOpen}) {
         closeModal();
       } catch(e){
         
-        console.log(e);
         toast.update(toastId, {
           render: e.message,
           type: "error",

@@ -53,6 +53,7 @@ font-size: 10px;
 
 export const ErrorContainer = styled.div`
 display: flex;
+width: auto;
 ` ;
 
 export const ErrorMessage = (props) => {
@@ -119,6 +120,10 @@ z-index: 100;
 
 &:hover { 
 filter: brightness(1.3);
+}
+
+&:disabled {
+background: gray;
 }
 ` ;
 

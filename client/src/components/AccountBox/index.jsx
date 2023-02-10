@@ -8,12 +8,14 @@ import { Marginer } from "../Marginer";
 
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
+import ResetPassword from '../../containers/Auth/ResetPassword';
+import ForgotPassword from '../../containers/Auth/ForgotPassword';
 import Logout from "./Logout";
 
 import { AnimatePresence, motion } from "framer-motion";
 
 const BoxContainer = styled(motion.div)`
-  min-width: 350px;
+  min-width: 330px;
   display: flex;
   flex-direction: column;
   border-radius: 19px;
@@ -101,17 +103,31 @@ const ContentContainer = styled(motion.div)`
   }
 `;
 
+const getHeader = (path) => {
+  switch(path){
+  case '/auth/register':
+    return 'REGISTER';
+  case '/auth/login':
+    return 'LOGIN';
+  case '/auth/reset':
+    return 'RESET CREDENTIALS';
+  case '/auth/forgot':
+    return 'FORGOT CREDENTIALS';
+  default:
+    return 'WHY YOU HERE?';
+  }
+};
+
 export function AccountBox(props) {
   const location = useLocation();
+  const header = getHeader(location.pathname);
 
   return (
     <BoxContainer layout>
       <TopContainer>
         <BackDrop />
         <HeaderContainer>
-          <HeaderText>
-            {location.pathname === "/auth/register" ? "REGISTRATION" : "LOGIN"}
-          </HeaderText>
+          <HeaderText>{ header }</HeaderText>
         </HeaderContainer>
       </TopContainer>
       <AnimatePresence exitBeforeEnter={true}>
@@ -125,10 +141,12 @@ export function AccountBox(props) {
 
           <Routes>
             <Route path={`/`} element={<Navigate to='login'/>}/>
+            <Route path={`/reset`} element={<ResetPassword/>}/>            
             <Route path={`/login`} element={<LoginForm/>}/>
             <Route path={`/register`} element={<RegisterForm/>}/>
             <Route path={`/logout`} element={<Logout/>}/>
-          </Routes>
+            <Route path={'/forgot'} element={<ForgotPassword/>}/>
+            </Routes>
         </ContentContainer>
       </AnimatePresence>
       <Marginer vertical="4rem" />

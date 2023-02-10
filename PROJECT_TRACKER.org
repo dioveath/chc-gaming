@@ -27,6 +27,9 @@
 
 ** DONE Integrate Forgot password in backend
 ** TODO Create Forgot password flow in frontend
+** TODO Create Organizer Login Flow
+** TODO Create Organizer Dashboard
+** TODO PUBG Mobile Organizer
 
 ** TODO Improvise for mobile responsive UI - Simplify & Animate
 ** TODO Great Incoming user experience      

@@ -1,6 +1,5 @@
 import { useLocation, Outlet, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useGetUserQuery } from '../../redux/UserApi';
 
 const RequireAuth = () => {
   const { accessToken: loggedIn } = useSelector(state => state.auth);

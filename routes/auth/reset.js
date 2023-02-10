@@ -1,5 +1,7 @@
 const Router = require("express").Router;
+const nodemailer = require('nodemailer');
 const jwt = require("jsonwebtoken");
+const qs = require('qs');
 
 const config = require("../../config");
 const UserAccess = require('../../data-access/user-db');
@@ -23,12 +25,39 @@ resetRouter.get("/:email", async (req, res) => {
       }
     );
 
-    return res.send({
+    const testAccount = await nodemailer.createTestAccount();
+
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass
+      }
+    });
+
+    const params = {
+      email: req.params.email,
+      token: token
+    };
+    const paramString = qs.stringify(params);
+    const info = await transporter.sendMail({
+      from: 'Norval Sipes <norval@charichagaming.com.np>',
+      to: req.params.email,
+      subject: 'Reset Password',
+      text: "Reset password link",
+      html: `Thank you for being with us! Here's <a href='http:localhost:3000/auth/reset?${paramString}'> RESET LINK </a>`
+    });
+
+    console.info("Preview URL: " + nodemailer.getTestMessageUrl(info));
+    
+    return res.status(200).send({
       status: "success",
-      reset_token: token
+      message: `Mail sent successfully to '${req.params.email}' with a reset link!`
     });
   } catch (e) {
-    return res.send({
+    return res.status(400).send({
       status: "fail",
       errorList: [e.message],
     });    
@@ -53,13 +82,13 @@ resetRouter.post("/:email", async (req, res) => {
 
     const updatedUser = UserAccess.updateUser(user.id, { password });
 
-    return res.send({
+    return res.status(200).send({
       status: 'success',
       updatedUser
     });
 
   } catch(e){
-    return res.send({
+    return res.status(400).send({
       status: "fail",
       errorList: [e.message],
     });        

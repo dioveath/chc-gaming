@@ -79,7 +79,7 @@ export function LoginForm() {
           <BoldLink to="/auth/register"> Register Now! </BoldLink>{" "}
         </MutedLink>
         <Marginer vertical="10px" />
-        
+        <BoldLink to="/auth/forgot"> Forgot Password? </BoldLink>
         <BoldLink to="/"> Home </BoldLink>
       </FormContainer>
     </motion.div>
