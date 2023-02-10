@@ -27,6 +27,7 @@
     "express-session": "^1.17.2",
     "firebase": "^9.8.2",
     "fluent-ffmpeg": "^2.1.2",
+    "googleapis": "^110.0.0",
     "imagemin": "7.0.1",
     "imagemin-jpegtran": "^7.0.0",
     "imagemin-mozjpeg": "9.0.0",
@@ -45,8 +46,7 @@
     "passport-local": "^1.0.0",
     "qs": "^6.10.3",
     "random-key": "^0.3.2",
-    "twilio": "^3.77.1",
-    "yup": "^1.0.0"
+    "twilio": "^3.77.1"
   },
   "devDependencies": {
     "chai": "^4.3.4",

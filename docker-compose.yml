@@ -10,7 +10,6 @@ services:
     networks:
       - shared-network
 
-
   api:
     container_name: chc-gaming-api
     image: chc-gaming-api:0.1.0

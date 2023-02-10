@@ -40,7 +40,8 @@
     "twin.macro": "^2.7.0",
     "video-react": "^0.15.0",
     "web-vitals": "^1.1.2",
-    "webpack": "4.44.2"
+    "webpack": "4.44.2",
+    "yup": "^1.0.0"
   },
   "resolutions": {
     "react-error-overlay": "6.0.9"

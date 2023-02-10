@@ -2,11 +2,17 @@ const Router = require("express").Router;
 const nodemailer = require('nodemailer');
 const jwt = require("jsonwebtoken");
 const qs = require('qs');
+const { google } = require('googleapis');
 
 const config = require("../../config");
 const UserAccess = require('../../data-access/user-db');
 
 const resetRouter = new Router();
+const oauth2Client = new google.auth.OAuth2(config.googleClientId, config.googleClientSecret, config.googleCallbackUri);
+
+oauth2Client.setCredentials({
+  refresh_token: config.googleRefreshToken
+});
 
 resetRouter.get("/:email", async (req, res) => {
   try {
@@ -14,7 +20,7 @@ resetRouter.get("/:email", async (req, res) => {
     if(!user) throw new Error('There is no such user!');
 
     const secret = user.password + config.JWT_SECRET;
-    const token = jwt.sign(
+    const resetToken = jwt.sign(
       {
         sub: user.id,
         iss: config.JWT_ISSUER,
@@ -25,33 +31,39 @@ resetRouter.get("/:email", async (req, res) => {
       }
     );
 
-    const testAccount = await nodemailer.createTestAccount();
-
+    const { token } = await oauth2Client.getAccessToken();
     const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false,
+      service: 'Gmail',
       auth: {
-        user: testAccount.user,
-        pass: testAccount.pass
+        type: 'OAuth2',
+        user: 'charichagaming@gmail.com',
+        clientId: config.googleClientId,
+        clientSecret: config.googleClientSecret,
+        refresh_token: config.googleRefreshToken,
+        accessToken: token
       }
     });
 
     const params = {
       email: req.params.email,
-      token: token
+      token: resetToken
     };
+
     const paramString = qs.stringify(params);
     const info = await transporter.sendMail({
-      from: 'Norval Sipes <norval@charichagaming.com.np>',
+      from: 'Charicha Gaming <team@charichagaming.com.np>',
       to: req.params.email,
       subject: 'Reset Password',
       text: "Reset password link",
-      html: `Thank you for being with us! Here's <a href='http:localhost:3000/auth/reset?${paramString}'> RESET LINK </a>`
+      html: `<h1> Reset your password </h1>
+               <p>Hi ${user.first_name}, </p>
+               <p> Tap the button below to reset your password. If you didn't request a new password you can safely delete this email. </p>
+               <a href='https://chcgaming.azurewebsites.net/auth/reset?${paramString}' style="color: white; background-color: rgb(183,27,27); padding: 10px 40px; text-decoration: none; font-weight: semi-bold;"> RESET PASSWORD </a>
+               <p> Thank you for being with us! </p>
+               <p> Charicha Gaming Team </p>
+               <a href='https://chcgaming.azurewebsites.net'> Charicha Gaming </a> `
     });
 
-    console.info("Preview URL: " + nodemailer.getTestMessageUrl(info));
-    
     return res.status(200).send({
       status: "success",
       message: `Mail sent successfully to '${req.params.email}' with a reset link!`
