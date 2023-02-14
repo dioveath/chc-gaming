@@ -7,6 +7,7 @@ import LoginPage from "./containers/LoginPage";
 import ProfilePage from "./containers/ProfilePage";
 import FifaLeagueRegister from "./containers/FifaLeagueRegister";
 import TourneysPage from "./containers/TourneysPage";
+import ArenaRegister from './containers/Arena/ArenaRegister';
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import RequireAuth from './containers/Auth/RequireAuth';
@@ -40,6 +41,7 @@ function App() {
           <Route element={<RequireAuth/>}>
             <Route path="/dashboard" element={<DashboardPage/>}/>
             <Route path="/organizer" element={<OrganizerDashboardPage/>}/>
+            <Route path="/arena/register" element={<ArenaRegister/>}/>
             <Route path="/organizer/tourneys/:tourneyId" element={<TourneyDashboardPage/>}/>
             <Route path="/organizer/tourney/:tourneyId" element={<TourneyDashboardPage/>}/>
             <Route path="/tourneys/:tourneyId" element={<FifaLeagueRegister/>}/>

@@ -3,6 +3,7 @@ module.exports = function makeGetArena(arenaAccess) {
     const headers = {
       'Content-Type': 'application/json'
     };
+
     try {
       const arena = await arenaAccess.findArenaById(httpRequest.params.id);
 

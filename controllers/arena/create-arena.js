@@ -2,7 +2,7 @@ module.exports = function makeCreateArena(arenaAccess){
 
     return async function createArena(httpRequest){
         const headers = { 
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         };
         try { 
           const newArena = await arenaAccess.addArena(httpRequest.body);
@@ -16,7 +16,7 @@ module.exports = function makeCreateArena(arenaAccess){
           };
         } catch(error){
           // TODO: Error Logging
-          console.log(error);
+          // console.log(error);
 
           return {
             headers,

@@ -13,7 +13,9 @@ const arenaSchema = Joi.object()
         "Publisher",
         "Developer"
       )
-      .default("Organizer"),
+          .default("Organizer"),
+
+        owner: Joi.objectId().required(),
 
     appearance: Joi.object({
       logo: Joi.string().uri().default(""),

@@ -27,7 +27,7 @@
 
 ** DONE Integrate Forgot password in backend
 ** DONE Create Forgot password flow in frontend
-** TODO Create Arena/Organizer Login Flow
+** DONE Create Arena/Organizer Register Flow
 ** TODO Create Arena/Organizer Dashboard
 ** TODO Create Game Integrater System
 ** TODO PUBG Mobile Organizer 

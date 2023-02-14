@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const ArenaSchema = new Schema({
   name: { type: String, unique: true },
   handle: { type: String, unique: true },
+  owner: { type: Schema.Types.ObjectId },
   category: String,
   appearance: Object,
   about: Object,

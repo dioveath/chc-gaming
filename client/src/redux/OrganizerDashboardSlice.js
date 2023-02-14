@@ -7,7 +7,6 @@ const organizerSlice = createSlice({
       activeMenu: 'Dashboard'
     }
   },
-
   reducers: {
     setActiveMenu: (state, action) => {
       state.dashboard.activeMenu = action.payload;

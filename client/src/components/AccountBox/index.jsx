@@ -8,8 +8,10 @@ import { Marginer } from "../Marginer";
 
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
+import RequireAuth from '../../containers/Auth/RequireAuth';
 import ResetPassword from '../../containers/Auth/ResetPassword';
 import ForgotPassword from '../../containers/Auth/ForgotPassword';
+import ArenaRegister from '../../containers/Arena/ArenaRegister';
 import Logout from "./Logout";
 
 import { AnimatePresence, motion } from "framer-motion";
@@ -113,6 +115,8 @@ const getHeader = (path) => {
     return 'RESET CREDENTIALS';
   case '/auth/forgot':
     return 'FORGOT CREDENTIALS';
+  case '/auth/arena':
+    return 'REGISTER ARENA';
   default:
     return 'WHY YOU HERE?';
   }
@@ -146,7 +150,7 @@ export function AccountBox(props) {
             <Route path={`/register`} element={<RegisterForm/>}/>
             <Route path={`/logout`} element={<Logout/>}/>
             <Route path={'/forgot'} element={<ForgotPassword/>}/>
-            </Routes>
+          </Routes>
         </ContentContainer>
       </AnimatePresence>
       <Marginer vertical="4rem" />

@@ -5,7 +5,9 @@ const _serializeSingle = (arena) => {
   return {
     id: arena._id,
     name: arena.name,
+    handle: arena.handle,
     category: arena.category,
+    owner: arena.owner,
     appearance: arena.appearance,
     about: arena.about,
     subscriptions: arena.subscriptions,

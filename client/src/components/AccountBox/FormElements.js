@@ -58,15 +58,18 @@ width: auto;
 
 export const ErrorMessage = (props) => {
   return (
-    <ErrorContainer>
-      <IconContext.Provider value={{ color: "white"}}>
-        <HiOutlineExclamation/>
-      </IconContext.Provider>
-      <Marginer horizontal="5px"/>
-      <ErrorText>
-        { props.errorMessage != null ? props.errorMessage : "Something wrong!" }
-      </ErrorText>
-    </ErrorContainer>    
+    <div className='flex flex-col gap-2 my-2'>
+      { props.errorMessage && props.errorMessage.split('\n').map((em) =>
+        <ErrorContainer>
+          <IconContext.Provider value={{ color: "white"}}>
+            <HiOutlineExclamation/>
+          </IconContext.Provider>
+          <Marginer horizontal="5px"/>
+          <ErrorText> { em } </ErrorText> 
+        </ErrorContainer>
+      )}      
+      { !props.errorMessage && <ErrorText>{'Something went wrong!'}</ErrorText> }
+    </div>
   );
 };
 
@@ -127,4 +130,29 @@ background: gray;
 }
 ` ;
 
+export const Select = styled.select.attrs(props => ({
+  className: props.className
+}))`
+background-color: #220303;
+color: #fff;
+font-size: 15px;
+font-weight: 600;
+padding: 7px 20px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+transition: all 240ms ease-in-out;
+outline: none;
+
+&:disabled {
+background: gray;
+}
+
+
+`;
+
+export const Option = styled.option.attrs(props => ({
+  className: props.className
+}))`
+`;
 

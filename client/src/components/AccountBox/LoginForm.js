@@ -42,7 +42,7 @@ export function LoginForm() {
       dispatch(setCredentials({ ...data }));
     } catch(e) {
       if(e?.data?.status === 'fail') {
-        setErrorMsg(e.data.errorList.join(', '));
+        setErrorMsg(e.data.errorList.join('\n'));
       } else if (e?.status) {
         setErrorMsg("Failed to fetch!");
       } else {
@@ -76,7 +76,7 @@ export function LoginForm() {
         <Marginer vertical="10px" />
         <MutedLink>
           Don't have an Account?
-          <BoldLink to="/auth/register"> Register Now! </BoldLink>{" "}
+          <BoldLink to="/auth/register"> Register Now! </BoldLink>
         </MutedLink>
         <Marginer vertical="10px" />
         <BoldLink to="/auth/forgot"> Forgot Password? </BoldLink>
