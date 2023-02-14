@@ -33,6 +33,6 @@ app.get('*', (_req, res) => {
 });
 
 app.listen(config.PORT, () => {
-  console.log(`listening to clients @localhost:${config.PORT}`);
+  console.log(`listening to clients @localhost:${config.PORT} | ✅🎉🚀🚀`);
 });
 

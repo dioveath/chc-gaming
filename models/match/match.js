@@ -13,7 +13,8 @@ var buildMakeMatch = function (matchValidator) {
     in_penalty,
     match_date,
   } = {}) => {
-    var error = matchValidator({
+
+    matchValidator({
       summary,
       status,
       is_neutral,
@@ -25,8 +26,6 @@ var buildMakeMatch = function (matchValidator) {
       in_penalty,
       match_date,
     });
-
-    if (error instanceof Object) throw new Error(error.errorList);
 
     return Object.freeze({
       getSummary: () => summary,

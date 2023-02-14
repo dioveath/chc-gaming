@@ -26,10 +26,11 @@
 ** DONE Create a Match Card with 2 players details   
 
 ** DONE Integrate Forgot password in backend
-** TODO Create Forgot password flow in frontend
-** TODO Create Organizer Login Flow
-** TODO Create Organizer Dashboard
-** TODO PUBG Mobile Organizer
+** DONE Create Forgot password flow in frontend
+** TODO Create Arena/Organizer Login Flow
+** TODO Create Arena/Organizer Dashboard
+** TODO Create Game Integrater System
+** TODO PUBG Mobile Organizer 
 
 ** TODO Improvise for mobile responsive UI - Simplify & Animate
 ** TODO Great Incoming user experience      
@@ -42,11 +43,6 @@
    
 ** TODO Use redux to manage tourney_data from tourney ???
 
-* Tournament Organizer
-** Tournament Dashboard Create all UIs without states
-** Basic tournament fixture generator based on no. of players
-** Tournament overview page for users
-   
 * TO FIX
 ** DONE running in production mode...! Where this coming from? FROM Mongoose connection
 ** DONE fix UIs components to a stable system
@@ -54,7 +50,7 @@
 ** DONE Fix routing problems in HomePage, create good Welcome User experience HomePage 
 ** DONE Fix UploadClip Delete Modal on Mobile Screens
 ** TODO Fix tourney matches crash
-** TODO Update Registrations to have list of names instead of User IDs   
+** TODO Update Registrations to have list of names instead of User IDs
    
 
 * TO RESEARCH
@@ -64,7 +60,8 @@
 
 * FUTURE IDEAS
 ** For Gamers
-   - Service to create, generate & download custom stream overlay with their stats for streaming.
+   - Service to create, generate & download custom stream overlay with their stats for streaming. (Marketplace or tool)
+   - Marketplace for selling PUBG Mobile ID
 
 ** For Organizers     
    - Service to create, generate & download custom stream overlay for tourneys with Live score updating, player stats, etc for streaming.
@@ -85,3 +82,11 @@
 ** TODO Upgrade Users Model with permissions for self, and ranking system   
 ** TODO Build Robust Khalti Verification API
 ** TODO Add Twilio Phone Number Verification
+
+* Should I Focus only on clip features? (TitTok for gaming)??
+Like posting a video would be to clip. For example, shroud clipped drdisrespected.
+More importantly shroud owned drdisrespected
+A platform for flexing of your gaming skills, to flex, to mock, etc.
+- Clipping others will start certain public polling system where there will be positive & negative reactions.
+- If the reaction is positive, the clipper (original poster) will get upvotes or certain flexable metrics to master, legendary, immortal ^^^.
+- But if the reaction is negative, the clipper (original clipper) will get downvotes loses their ratings to something like noob, beginner, amatuer.

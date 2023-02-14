@@ -19,7 +19,7 @@ router.post('/:id/register', makeExpressCallback(tourneyController.registerTourn
 router.post('/:id/register-verify', [khaltiRegistrationFeeVerify], makeExpressCallback(tourneyController.updateTourney));
 
 // for organizers
-router.post('/:id/register/:playerId', [isAuthorized()], makeExpressCallback(tourneyController.registerPlayerToTourney));
-router.delete('/:id/register/:playerId', [isAuthorized()], makeExpressCallback(tourneyController.deletePlayerFromTourney));
+router.post('/:id/register/:playerId', [isAuthorized], makeExpressCallback(tourneyController.registerPlayerToTourney));
+router.delete('/:id/register/:playerId', [isAuthorized], makeExpressCallback(tourneyController.deletePlayerFromTourney));
 
 module.exports = router;

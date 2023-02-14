@@ -33,4 +33,4 @@ module.exports = function makeUpdateUsser(clipAccess){
 
   };
 
-}
+};

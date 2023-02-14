@@ -21,14 +21,14 @@ module.exports = function makeUpdateRole(roleAccess){
       };
 
     } catch(error){
-      // console.log(error)
+      console.log(error);
 
       return {
         headers,
         statusCode: 400,
         body: {
           status: 'fail',
-          errorList: error.message.split(',')
+          errorList: error.message.split('\n')
         }
       };
     }

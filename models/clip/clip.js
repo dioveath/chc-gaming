@@ -10,7 +10,8 @@ var buildMakeClip = function (clipValidator) {
     likes,
     comments,
   } = {}) => {
-    var error = clipValidator({
+
+    clipValidator({
       title,
       author,
       privacy,
@@ -19,8 +20,6 @@ var buildMakeClip = function (clipValidator) {
       likes,
       comments,
     });
-
-    if (error instanceof Object) throw new Error(error.errorList);
 
     return Object.freeze({
       getTitle: () => title,

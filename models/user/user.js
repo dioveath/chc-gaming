@@ -22,7 +22,7 @@ var buildMakeUser = function(userValidator, bcrypt){
     following
   } = {}) => {
 
-    var error = userValidator({
+    userValidator({
       first_name,
       last_name,
       gaming_name,
@@ -42,8 +42,6 @@ var buildMakeUser = function(userValidator, bcrypt){
       followers,
       following      
     });
-
-    if(error instanceof Object) throw new Error(error.errorList);
 
     // create password hash
     const saltRounds = 5;

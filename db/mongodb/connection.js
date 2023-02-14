@@ -19,11 +19,11 @@ if(env === 'production') {
 
 // signal connection
 mongoose.connection.once('open', function() {
-  console.log('Connection has been made.');
+  console.log('Connection has been made.📶');
 }).on('error', function(error) {
-  console.log('Connect error.', error);
+  console.log('Connect error.❌', error);
 }).on('disconnected', function(){
-  console.log('Connection disconnected.');
+  console.log('Connection disconnected.👎');
 });
 
 

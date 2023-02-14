@@ -6,14 +6,10 @@ var buildMakeRole = function(roleValidator){
     permissions
   } = {}) => {
 
-    var error = roleValidator({
+    roleValidator({
       role_name,
       permissions
     });
-
-    if(error instanceof Object) throw new Error(error.errorList);
-
-    // TODO: permission syntax check
 
     return Object.freeze({
       getRoleName: () => role_name,

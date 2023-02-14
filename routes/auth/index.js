@@ -29,7 +29,7 @@ authRouter.post("/login", async (req, res) => {
         errorList: ["User or Password don't match!"],
       });
     }
-    const accessToken = issueJwt(user.id, user.roles);
+    const accessToken = issueJwt(user.id, user.roles, user.permissions);
 
     return res.status(200).send({
       status: "success",
@@ -47,7 +47,7 @@ authRouter.post("/login", async (req, res) => {
 authRouter.post("/register", async (req, res) => {
   try {
     const user = await UserAccess.addUser(req.body);
-    const accessToken = issueJwt(user.id, user.roles);
+    const accessToken = issueJwt(user.id, user.roles, user.permissions);
     return res.send({
       status: "success",
       userId: user.id,
@@ -62,15 +62,16 @@ authRouter.post("/register", async (req, res) => {
 });
 
 
-function issueJwt(userId, userRoles) {
+function issueJwt(userId, userRoles, userPermissions) {
   const tokenOptions = {
-    expiresIn: "1h",
+    expiresIn: "24h",
   };
   return jwt.sign(
     {
       sub: userId,
       iss: config.JWT_ISSUER,
       roles: userRoles,
+      permissions: userPermissions
     },
     config.JWT_SECRET,
     tokenOptions

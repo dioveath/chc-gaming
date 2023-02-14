@@ -13,6 +13,8 @@ const assert = require('assert');
 // tourneys
 // require('../models/tourney/index.test');
 
-
 // clip
-require('../models/clip/index.test');
+// require('../models/clip/index.test');
+
+// arena
+require('../models/arena/index.test');

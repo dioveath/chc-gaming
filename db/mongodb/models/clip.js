@@ -2,8 +2,8 @@ const mongoose = require('../connection');
 const uniqueValidator = require('mongoose-unique-validator');
 const paginate = require('mongoose-paginate-v2');
 
-var Schema = mongoose.Schema;
-var ClipSchema = new Schema({
+const Schema = mongoose.Schema;
+const ClipSchema = new Schema({
   title: String,
   author: Schema.Types.ObjectId,
   privacy: String,
@@ -15,6 +15,6 @@ var ClipSchema = new Schema({
 
 ClipSchema.plugin(uniqueValidator);
 ClipSchema.plugin(paginate);
-var Clip = mongoose.model('Clip', ClipSchema);
+const Clip = mongoose.model('Clip', ClipSchema);
 
 module.exports = Clip;

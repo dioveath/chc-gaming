@@ -10,7 +10,7 @@ const errorFormatter = require('./errorFormatter');
 
 function listClips(httpQuery){
   const { pageQuery, query } = httpQuery;
-  const queryObj = JSON.parse(query);
+  const queryObj = JSON.parse(query ?? "{}");
   
   let paginationParams = [
     queryObj,

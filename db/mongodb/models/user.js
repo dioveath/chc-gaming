@@ -1,8 +1,8 @@
 const mongoose = require('../connection');
 const uniqueValidator = require('mongoose-unique-validator');
 
-var Schema = mongoose.Schema;
-var UserSchema = new Schema({
+const Schema = mongoose.Schema;
+const UserSchema = new Schema({
   first_name: String,
   last_name: String,
   gaming_name: { type: String, unique: true },  
@@ -28,6 +28,6 @@ var UserSchema = new Schema({
 }, { timestamps: true });
 
 UserSchema.plugin(uniqueValidator);
-var User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 module.exports = User;

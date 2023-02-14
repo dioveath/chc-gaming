@@ -9,8 +9,8 @@ const userUpdateSchema = Joi.object().keys({
   address: Joi.string(),
   phone_number: Joi.string().length(10).pattern(/^[0-9]+$/),
   dob: Joi.date().min('1-1-1970').max('1-1-2020'), // MM-DD-YYYY
-  roles: Joi.array().items(Joi.objectId()),
-  permissions: Joi.array().items(Joi.string()),
+  roles: Joi.array().items(Joi.objectId()), // roles are collection of permissions
+  permissions: Joi.array().items(Joi.string()), // permissions are extra permissions that aren't available with roles
   profile_link: Joi.string().allow(''),
   cover_link: Joi.string().allow(''),
   social_links: Joi.array().items(Joi.object().keys({
