@@ -1,6 +1,0 @@
-const APIUrl = {
-  baseUrl: process.env.REACT_APP_API_CLIENT,
-  port: process.env.REACT_APP_API_CLIENT
-};
-
-export default APIUrl;
