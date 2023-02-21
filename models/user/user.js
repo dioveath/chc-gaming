@@ -1,12 +1,12 @@
 // Entity - User
 
-var buildMakeUser = function(userValidator, bcrypt){
+var buildMakeUser = function (userValidator, bcrypt) {
   return async ({
     first_name,
     last_name,
     gaming_name,
-    password,    
-    email, 
+    password,
+    email,
     address,
     phone_number,
     dob,
@@ -19,15 +19,14 @@ var buildMakeUser = function(userValidator, bcrypt){
     achievements,
     trophies,
     followers,
-    following
+    following,
   } = {}) => {
-
     userValidator({
       first_name,
       last_name,
       gaming_name,
-      password,      
-      email, 
+      password,
+      email,
       address,
       phone_number,
       dob,
@@ -40,7 +39,28 @@ var buildMakeUser = function(userValidator, bcrypt){
       achievements,
       trophies,
       followers,
-      following      
+      following,
+    });
+
+    await userValidator({
+      first_name,
+      last_name,
+      gaming_name,
+      password,
+      email,
+      phone_number,
+      address,
+      dob,
+      roles,
+      permissions,
+      profile_link,
+      cover_link,
+      social_links,
+      exp_points,
+      achievements,
+      trophies,
+      followers,
+      following,
     });
 
     // create password hash
@@ -48,7 +68,7 @@ var buildMakeUser = function(userValidator, bcrypt){
     var salt;
     var hashedPassword;
 
-    if(password != undefined) {
+    if (password != undefined) {
       salt = await bcrypt.genSalt(saltRounds);
       hashedPassword = await bcrypt.hash(password, salt);
     }
@@ -59,7 +79,7 @@ var buildMakeUser = function(userValidator, bcrypt){
       getGamingName: () => gaming_name,
       getPassword: () => hashedPassword,
       getEmail: () => email,
-      getPhoneNumber: () => phone_number,      
+      getPhoneNumber: () => phone_number,
       getAddress: () => address,
       getDOB: () => dob,
       getRoles: () => roles,
@@ -71,12 +91,9 @@ var buildMakeUser = function(userValidator, bcrypt){
       getAchievements: () => achievements,
       getTrophies: () => trophies,
       getFollowers: () => followers,
-      getFollowing: () => following
+      getFollowing: () => following,
     });
-    
   };
-
 };
-
 
 module.exports = buildMakeUser;

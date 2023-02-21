@@ -16,9 +16,8 @@ module.exports = async function isAuthorized(req, res, next) {
       errorList: ["Unauthenticated: You're not unauthenticated!"],
     });
 
-
   let isSuperAdmin = false;
-  permissions.concat(req.user.permissions);
+  permissions = permissions.concat(req.user.permissions);
 
   for (let i = 0; i < req.user.roles.length; i++) {
     try {

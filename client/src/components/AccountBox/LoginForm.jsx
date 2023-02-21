@@ -25,8 +25,7 @@ export function LoginForm() {
   const [ login, { isLoading } ] = useLoginMutation();
   const [errorMsg, setErrorMsg] = useState('');
 
-
-  useEffect(() => {
+    useEffect(() => {
     setErrorMsg('');
   }, [email.current?.value, password.current?.value]);
 

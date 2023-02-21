@@ -46,19 +46,24 @@ filter: brightness(1.3);
 
 
 export const ErrorText = styled.span`
-// color: white;
-color: rgb(183,27,27);
+line-height: 0.75rem;
+color: white;
+// color: rgb(183,27,27);
 font-size: 10px;
 `;
 
 export const ErrorContainer = styled.div`
+padding: 5px 5px;
 display: flex;
+align-items: center;
 width: auto;
+background-color: rgb(183,27,27);
+border-radius: 5px;
 ` ;
 
 export const ErrorMessage = (props) => {
   return (
-    <div className='flex flex-col gap-2 my-2'>
+    <div className='flex flex-col my-1 gap-[2px]'>
       { props.errorMessage && props.errorMessage.split('\n').map((em, idx) =>
         <ErrorContainer key={idx}>
           <IconContext.Provider value={{ color: "white"}}>

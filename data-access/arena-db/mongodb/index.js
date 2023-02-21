@@ -7,7 +7,7 @@ const errorFormatter = require('./errorFormatter');
 function listArenas(httpQuery){
   const { pageQuery, query } = httpQuery;
   const queryObj = JSON.parse(query ?? "{}");
-  
+
   let paginationParams = [
     queryObj,
     typeof pageQuery === "string" ? JSON.parse(pageQuery ?? "{}") : pageQuery,
@@ -83,4 +83,3 @@ module.exports = {
   deleteArena, 
   dropArenas
 };
-

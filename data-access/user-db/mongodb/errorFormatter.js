@@ -6,7 +6,6 @@ module.exports = (error) => {
 
     let props = Object.keys(error.errors);
     let messages = [];
-    console.log(props);
 
     for (let prop of props) {
       // error.errors.message gives us: Error, 'gaming_name' to be unique

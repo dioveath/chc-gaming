@@ -66,11 +66,16 @@ export function RegisterForm(props){
       }
 
     } catch (e) {
-      
-      dispatch(error({
-        errorMessages: [e.message]
-      }));
-
+      if(e.response?.data?.errorList) {
+        console.log(e.response.data.errorList);
+        dispatch(error({
+          errorMessages: e.response.data.errorList
+        }));
+      } else {
+        dispatch(error({
+          errorMessages: e.message
+        }))
+      }
     }
 
   };
@@ -94,11 +99,9 @@ export function RegisterForm(props){
       <Input type="password" placeholder="Password" ref={password}/>
       <Input type="password" placeholder="Confirm Password" ref={confirmPassword}/>
       <Marginer vertical="5px"/>        
-      {
-        reg.isError && reg.errorMessages.map((message, i) => {
-          return <ErrorMessage errorMessage={message} key={i}/>;
-        })
-      }        
+
+      { reg.isError && <ErrorMessage errorMessage={reg.errorMessages.join('\n')}/>}
+
       <Marginer vertical="5px"/>
       <SubmitButton type="submit"> Register </SubmitButton>
       <Marginer vertical="10px"/>        

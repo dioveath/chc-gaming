@@ -25,7 +25,7 @@ function findUserById(id){
 async function addUser(userInfo){
   // defaults
   userInfo.roles = ['628a15b4697db52918b69f1c']; // gamer role
-  userInfo.permissions = [];
+  userInfo.permissions = ['read:users:all', 'update:users:self', 'read:clips:all', 'read:tourneys:all'];
   userInfo.profile_link = '';
   userInfo.cover_link = '';
   userInfo.exp_points = 0;

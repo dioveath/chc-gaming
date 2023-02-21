@@ -16,7 +16,6 @@ module.exports = function makeCreateUser(userAccess){
           };
         } catch(error){
           // TODO: Error Logging
-          console.log(error);
 
           return {
             headers,

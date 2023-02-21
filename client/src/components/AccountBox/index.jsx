@@ -17,7 +17,7 @@ import Logout from "./Logout";
 import { AnimatePresence, motion } from "framer-motion";
 
 const BoxContainer = styled(motion.div)`
-  min-width: 330px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   border-radius: 19px;
@@ -27,8 +27,12 @@ const BoxContainer = styled(motion.div)`
   overflow: hidden;
 
   @media only screen and (min-width: 460px) {
-    min-width: 400px;
+    width: 400px;
   }
+
+  @media only screen and (min-width: 600px) {
+    width: 450px;
+  }  
 
   ${tw`
     transition-all

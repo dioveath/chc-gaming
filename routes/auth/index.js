@@ -20,7 +20,6 @@ authRouter.post("/login", async (req, res) => {
 
   const user = await UserAccess.findUserBy("email", req.body.email);
 
-
   if (user) {
     const match = await bcrypt.compare(req.body.password, user.password);
     if (!match) {
@@ -38,7 +37,7 @@ authRouter.post("/login", async (req, res) => {
     });
   }
 
-  return res.send({
+  return res.status(404).send({
     status: "fail",
     errorList: ["User not found with email, " + req.body.email],
   });
@@ -48,13 +47,14 @@ authRouter.post("/register", async (req, res) => {
   try {
     const user = await UserAccess.addUser(req.body);
     const accessToken = issueJwt(user.id, user.roles, user.permissions);
-    return res.send({
+    return res.status(201).send({
       status: "success",
       userId: user.id,
       accessToken: accessToken,
     });
   } catch (error) {
-    return res.send({
+    console.log(error);
+    return res.status(400).send({
       status: "fail",
       errorList: error.message.split(","),
     });
