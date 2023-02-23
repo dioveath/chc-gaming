@@ -1,10 +1,12 @@
 import { apiSlice } from "../../redux/ApiSlice";
 
 export const arenaApi = apiSlice.injectEndpoints({
+
   endpoints: (builder) => ({
     getArena: builder.query({
-      query: (id) => `arenas/${id}`,
+      query: (id) => `api/v1/arenas/${id}`,
       providesTags: (_result, _error, id) => [{ type: "Arenas", id }],
+      transformResponse: (res) => res.arena,
     }),
     getArenas: builder.query({
       query: (queries) => {
@@ -16,7 +18,7 @@ export const arenaApi = apiSlice.injectEndpoints({
           : undefined;
 
         return {
-          url: `arenas`,
+          url: `api/v1/arenas`,
           params,
           providesTags: (result, _error, _query) =>
             result?.arenas?.arenas

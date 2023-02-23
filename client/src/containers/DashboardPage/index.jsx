@@ -2,28 +2,28 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 import { useSelector } from "react-redux";
-import { useGetUserQuery } from '../../redux/UserApi';
+import { useGetUserQuery } from "../../redux/UserApi";
 
 import LeftSideBar from "./LeftSideBar";
 import Dashboard from "./Dashboard";
 import FriendsPage from "./Friends";
 import ClanPage from "./Clan";
-import ExplorePage from './Explore';
-import TournamentsPage from './Tournaments';
-import SettingsPage from './Settings';
-import Logout from '../../components/AccountBox/Logout';
+import ExplorePage from "./Explore";
+import TournamentsPage from "./Tournaments";
+import SettingsPage from "./Settings";
+import Logout from "../../components/AccountBox/Logout";
 
 import { FlexContainer } from "../../components/base";
 import { Text } from "../../components/Text";
 
 import BounceLoader from "react-spinners/BounceLoader";
 import { MdOutlineError } from "react-icons/md";
-import { IoIosPeople } from 'react-icons/io';
+import { IoIosPeople } from "react-icons/io";
 import { FcLandscape } from "react-icons/fc";
 import { GiCastle, GiCheckboxTree } from "react-icons/gi";
 import { MdDashboard } from "react-icons/md";
 import { RiLogoutCircleLine } from "react-icons/ri";
-import { IoSettings } from 'react-icons/io5';
+import { IoSettings } from "react-icons/io5";
 
 const PageContainer = styled.div`
   background: radial-gradient(#1d0207, #0d0000);
@@ -49,9 +49,9 @@ const MenuItems = [
   },
   {
     name: "Tourneys",
-    icon: <GiCheckboxTree/>,
-    content: <TournamentsPage/>
-  },    
+    icon: <GiCheckboxTree />,
+    content: <TournamentsPage />,
+  },
   {
     name: "Your Clan",
     icon: <GiCastle />,
@@ -64,25 +64,24 @@ const MenuItems = [
   },
   {
     name: "Settings",
-    icon: <IoSettings/>,
-    content: <SettingsPage/>
+    icon: <IoSettings />,
+    content: <SettingsPage />,
   },
   {
     name: "Log out",
     icon: <RiLogoutCircleLine />,
-    content: <Logout/>
+    content: <Logout />,
   },
 ];
 
 const ContentContainer = styled.div`
-${tw`
+  ${tw`
 max-w-2xl
 w-full
 h-full
 px-2
 `}
 `;
-
 
 export default function DashboardPage() {
   const { dashboard } = useSelector((state) => state.userDashboard);
@@ -124,11 +123,9 @@ export default function DashboardPage() {
 
   return (
     <>
-      <LeftSideBar menuItems={MenuItems} />      
+      <LeftSideBar menuItems={MenuItems} />
       <PageContainer>
-	<ContentContainer>
-          {renderContent}
-        </ContentContainer>
+        <ContentContainer>{renderContent}</ContentContainer>
       </PageContainer>
     </>
   );

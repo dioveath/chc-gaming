@@ -4,7 +4,7 @@ import tw from "twin.macro";
 
 import Button from "../Button";
 import { FlexContainer } from "../base";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 const ModalContainer = styled(motion.div).attrs((props) => ({
   className: props.className,
@@ -73,7 +73,7 @@ overflow-scroll
 `;
 
 export const ModalFooter = styled.div`
-${tw`
+  ${tw`
 w-full
 p-4
 flex
@@ -85,30 +85,31 @@ gap-1
 `;
 
 export function Modal({ isOpen, onClose, children }) {
+  if(!isOpen) return <></>
   return (
     <>
-      <ModalContainer className={!isOpen && "hidden"}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5 }}>
+      <ModalContainer
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         {children}
       </ModalContainer>
-      <ModalOverlay onClick={onClose} className={!isOpen && "hidden"} />
+      <ModalOverlay onClick={onClose}/>
     </>
   );
 }
 
 export const useModal = () => {
   const [isOpen, setOpen] = useState(false);
-
   const onOpen = () => {
     setOpen(true);
   };
 
   const onClose = (e) => {
-    // e.preventDefault();
-    // e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
     setOpen(false);
   };
 

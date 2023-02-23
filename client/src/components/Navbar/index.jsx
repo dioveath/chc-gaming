@@ -1,38 +1,39 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import tw from 'twin.macro';
+import React from "react";
+import styled, { css } from "styled-components";
+import tw from "twin.macro";
 
-import { NavContainer, LogoContainer, NavItems, UserItems }  from './NavbarElements';
-import { Logo } from '../Logo';
-import { useMediaQuery } from 'react-responsive';
-import { SCREENS } from '../Responsive';
-
-
+import {
+  NavContainer,
+  LogoContainer,
+  NavItems,
+  UserItems,
+} from "./NavbarElements";
+import { Logo } from "../Logo";
+import { useMediaQuery } from "react-responsive";
+import { SCREENS } from "../Responsive";
 
 const NavbarContainer = styled.nav`
-    background-color: rgba(148, 27, 0, 0.6);
-    min-height: 60px;
-    z-index: 100;
+  background-color: rgba(148, 27, 0, 0.6);
+  min-height: 60px;
+  z-index: 100;
+  position: sticky;
+
+  top: 0;
+  left: 0;
+
+  @media only screen and (max-width: 640px) {
     position: sticky;
+  }
 
-    top: 0;
-    left: 0;
-
-@media only screen and (max-width: 640px) {
-position: sticky;
-}
-
-    ${tw`
+  ${tw`
         w-full
         flex
         flex-row
-items-center
-sm:px-3
-
+        items-center
+        sm:px-3
         lg:px-12
         justify-between
     `}
-
 `;
 
 const Navbar = (props) => {
@@ -40,17 +41,15 @@ const Navbar = (props) => {
   const isTablet = useMediaQuery({ maxWidth: SCREENS.md });
 
   return (
-      <NavbarContainer>
-        <NavContainer>
-          <LogoContainer>
-            { isTablet ? <Logo size="30px"/> : <Logo/>}
-          </LogoContainer>
-          <NavItems/>
-        </NavContainer>
-        <NavContainer>
-          { !isMobile && <UserItems/>}
-        </NavContainer>
-      </NavbarContainer>
+    <NavbarContainer>
+      <NavContainer>
+        <LogoContainer>
+          {isTablet ? <Logo size="30px" /> : <Logo />}
+        </LogoContainer>
+        <NavItems />
+      </NavContainer>
+      <NavContainer>{!isMobile && <UserItems />}</NavContainer>
+    </NavbarContainer>
   );
 };
 

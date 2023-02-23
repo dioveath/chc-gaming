@@ -27,8 +27,9 @@ export default configureStore({
   },
 
   middleware: (getDefaultMiddleware) =>
-  getDefaultMiddleware()
+    getDefaultMiddleware()
       .concat(clipApi.middleware)
       .concat(userApi.middleware)
-    .concat(tourneyApi.middleware).concat(apiSlice.middleware),
+      .concat(tourneyApi.middleware)
+      .concat(apiSlice.middleware),
 });

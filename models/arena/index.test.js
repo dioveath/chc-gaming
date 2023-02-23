@@ -10,13 +10,14 @@ describe("makeArena", () => {
   it("test makeArena makes a valid arena", (done) => {
     const validArenaInfoPayload = {
       name: "Charicha Gaming",
-      handle: "charichgaming"
+      handle: "charichgaming",
+      owner: "63f4fea2bce1c84fa0b86111"
     };
 
     makeArena(validArenaInfoPayload).then(result => {
-      console.log(result);
       expect(result).to.have.keys([
         "name",
+        "owner",
         "handle",
         "category",
         "appearance",

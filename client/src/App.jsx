@@ -22,6 +22,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import ArenaPage from "./containers/Arena";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,7 +43,9 @@ function App() {
           
           <Route element={<RequireAuth/>}>
             <Route path="/dashboard" element={<DashboardPage/>}/>
-            <Route path="/organizer" element={<OrganizerDashboardPage/>}/>
+            <Route path="/arena/:id" element={<ArenaPage/>}/>
+            <Route path="/arena/:id/:panel" element={<ArenaPage/>}/>            
+            <Route path="/organizer/:id/dashboard" element={<OrganizerDashboardPage/>}/>
             <Route path="/arena/register" element={<ArenaRegister/>}/>
             <Route path="/organizer/tourneys/:tourneyId" element={<TourneyDashboardPage/>}/>
             <Route path="/organizer/tourney/:tourneyId" element={<TourneyDashboardPage/>}/>
