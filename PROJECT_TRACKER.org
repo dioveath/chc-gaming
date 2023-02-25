@@ -51,11 +51,12 @@
 ** DONE Fix UploadClip Delete Modal on Mobile Screens
 ** TODO Fix tourney matches crash
 ** TODO Update Registrations to have list of names instead of User IDs
-   
+
 
 * TO RESEARCH
 ** DELEGATED Needs refactoring permissions, role system
 ** DONE Create a flexible UI component system for further UI works (Create kind of like Chakra UI)   
+** TODO Rate Limiter for API
 
 
 * FUTURE IDEAS
@@ -90,3 +91,5 @@ A platform for flexing of your gaming skills, to flex, to mock, etc.
 - Clipping others will start certain public polling system where there will be positive & negative reactions.
 - If the reaction is positive, the clipper (original poster) will get upvotes or certain flexable metrics to master, legendary, immortal ^^^.
 - But if the reaction is negative, the clipper (original clipper) will get downvotes loses their ratings to something like noob, beginner, amatuer.
+
+ 

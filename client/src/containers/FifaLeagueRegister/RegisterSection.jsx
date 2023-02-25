@@ -18,7 +18,7 @@ import APIUrl from '../../config/config';
 import RulesSection from './RulesSection';
 import ScheduleSection from './ScheduleSection';
 
-import { Tab, TabPanel } from '../../components/Tab';
+import { BottomTab, BottomTabPanel } from '../../components/BottomTab';
 
 const RegisterContainer = styled.div`
   width: 100%;
@@ -177,15 +177,15 @@ export function RegisterFifaSection(){
         <TitleContainer>
           <TitleText> { selectedTourney.title } </TitleText>
         </TitleContainer>
-        <Tab>
-          <TabPanel name='Overview'>
+        <BottomTab>
+          <BottomTabPanel name='Overview'>
             <RulesSection/>
-          </TabPanel>
-          <TabPanel name='Schedule'>
+          </BottomTabPanel>
+          <BottomTabPanel name='Schedule'>
             <ScheduleSection/>
-          </TabPanel>
-          <TabPanel name='Prizes'> Prizes </TabPanel>          
-        </Tab>
+          </BottomTabPanel>
+          <BottomTabPanel name='Prizes'> Prizes </BottomTabPanel>          
+        </BottomTab>
 
         <TitleContainer>
           <TitleText> REGISTRATION </TitleText>

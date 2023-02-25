@@ -119,14 +119,17 @@ From Manager to Admin, we have got ranks for all.
 	`read:users:6278f1102a76784ab87b45fe`
 
 
-
 ## Matches
 - A Match Resource Represents a single match. 
 
 ## Tourneys
 - A Tourney Resource Represents a single Tourney.
+- Tourney can choose available format for doing knockout, league, group-staged or combination of all.
+- Tourney can be customized through logo, banners, type of format, prize distribution, sponsorships.
+- Anyone will be able to share as well as integrate tourney info through iframe.
 
-
+# Custom Game Inegration System
+In the near future, we'll build a system that would be helpful for game developers to integrate their games within our Gaming ecosystem.
 
 ## Getting Started
 

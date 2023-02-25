@@ -1,4 +1,4 @@
-import { Tab, TabPanel } from '../../../components/Tab';
+import { BottomTab, BottomTabPanel } from '../../../components/BottomTab';
 import { Text } from '../../../components/Text';
 import HomePanel from './HomePanel';
 import ClipsPanel from './ClipsPanel';
@@ -57,12 +57,12 @@ const PanelItems = [
 export default function Dashboard(){
   return (
     <MainSectionContainer>
-      <Tab>
-        { PanelItems.map((p) => <TabPanel key={p.name} name={p.name} headerIcon={p.headerIcon}>
+      <BottomTab>
+        { PanelItems.map((p) => <BottomTabPanel key={p.name} name={p.name} headerIcon={p.headerIcon}>
                                   {p.panel}
                                   <Marginer vertical='20rem'/>
-                                </TabPanel>)}
-      </Tab>
+                                </BottomTabPanel>)}
+      </BottomTab>
     </MainSectionContainer>
   );
 }
