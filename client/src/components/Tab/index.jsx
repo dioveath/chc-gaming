@@ -28,7 +28,7 @@ export default function Tab({ children, initTab, onChange }) {
 
   return (
     <>
-      <div className="text-white mt-4">
+      <div className="text-white mt-4 mb-4">
         <ul className="flex gap-4 font-semibold relative">
           <div className="absolute bottom-0 w-full mt-2 h-[1px] bg-gray-700"></div>
           {Object.entries(headers).map(([key, value]) => (
@@ -49,6 +49,7 @@ export default function Tab({ children, initTab, onChange }) {
         </ul>
       </div>
       {headers[activeTab]?.element}
+      <div className="h-10"/>
     </>
   );
 }

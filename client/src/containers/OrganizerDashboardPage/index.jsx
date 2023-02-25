@@ -26,7 +26,7 @@ const ContentContainer = styled.div`
   ${tw`
 w-full
 h-full
-p-2
+px-2
 flex
 justify-center
 `}

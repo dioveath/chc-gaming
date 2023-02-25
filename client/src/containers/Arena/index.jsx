@@ -8,7 +8,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 import coverDefault from "../../assets/images/fifa_league_poster.png";
 import logoDefault from "../../assets/images/logo_profile.png";
 import { AiFillCamera } from "react-icons/ai";
-import Tab, { TabItem } from '../../components/Tab';
+import Tab, { TabItem } from "../../components/Tab";
 import HomePanel from "./Panels/Home";
 import AboutPanel from "./Panels/About";
 import NewsPanel from "./Panels/News";
@@ -24,7 +24,7 @@ export default function ArenaPage() {
 
   const link = params["*"];
   const isOwner = !!link?.split("/")[0];
-  const panel = params.panel ?? 'home';
+  const panel = params.panel ?? "home";
 
   const computeLink = link?.split("/");
   computeLink.pop();
@@ -48,33 +48,37 @@ export default function ArenaPage() {
 
   return (
     <div className="w-full h-full">
-      {isLoading && <Skeleton height={200} />}
-      <div>
-        {!isFetching && (
-          <div className="relative">
-            {isOwner && (
-              <button className="absolute top-0 right-0 bg-slate-700 text-white flex items-center gap-3 p-2 rounded-md m-2">
-                <AiFillCamera className="flex " /> Upload Cover
-              </button>
+      {panel === "home" && (
+        <>
+          {isLoading && <Skeleton height={200} />}
+          <div>
+            {!isFetching && (
+              <div className="relative">
+                {isOwner && (
+                  <button className="absolute top-0 right-0 bg-slate-700 text-white flex items-center gap-3 p-2 rounded-md m-2">
+                    <AiFillCamera className="flex " /> Upload Cover
+                  </button>
+                )}
+                <img
+                  src={coverDefault}
+                  alt={data.name + " Cover Photo"}
+                  className="w-full h-[450px] object-cover overflow-clip"
+                />
+              </div>
             )}
-            <img
-              src={coverDefault}
-              alt={data.name + " Cover Photo"}
-              className="w-full h-[450px] object-cover overflow-clip"
-            />
           </div>
-        )}
-      </div>
+        </>
+      )}
 
-      <div className="px-2 md:px-4 lg:px-20 xl:px-52 mt-2">
+      <div className="px-2 md:px-4 lg:px-20 xl:px-52 max-w-[1920px] mt-2">
         <div className="flex flex-wrap items-center justify-center md:justify-between gap-2 ">
           <div className="flex items-center gap-2">
             <div className="w-20 h-20 rounded-full overflow-clip bg-gradient-to-b from-transparent to-black">
               {!isFetching && (
                 <div className="relative">
-                  { isOwner && (
+                  {isOwner && (
                     <button className="absolute bottom-0 right-0 bg-slate-700/70 text-white items-center p-2 rounded-full m-1">
-                      <AiFillCamera/>
+                      <AiFillCamera />
                     </button>
                   )}
                   <img
@@ -96,14 +100,16 @@ export default function ArenaPage() {
           </div>
         </div>
 
-        <Tab initTab={panel} onChange={(newTab) => navigate(`/${baseLink}/${newTab}`)}>
-          <TabItem name='Home' element={<HomePanel/>} />
-          <TabItem name='News' element={<NewsPanel/>} />          
-          <TabItem name='Tournaments' element={<TournamentsPanel/>} />
-          <TabItem name='Leaderboards' element={<LeaderboardsPanel/>} />
-          <TabItem name='About' element={<AboutPanel/>} />          
+        <Tab
+          initTab={panel}
+          onChange={(newTab) => navigate(`/${baseLink}/${newTab}`)}
+        >
+          <TabItem name="Home" element={<HomePanel />} />
+          <TabItem name="News" element={<NewsPanel />} />
+          <TabItem name="Tournaments" element={<TournamentsPanel />} />
+          <TabItem name="Leaderboards" element={<LeaderboardsPanel />} />
+          <TabItem name="About" element={<AboutPanel />} />
         </Tab>
-
       </div>
     </div>
   );

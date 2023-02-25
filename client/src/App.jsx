@@ -45,7 +45,7 @@ function App() {
             <Route path="/dashboard" element={<DashboardPage/>}/>
             <Route path="/arena/:id" element={<ArenaPage/>}/>
             <Route path="/arena/:id/:panel" element={<ArenaPage/>}/>            
-            <Route path="/organizer/:id/dashboard" element={<OrganizerDashboardPage/>}/>
+            <Route path="/organizer/:id/:panel" element={<OrganizerDashboardPage/>}/>
             <Route path="/arena/register" element={<ArenaRegister/>}/>
             <Route path="/organizer/tourneys/:tourneyId" element={<TourneyDashboardPage/>}/>
             <Route path="/organizer/tourney/:tourneyId" element={<TourneyDashboardPage/>}/>
