@@ -11,7 +11,7 @@
 ** DONE Combine Frontend with Backend
 ** DONE Buy Domain and Hosting and deploy the Site. (Used heroku free)
 
-* User / Players
+* Frontend
 ** DONE Needs to get his Upcoming Matches
 ** DONE Compress video files
 ** DONE Clips (Like) feature
@@ -28,23 +28,22 @@
 ** DONE Integrate Forgot password in backend
 ** DONE Create Forgot password flow in frontend
 ** DONE Create Arena/Organizer Register Flow
-** TODO Create Arena/Organizer Dashboard
-** TODO Create Game Integrater System
-** TODO PUBG Mobile Organizer 
+** DONE Create Arena/Organizer Dashboard
 
-** TODO Improvise for mobile responsive UI - Simplify & Animate
-** TODO Great Incoming user experience      
-** TODO Create a Profile Page showing achievements & all
+** Great Incoming user experience / Refactor UI/UX for whole system (See Figma for reference)
+*** TODO Create a base layout responsive ui/ux and for handling swipes
+*** TODO Improvise for mobile responsive UI - Simplify & Animate
+*** TODO Create a landing dashboard with background video integrated
+*** TODO Build a simple UI/UX for shorts
+*** TODO Clips share system seo optimized for facebook share
 
-** TODO Create a TourneyView for users
+** TODO Create Game Integrater System (0.0.1)
+*** TODO PUBG Mobile Organizer
+*** TODO Rank System,
 
-** TODO Rank System,   
-** TODO Clips share system seo optimized for facebook share
-   
-** TODO Use redux to manage tourney_data from tourney ???
 
 * TO FIX
-** DONE running in production mode...! Where this coming from? FROM Mongoose connection
+** DONE running in production mode...! Where this coming from? Ans - FROM Mongoose connection
 ** DONE fix UIs components to a stable system
 ** DONE Change Your Matches to Matches
 ** DONE Fix routing problems in HomePage, create good Welcome User experience HomePage 
@@ -56,6 +55,7 @@
 * TO RESEARCH
 ** DELEGATED Needs refactoring permissions, role system
 ** DONE Create a flexible UI component system for further UI works (Create kind of like Chakra UI)   
+** TODO How to support for international players and regions? (Internationalization)
 ** TODO Rate Limiter for API
 
 
@@ -67,7 +67,7 @@
 ** For Organizers     
    - Service to create, generate & download custom stream overlay for tourneys with Live score updating, player stats, etc for streaming.
    
-* TODOS
+* TODOS BACKEND
 ** DONE Upgrade Commander to Support multiple commands
 ** DONE Use Joi Validator for the Model
 ** DONE Create data-access all use-cases for Users Model    
@@ -76,10 +76,7 @@
 ** DONE [#C] Build More robust Validation System for User.
 ** DONE [#B] Add models - Match, Tourney
 ** DONE Design a Frontend in Fig  ma - Ref iglnetwork.com | esports.pubgmobile.com
-** DONE Build stateless UIs for Tourney Dashboard
-** DONE Build stateless UIs for User Dashboard
 ** TODO Upgrade Tournament Organizer with tournament fixture maker
-** TODO Make Stateful Tournament Organizer
 ** TODO Upgrade Users Model with permissions for self, and ranking system   
 ** TODO Build Robust Khalti Verification API
 ** TODO Add Twilio Phone Number Verification

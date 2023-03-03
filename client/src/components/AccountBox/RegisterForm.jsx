@@ -55,6 +55,7 @@ export function RegisterForm(props){
                                      );
 
       if(response.data.status === 'success') {
+        dispatch(complete());
         dispatch(setCredentials({
           accessToken: response.data.accessToken,
           userId: response.data.userId
@@ -100,10 +101,10 @@ export function RegisterForm(props){
       <Input type="password" placeholder="Confirm Password" ref={confirmPassword}/>
       <Marginer vertical="5px"/>        
 
-      { reg.isError && <ErrorMessage errorMessage={reg.errorMessages.join('\n')}/>}
+      { reg.isError && <ErrorMessage errorMessage={typeof reg.errorMessages === 'string' ? reg.errorMessages : reg.errorMessages.join('\n')}/>}
 
       <Marginer vertical="5px"/>
-      <SubmitButton type="submit"> Register </SubmitButton>
+      <SubmitButton type="submit"> {reg.isPending ? "Registering" : "Register"} </SubmitButton>
       <Marginer vertical="10px"/>        
       <MutedLink> Already have an Account? <BoldLink to="/auth/login"> Login Here! </BoldLink> </MutedLink>
     </FormContainer>
