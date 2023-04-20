@@ -1,9 +1,13 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 
 import { useSelector } from "react-redux";
 import { useGetUserQuery } from "../../redux/UserApi";
 
+import Navbar from "../../components/Navbar";
+import ArenaBar from "../../components/ArenaBar";
+import RightSideBar from "../../components/RightSideBar";
 import LeftSideBar from "./LeftSideBar";
 import Dashboard from "./Dashboard";
 import FriendsPage from "./Friends";
@@ -24,6 +28,7 @@ import { GiCastle, GiCheckboxTree } from "react-icons/gi";
 import { MdDashboard } from "react-icons/md";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { IoSettings } from "react-icons/io5";
+import HomePage from "../HomePage";
 
 const PageContainer = styled.div`
   background: radial-gradient(#1d0207, #0d0000);
@@ -88,19 +93,14 @@ export default function DashboardPage() {
   const { userId } = useSelector((state) => state.auth);
   const { isLoading, error } = useGetUserQuery(userId);
 
-  const renderContent = MenuItems.find(
-    (menu) => menu.name === dashboard.activeMenu
-  ).content;
+  const [openRightSidebar, setOpenRightSidebar] = useState(false);
+  const contentWidth = openRightSidebar ? "w-[calc((100%-4rem)*8/10)]" : "w-full";
+
+  const renderContent = MenuItems.find((menu) => menu.name === dashboard.activeMenu).content;
 
   if (error)
     return (
-      <FlexContainer
-        bg={"radial-gradient(#1D0207, #0D0000)"}
-        w="100vw"
-        h="100vh"
-        justify="center"
-        align="center"
-      >
+      <FlexContainer bg={"radial-gradient(#1D0207, #0D0000)"} w="100vw" h="100vh" justify="center" align="center">
         <MdOutlineError size="4rem" color="white" />
         <Text fontSize="1.4rem" fontWeight="600" color="white">
           Server Error | 500
@@ -110,23 +110,39 @@ export default function DashboardPage() {
 
   if (isLoading)
     return (
-      <FlexContainer
-        bg={"radial-gradient(#1D0207, #0D0000)"}
-        w="100vw"
-        h="100vh"
-        justify="center"
-        align="center"
-      >
+      <FlexContainer bg={"radial-gradient(#1D0207, #0D0000)"} w="100vw" h="100vh" justify="center" align="center">
         <BounceLoader color="red" />
       </FlexContainer>
     );
 
   return (
-    <>
-      <LeftSideBar menuItems={MenuItems} />
-      <PageContainer>
-        <ContentContainer>{renderContent}</ContentContainer>
-      </PageContainer>
-    </>
+    <main className="h-screen">
+      <Navbar />
+
+      <div className="flex flex-row h-[calc((100%-56px))]">
+        <ArenaBar />
+        <div className={`${contentWidth} h-full overflow-auto flex justify-center`}>
+          <HomePage />
+        </div>
+        {/* <aside className="w-[calc((100%-4rem)*2/10)]  bg-pink-300 flex justify-center items-center">
+        </aside> */}
+      </div>
+
+      {/* 
+        <div className="h-screen overflow-auto w-full">
+          <div className="h-[56px] bg-transparent"></div>
+          <div className="w-full flex justify-center">
+            <HomePage />
+          </div>
+          
+        </div>
+
+        <RightSideBar open={openRightSidebar} setOpen={setOpenRightSidebar} /> */}
+
+      {/* <LeftSideBar menuItems={MenuItems} /> */}
+      {/* <PageContainer> */}
+      {/* <ContentContainer>{renderContent}</ContentContainer> */}
+      {/* </PageContainer> */}
+    </main>
   );
 }

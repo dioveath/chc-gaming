@@ -13,11 +13,10 @@ import { useMediaQuery } from "react-responsive";
 import { SCREENS } from "../Responsive";
 
 const NavbarContainer = styled.nav`
-  background-color: rgba(148, 27, 0, 0.6);
-  min-height: 60px;
-  z-index: 100;
-  position: sticky;
-
+  background-color: rgba(148, 27, 0, 0.7);
+  height: 56px;
+  z-index: 9999999;
+  
   top: 0;
   left: 0;
 
@@ -44,7 +43,7 @@ const Navbar = (props) => {
     <NavbarContainer>
       <NavContainer>
         <LogoContainer>
-          {isTablet ? <Logo size="30px" /> : <Logo />}
+          {isTablet ? <Logo size="20px" /> : <Logo />}
         </LogoContainer>
         <NavItems />
       </NavContainer>

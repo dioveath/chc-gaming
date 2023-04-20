@@ -16,7 +16,7 @@ ${tw`
 min-w-full
 pt-5
 pb-7
-px-6
+md:px-6
 `}
 
 `;

@@ -26,6 +26,7 @@ export default function ForgotPassword () {
       toast.success(`Email sent successfully to ${validatedEmail}!`);
       setDisabled(true);
     } catch(e){
+      console.log(e);
       setErrorMsg(e.response.data.errorList.join(', '));
     } finally {
       setLoading(false);

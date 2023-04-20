@@ -7,7 +7,8 @@ module.exports = {
       colors: {
         'cornellred': '#b71b1b',
         'woodred': '#220303',
-        'primary': '#1D0207',
+        'primary': '#941B00',
+        'secondary': '#1D0207',
         'darkred': '#0D0000',        
       }
     },

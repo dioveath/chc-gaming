@@ -6,8 +6,9 @@
 
 
 *::-webkit-scrollbar {
-    width: 0.1em;
-    height: 0.1em
+    width: 0.2em;
+    height: 0.3em;
+    border-radius: 5px;    
 }
  
 *::-webkit-scrollbar-track {
