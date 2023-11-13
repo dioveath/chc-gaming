@@ -40,7 +40,6 @@ resetRouter.get("/:email", async (req, res) => {
         clientId: config.googleClientId,
         clientSecret: config.googleClientSecret,
         refresh_token: config.googleRefreshToken,
-        accessToken: token
       }
     });
 
@@ -69,7 +68,8 @@ resetRouter.get("/:email", async (req, res) => {
       message: `Mail sent successfully to '${req.params.email}' with a reset link!`
     });
   } catch (e) {
-    return res.status(400).send({
+    console.log(e);
+    return res.status(500).send({
       status: "fail",
       errorList: [e.message],
     });    

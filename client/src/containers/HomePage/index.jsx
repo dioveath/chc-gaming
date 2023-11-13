@@ -4,6 +4,9 @@ import ClipViewCard from "../../components/Clips/ClipViewCard";
 import Footer from "../../components/Footer";
 import TourneyCard from "../../components/Tourneys/TourneyCard";
 import ClipCard from "../DashboardPage/Dashboard/ClipsPanel/ClipCard";
+import FeaturedArenas from "./sections/FeaturedArenas";
+import TourneySection from './sections/TourneySection';
+import TrendingClips from "./sections/TrendingClips";
 
 export default function HomePage() {
   // get the premium video id from the backend
@@ -29,37 +32,19 @@ export default function HomePage() {
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-secondary/20 via-secondary/80 to-secondary"></div>
       </div>
 
-      <div className="max-w-[1024px] mx-auto overflow-clip">
+      <div className="max-w-[1024px] mx-auto overflow-clip px-2">
         {/* Featured Leagues */}
         <div className="mt-4">
-          <h2 className="text-white font-bold text-xl mb-4">Trending Tourneys</h2>
-          <div className="flex items-center gap-4 overflow-x-scroll">
-            <TourneyCard />
-            <TourneyCard />
-            <TourneyCard />
-          </div>
+          <TourneySection/>
         </div>
 
         <div className="mt-4">
-          <h2 className="text-white font-bold text-xl mb-4">Trending Clips</h2>
-          <div className="flex items-center gap-4 overflow-x-scroll p-4">
-            <ClipViewCard/>
-            <ClipViewCard/>            
-            <ClipViewCard/>
-          </div>
+          <TrendingClips/>
         </div>
 
         {/* Featured Arenas */}
         <div className="mt-4">
-          <h2 className="text-white font-bold text-xl mb-4">Featured Arenas</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 justify-items-center">
-            <ArenaCard/>
-            <ArenaCard/>
-            <ArenaCard/>                       
-            <ArenaCard/>                       
-            <ArenaCard/>
-            <ArenaCard/>                        
-          </div>
+          <FeaturedArenas/>
         </div>
 
         {/* Tourneys for you */}

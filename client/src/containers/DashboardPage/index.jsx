@@ -29,6 +29,7 @@ import { MdDashboard } from "react-icons/md";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { IoSettings } from "react-icons/io5";
 import HomePage from "../HomePage";
+import { useLocation } from "react-router-dom";
 
 const PageContainer = styled.div`
   background: radial-gradient(#1d0207, #0d0000);
@@ -93,6 +94,10 @@ export default function DashboardPage() {
   const { userId } = useSelector((state) => state.auth);
   const { isLoading, error } = useGetUserQuery(userId);
 
+  // get current path
+  const location = useLocation();
+  const currentPage = location.pathname.split("/")[1];
+
   const [openRightSidebar, setOpenRightSidebar] = useState(false);
   const contentWidth = openRightSidebar ? "w-[calc((100%-4rem)*8/10)]" : "w-full";
 
@@ -117,7 +122,7 @@ export default function DashboardPage() {
 
   return (
     <main className="h-screen">
-      <Navbar />
+      <Navbar page={currentPage}/>
 
       <div className="flex flex-row h-[calc((100%-56px))]">
         <ArenaBar />
@@ -127,22 +132,6 @@ export default function DashboardPage() {
         {/* <aside className="w-[calc((100%-4rem)*2/10)]  bg-pink-300 flex justify-center items-center">
         </aside> */}
       </div>
-
-      {/* 
-        <div className="h-screen overflow-auto w-full">
-          <div className="h-[56px] bg-transparent"></div>
-          <div className="w-full flex justify-center">
-            <HomePage />
-          </div>
-          
-        </div>
-
-        <RightSideBar open={openRightSidebar} setOpen={setOpenRightSidebar} /> */}
-
-      {/* <LeftSideBar menuItems={MenuItems} /> */}
-      {/* <PageContainer> */}
-      {/* <ContentContainer>{renderContent}</ContentContainer> */}
-      {/* </PageContainer> */}
     </main>
   );
 }
